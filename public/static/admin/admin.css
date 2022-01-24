@@ -260,6 +260,13 @@ ul.layui-nav a{
     top:0;
 }
 
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover{
+    background:none ;
+}
+
 .layui-layout-admin .layui-side .layui-logo,
 .layui-side.layui-bg-black,
 .layui-side .layui-nav{
@@ -307,7 +314,7 @@ ul.layui-nav a{
 .layui-side dl.layui-nav-child a{
     padding-left: 33px;
 }
-.layui-side dl.layui-nav-child .layui-this a,
+/*.layui-side dl.layui-nav-child .layui-this a,*/
 .layui-nav-tree .layui-nav-item.layui-this > a
 {
     background-color: var(--td-brand-color);
@@ -322,7 +329,9 @@ ul.layui-nav a{
 }
 
 .layui-side .layui-nav-tree dl.layui-nav-child dd:not(.layui-this) a:hover,
-.layui-nav-tree .layui-nav-item > a:hover
+.layui-nav-tree .layui-nav-item > a:hover,
+.layui-nav-tree .layui-nav-child a:hover,
+.layui-nav-tree dd.layui-this > a:hover
 {
     background-color: var(--td-brand-color);
     color:var(--td-hover-color) !important;

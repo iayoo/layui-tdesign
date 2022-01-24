@@ -67,24 +67,77 @@ layui.extend({
         }
     }
 
+    function getMenuChild(childData,type){
+        let html = '';
+        childData.map(function (item) {
+            let start = '';
+            let end = '';
+            let itemHtml = '';
+
+            if (type === 'li'){
+                start = '<li class="layui-nav-item">'
+                end = '</li>';
+            }else{
+                start = '<dd >'
+                end = '</dd>';
+            }
+            let href = 'data-href="'+(item.href === undefined?'javascript:;':item.href)+'"';
+            let id = 'menu-id="'+item.id+'"';
+            let icon = item.icon;
+            itemHtml += '<a '+ href +' '+ id +'><i class="layui-icon '+ icon +'"></i><span class="title">'+item.name+'</span></a>';
+
+            if (item.children !== undefined && item.children.length > 0){
+                itemHtml += '<dl class="layui-nav-child" >' + getMenuChild(item.children,'dl') + '</dl>';
+            }
+
+            html += start + itemHtml + end;
+        })
+
+        return html;
+
+        //
+        // let html = '';
+        // let el = null;
+        // let start = '';
+        // let end = '';
+        // if (type === 'li'){
+        //     el = $('<li class="layui-nav-item"></li>');
+        //
+        //     start = '<li class="layui-nav-item">'
+        //     end = '</li>';
+        // }else{
+        //     // console.log(childData)
+        //     start = '<dl class="layui-nav-child">'
+        //     end = '</dl>';
+        // }
+        //
+        // let href = 'data-href="'+(childData.href === undefined?'javascript:;':childData.href)+'"';
+        // let id = 'menu-id="'+childData.id+'"';
+        // let icon = childData.icon;
+        // html+= '<a '+ href +' '+ id +'><i class="layui-icon '+ icon +'"></i><span class="title">'+childData.name+'</span></a>';
+        //
+        // if (childData.children !== undefined && childData.children.length > 0){
+        //     childData.children.map(function (item) {
+        //         html += ''
+        //         if (item.children!==undefined && item.children.length >0){
+        //             html+= getMenuChild(item,'dl')
+        //         }
+        //     })
+        // }else{
+        // }
+        // return start + html + end;
+    }
+
     Menu.prototype.renderSideMenu = function (el,data){
         let _this = this;
         $(el).empty();
-        data.map(function (item) {
-            let liElem = $('<li class="layui-nav-item" ><a class="" data-href="'+(item.href === undefined?'javascript:;':item.href)+'"><i class="layui-icon '+item.icon+'"></i><span class="title">'+item.name+'</span></a></li>');
-            if (item.children !==undefined && item.children.length > 0){
-                let cElem = $('<dl class="layui-nav-child"></dl>');
-                let cElemHtml = '';
-                item.children.map(function (cItem) {
-                    cElemHtml += '<dd><a data-href="'+cItem.href+'" menu-id="'+cItem.id+'"><span class="title">'+cItem.name+'</span></a></dd>';
-                })
-                cElem.html(cElemHtml)
-                liElem.append(cElem)
-            }
-            $(el).append(liElem)
-        })
+        let html = getMenuChild(data,'li')
+        $(el).append($(html))
         //监听导航点击
         element.on('nav('+ $(el).attr('id') +')', function(elem){
+            if (!$(elem).parent().hasClass('layui-nav-itemed')){
+                console.log(1)
+            }
             let href = $(elem).data('href');
             if (href === undefined || href === ''){
                 return;
