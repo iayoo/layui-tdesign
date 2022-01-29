@@ -1,0 +1,125 @@
+@font-face {
+  font-family: "layui-icon"; /* Project id 3166530 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1643452964251') format('woff2'),
+       url('iconfont.woff?t=1643452964251') format('woff'),
+       url('iconfont.ttf?t=1643452964251') format('truetype');
+}
+
+.layui-icon {
+  font-family: "layui-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-icon-extend-component:before {
+  content: "\e6f2";
+}
+
+.layui-icon-extend-code:before {
+  content: "\e6f3";
+}
+
+.layui-icon-extend-copy:before {
+  content: "\e6f4";
+}
+
+.layui-icon-extend-dollar:before {
+  content: "\e6f5";
+}
+
+.layui-icon-extend-history:before {
+  content: "\e6f8";
+}
+
+.layui-icon-extend-editor:before {
+  content: "\e6f6";
+}
+
+.layui-icon-extend-data:before {
+  content: "\e6f9";
+}
+
+.layui-icon-extend-gift:before {
+  content: "\e6fa";
+}
+
+.layui-icon-extend-integral:before {
+  content: "\e6fb";
+}
+
+.layui-icon-extend-nav-list:before {
+  content: "\e6fd";
+}
+
+.layui-icon-extend-pic:before {
+  content: "\e6ff";
+}
+
+.layui-icon-extend-Notvisible:before {
+  content: "\e6fe";
+}
+
+.layui-icon-extend-play:before {
+  content: "\e701";
+}
+
+.layui-icon-extend-rising:before {
+  content: "\e703";
+}
+
+.layui-icon-extend-QRcode:before {
+  content: "\e704";
+}
+
+.layui-icon-extend-rmb:before {
+  content: "\e705";
+}
+
+.layui-icon-extend-similar-product:before {
+  content: "\e707";
+}
+
+.layui-icon-extend-Exportservices:before {
+  content: "\e702";
+}
+
+.layui-icon-extend-sendinquiry:before {
+  content: "\e70d";
+}
+
+.layui-icon-extend-all-fill:before {
+  content: "\e718";
+}
+
+.layui-icon-extend-favorites-fill:before {
+  content: "\e721";
+}
+
+.layui-icon-extend-browse:before {
+  content: "\e745";
+}
+
+.layui-icon-extend-Notvisible1:before {
+  content: "\e75a";
+}
+
+.layui-icon-extend-ziyingyewu:before {
+  content: "\e7cb";
+}
+
+.layui-icon-extend-auto:before {
+  content: "\e6eb";
+}
+
+.layui-icon-extend-all:before {
+  content: "\e6ef";
+}
+
+.layui-icon-extend-bussiness-man:before {
+  content: "\e6f0";
+}
+
