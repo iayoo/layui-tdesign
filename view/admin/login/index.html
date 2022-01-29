@@ -33,9 +33,9 @@
 
                 <div class="wrap-input validate-input">
                     <input class="input layui-input login-form-pass-input" type="password" name="pass" placeholder="密码">
-                    <span class="symbol-input">
+                    <span class="symbol-input" onclick="ssss()">
                         <i class="layui-icon layui-icon-password" aria-hidden="true"></i>
-                        <i class="icon layui-icon layui-icon-extend-browse password-view-icon" aria-hidden="true"></i>
+                        <i onclick="show()" lay-event="pass-view" class="icon layui-icon layui-icon-extend-browse password-view-icon" aria-hidden="true"></i>
                     </span>
                 </div>
 
@@ -63,9 +63,15 @@
 </div>
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
-<script src="static/admin/layui/layui.js"></script>
+<script src="/static/admin/layui/layui.js"></script>
 <script>
+    layui.use(['jquery'],function () {
+        let $ = layui.jquery
 
+        $("[lay-event]").on('click',function (event) {
+            console.log(event)
+        })
+    })
 </script>
 </body>
 </html>
