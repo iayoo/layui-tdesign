@@ -13,13 +13,18 @@
 </head>
 <body>
 <div class="dowebok">
+    <div class="page-loading" ia-event="page-loading">
+        <div class="loading-icon">
+            <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>
+        </div>
+    </div>
     <div class="container-login">
         <div class="wrap-login">
             <div class="login-pic js-tilt" data-tilt="">
                 <img src="/static/admin/images/login-img.png" alt="img">
             </div>
 
-            <form class="login-form validate-form layui-form">
+            <form class="login-form validate-form layui-form" >
 					<span class="login-form-title">
 						会员登陆
 					</span>
@@ -40,7 +45,7 @@
                 </div>
 
                 <div class="container-login-form-btn">
-                    <button class="login-form-btn">
+                    <button class="login-form-btn" type="submit" lay-submit lay-filter="login-submit" ia-event="loading">
                         登陆
                     </button>
                 </div>
@@ -65,12 +70,36 @@
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="/static/admin/layui/layui.js"></script>
 <script>
-    layui.use(['jquery'],function () {
-        let $ = layui.jquery
+    layui.use(['jquery','form'],function () {
+        let $ = layui.jquery, form = layui.form;
 
         $("[lay-event]").on('click',function (event) {
             console.log(event)
         })
+        console.log(1)
+        let page_loading = $("[ia-event='page-loading']");
+        $("button[ia-event='loading']").on('click',function (obj) {
+            let _this = $(this)
+
+            _this.attr("disabled","disabled")
+            _this.css("opacity","0.7")
+            _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
+            setTimeout(function () {
+                _this.children('i.btn-loading').remove()
+                _this.removeAttr('disabled')
+                _this.css("opacity","1")
+            },1500)
+            return false;
+        })
+        page_loading.fadeOut(500);
+        form.on('submit(login-submit)', function(data) {
+            console.log('login submit')
+            page_loading.fadeIn(500);
+            setTimeout(function () {
+                location.href = "/admin";
+            },1000)
+            return false;
+        });
     })
 </script>
 </body>
