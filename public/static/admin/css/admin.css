@@ -886,7 +886,7 @@ div.layui-layer{
 }
 
 .layui-side-shrink .layui-side-scroll .layui-logo{
-    background-image: url(./images/logo.png);
+    background-image: url(../images/logo.png);
     background-size: 40px;
     background-repeat: no-repeat;
     background-position-x: 15px;
