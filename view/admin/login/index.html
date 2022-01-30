@@ -37,11 +37,14 @@
                 </div>
 
                 <div class="wrap-input validate-input">
-                    <input class="input layui-input login-form-pass-input" type="password" name="pass" placeholder="密码">
-                    <span class="symbol-input" onclick="ssss()">
-                        <i class="layui-icon layui-icon-password" aria-hidden="true"></i>
-                        <i onclick="show()" lay-event="pass-view" class="icon layui-icon layui-icon-extend-browse password-view-icon" aria-hidden="true"></i>
+                    <span class="pass-view" >
+                        <i ia-event="pass-view" class="icon layui-icon layui-icon-extend-Notvisible1 password-view-icon" aria-hidden="true"></i>
                     </span>
+                    <span class="symbol-input">
+                        <i class="layui-icon layui-icon-password" aria-hidden="true"></i>
+                    </span>
+                    <input class="input layui-input login-form-pass-input" type="password" name="pass" placeholder="密码">
+
                 </div>
 
                 <div class="container-login-form-btn">
@@ -73,10 +76,23 @@
     layui.use(['jquery','form'],function () {
         let $ = layui.jquery, form = layui.form;
 
-        $("[lay-event]").on('click',function (event) {
-            console.log(event)
+        $("[ia-event]").on('click',function (event) {
+            let _this = $(this);
+            let iaEvent = _this.attr('ia-event');
+            console.log(iaEvent)
+            if (iaEvent === 'pass-view'){
+                console.log(_this.parent().children('input'))
+                if (_this.hasClass('layui-icon-extend-Notvisible1')){
+                    _this.removeClass('layui-icon-extend-Notvisible1');
+                    _this.addClass('layui-icon-extend-browse');
+                    _this.parent().parent().children('input').attr('type','input')
+                }else{
+                    _this.addClass('layui-icon-extend-Notvisible1');
+                    _this.removeClass('layui-icon-extend-browse');
+                    _this.parent().parent().children('input').attr('type','password')
+                }
+            }
         })
-        console.log(1)
         let page_loading = $("[ia-event='page-loading']");
         $("button[ia-event='loading']").on('click',function (obj) {
             let _this = $(this)
