@@ -30,7 +30,7 @@
 					</span>
 
                 <div class="wrap-input validate-input">
-                    <input class="input layui-input"  type="text" name="email" placeholder="邮箱">
+                    <input class="input layui-input" lay-verify="account" type="text" name="account" placeholder="账号">
                     <span class="symbol-input">
                         <i class="layui-icon layui-icon-username" aria-hidden="true"></i>
                     </span>
@@ -43,7 +43,7 @@
                     <span class="symbol-input">
                         <i class="layui-icon layui-icon-password" aria-hidden="true"></i>
                     </span>
-                    <input class="input layui-input login-form-pass-input" type="password" name="pass" placeholder="密码">
+                    <input class="input layui-input login-form-pass-input" type="password" name="password" placeholder="密码">
 
                 </div>
 
@@ -76,10 +76,38 @@
     layui.use(['jquery','form'],function () {
         let $ = layui.jquery, form = layui.form;
 
+        form.verify({
+            account: function(value, item){ //value：表单的值、item：表单的DOM对象
+                // console.log(value);
+                // console.log(item);
+                let err = false;
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    err = '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    err = '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    err = '用户名不能全为数字';
+                }
+                if (err !== false){
+                    layer.msg(err)
+                    return true;
+                }
+                return false;
+            }
+
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ,password: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+        });
+
         $("[ia-event]").on('click',function (event) {
             let _this = $(this);
             let iaEvent = _this.attr('ia-event');
-            console.log(iaEvent)
             if (iaEvent === 'pass-view'){
                 console.log(_this.parent().children('input'))
                 if (_this.hasClass('layui-icon-extend-Notvisible1')){
@@ -92,28 +120,29 @@
                     _this.parent().parent().children('input').attr('type','password')
                 }
             }
+            // console.log(form.verify())
         })
         let page_loading = $("[ia-event='page-loading']");
-        $("button[ia-event='loading']").on('click',function (obj) {
-            let _this = $(this)
-
-            _this.attr("disabled","disabled")
-            _this.css("opacity","0.7")
-            _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
-            setTimeout(function () {
-                _this.children('i.btn-loading').remove()
-                _this.removeAttr('disabled')
-                _this.css("opacity","1")
-            },1500)
-            return false;
-        })
+        // $("button[ia-event='loading']").on('click',function (obj) {
+        //     let _this = $(this)
+        //
+        //     _this.attr("disabled","disabled")
+        //     _this.css("opacity","0.7")
+        //     _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
+        //     setTimeout(function () {
+        //         _this.children('i.btn-loading').remove()
+        //         _this.removeAttr('disabled')
+        //         _this.css("opacity","1")
+        //     },1500)
+        //     console.log(form.verify(''))
+        //     return false;
+        // })
         page_loading.fadeOut(500);
         form.on('submit(login-submit)', function(data) {
-            console.log('login submit')
-            page_loading.fadeIn(500);
-            setTimeout(function () {
-                location.href = "/admin";
-            },1000)
+            // page_loading.fadeIn(500);
+            // setTimeout(function () {
+            //     location.href = "/admin";
+            // },1000)
             return false;
         });
     })
