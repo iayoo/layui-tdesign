@@ -5,6 +5,9 @@ namespace app\admin\controller;
 class Login extends BaseController
 {
     public function index(){
-        return $this->fetch();
+        return $this->fetchHandle(function (){
+
+        });
+//        return $this->fetch();
     }
 }

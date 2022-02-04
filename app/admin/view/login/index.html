@@ -73,8 +73,13 @@
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="/static/admin/layui/layui.js"></script>
 <script>
-    layui.use(['jquery','form'],function () {
-        let $ = layui.jquery, form = layui.form;
+
+    layui.config({
+        base: '/static/admin/component/' //静态资源所在路径
+    }).extend({
+        index: '/static/admin' //主入口模块
+    }).use(['jquery','form','request'],function () {
+        let $ = layui.jquery, form = layui.form, request = layui.request;
 
         form.verify({
             account: function(value, item){ //value：表单的值、item：表单的DOM对象
@@ -140,19 +145,39 @@
         page_loading.fadeOut(500);
         form.on('submit(login-submit)', function(data) {
             let _this = $(this);
-
+            console.log(data.field)
             _this.attr("disabled","disabled")
             _this.css("opacity","0.7")
             _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
-            setTimeout(function () {
+            // setTimeout(function () {
+            //     _this.children('i.btn-loading').remove()
+            //     _this.removeAttr('disabled')
+            //     _this.css("opacity","1")
+            //     page_loading.fadeIn(500);
+            //
+            //     // setTimeout(function () {
+            //     //     location.href = "/admin";
+            //     // },1000)
+            // },1500)
+
+            function btnRemoveLoading(){
                 _this.children('i.btn-loading').remove()
-                _this.removeAttr('disabled')
-                _this.css("opacity","1")
-                page_loading.fadeIn(500);
-                setTimeout(function () {
-                    location.href = "/admin";
-                },1000)
-            },1500)
+                    _this.removeAttr('disabled')
+                    _this.css("opacity","1")
+            }
+
+            request.post({
+                data:data.field,
+                error:function (res) {
+                    btnRemoveLoading()
+                },
+                success(){
+                    btnRemoveLoading()
+                }
+            })
+
+
+
             // page_loading.fadeIn(500);
             // setTimeout(function () {
             //     location.href = "/admin";
