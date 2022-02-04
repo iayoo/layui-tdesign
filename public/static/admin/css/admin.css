@@ -1097,3 +1097,9 @@ div.layui-layer{
 .explorer_file_list .file_item .file_image_magnifying i {
     font-size: 22px;
 }
+
+
+div.layui-layer.layui-layer-msg{
+    border: none;
+    box-shadow: 1px 1px 5px 0px #00000029;
+}
