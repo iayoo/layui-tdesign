@@ -182,7 +182,6 @@ iframe {
 }
 
 .login-form-title {
-    font-family: Poppins-Bold;
     font-size: 24px;
     color: #333333;
     line-height: 1.2;
@@ -459,7 +458,7 @@ span.pass-view i{
 }
 span.verify_code{
     position: absolute;
-    width: 50%;
+    width: 45%;
     /*height: 74px;*/
     right: 1px;
     border-radius: 50%;
@@ -472,7 +471,7 @@ span.verify_code > img{
     max-width: 100%;
     height: 48px;
     border-radius: 0 50px 50px 0;
-    border-left: 1px solid red;
+    border-left: 1px solid #001f9790;
 }
 
 .login-form .layui-tab-title,.login-form ul.layui-tab-title li.layui-this:after{

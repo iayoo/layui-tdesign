@@ -58,8 +58,8 @@
                                 <span class="symbol-input">
                                     <i class="layui-icon layui-icon-vercode" aria-hidden="true"></i>
                                 </span>
-                                <span class="verify_code">
-                                    <img src="{:captcha_src()}" alt="">
+                                <span class="verify_code" ia-event="verify-refresh">
+                                    <img src="{:captcha_src()}" alt="" >
                                 </span>
                                 <input class="input layui-input login-form-pass-input" type="text" name="verify"
                                        placeholder="验证码">
@@ -201,6 +201,11 @@
                         _this.text('发送验证码');
                     }
                 },1000);
+            }
+            if (iaEvent === 'verify-refresh'){
+                let src = '{:captcha_src()}?v=' + ((new Date()).getTime());
+                console.log(src)
+                _this.find('img').attr('src',src);
             }
             // console.log(form.verify())
         })
