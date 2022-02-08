@@ -8,4 +8,9 @@ class Component extends BaseController
     {
         return $this->fetch();
     }
+
+    public function step()
+    {
+        return $this->fetch();
+    }
 }
