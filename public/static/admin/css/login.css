@@ -190,7 +190,7 @@ iframe {
 
     width: 100%;
     display: block;
-    padding-bottom: 54px;
+    padding-bottom: 15px;
 }
 
 
@@ -514,4 +514,15 @@ span.verify_code > img{
 .login-form ul.layui-tab-title li.layui-this{
     background-color: #001f97;
     color: #f2f2f2;
+}
+
+.login-form .qrcode{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form .qrcode img{
+    width: 175px;
 }
