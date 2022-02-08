@@ -1026,7 +1026,7 @@ div.layui-layer{
     display: flex;
     justify-content: center;
     background-color: #fff;
-    box-shadow: 0px -4px 4px #8000FF0F;
+    box-shadow: 0 -4px 4px 0 #f2f2f287;
     z-index: 1;
 }
 

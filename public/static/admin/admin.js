@@ -26,6 +26,16 @@ layui.extend({
      * 刷新iframe
      */
     function refresh (obj) {
+        let _this = $(this);
+        if (_this.find('i').hasClass('layui-icon-loading')){
+            return false;
+        }
+        _this.find('i').removeClass('layui-icon-refresh-3')
+        _this.find('i').addClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
+        setTimeout(function () {
+            _this.find('i').addClass('layui-icon-refresh-3')
+            _this.find('i').removeClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
+        },1000)
         let curIframe = $(".layui-tab-content .layui-tab-item").eq(admin.curIframeIndex).find("iframe")[0];
         admin.iframeLoading(1000);
         curIframe.contentWindow.location.reload(true);
