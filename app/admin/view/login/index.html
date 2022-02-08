@@ -47,6 +47,16 @@
 
                 </div>
 
+                <div class="wrap-input validate-input">
+                    <span class="symbol-input">
+                        <i class="layui-icon layui-icon-vercode" aria-hidden="true"></i>
+                    </span>
+                    <span class="verify_code">
+                        <img src="{:captcha_src()}" alt="">
+                    </span>
+                    <input class="input layui-input login-form-pass-input" type="text" name="verify" placeholder="验证码">
+                </div>
+
                 <div class="container-login-form-btn">
                     <button class="login-form-btn" type="submit" lay-submit lay-filter="login-submit" ia-event="loading">
                         登陆
