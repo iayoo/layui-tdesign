@@ -24,7 +24,7 @@
                 <img src="/static/admin/images/login-img.png" alt="img">
             </div>
 
-            <form class="login-form validate-form layui-form" >
+            <form class="login-form validate-form layui-form" lay-verType="tips">
                 <span class="login-form-title">
                     后台登录
                 </span>
@@ -35,7 +35,7 @@
                         <div class="layui-tab-item layui-show">
                             <div class="wrap-input validate-input">
                                 <input class="input layui-input" lay-verify="account" type="text" name="account"
-                                       placeholder="账号">
+                                       placeholder="账号" >
                                 <span class="symbol-input">
                                     <i class="layui-icon layui-icon-username" aria-hidden="true"></i>
                                 </span>
@@ -50,7 +50,7 @@
                                 <span class="symbol-input">
                                     <i class="layui-icon layui-icon-password" aria-hidden="true"></i>
                                 </span>
-                                <input class="input layui-input login-form-pass-input" type="password" name="password"
+                                <input class="input layui-input login-form-pass-input" lay-verify="password" type="password" name="password"
                                        placeholder="密码">
                             </div>
 
@@ -134,13 +134,16 @@
         base: '/static/admin/component/' //静态资源所在路径
     }).extend({
         index: '/static/admin' //主入口模块
-    }).use(['jquery','form','request'],function () {
-        let $ = layui.jquery, form = layui.form, request = layui.request;
+    }).use(['jquery','form','request','loading'],function () {
+        let $ = layui.jquery, form = layui.form, request = layui.request, loading = layui.loading;
 
         form.verify({
+            required:function (val,item){
+                // console.log(val)
+                // console.log(item)
+            },
             account: function(value, item){ //value：表单的值、item：表单的DOM对象
-                // console.log(value);
-                // console.log(item);
+                // console.log('from verify!')
                 let err = false;
                 if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
                     err = '用户名不能有特殊字符';
@@ -156,21 +159,26 @@
                     return true;
                 }
                 return false;
+            },
+            phone:function (val,item) {
+                return false;
             }
 
             //我们既支持上述函数式的方式，也支持下述数组的形式
             //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
-            ,password: [
-                /^[\S]{6,12}$/
-                ,'密码必须6到12位，且不能出现空格'
-            ]
+            ,password:function (val,item) {
+                if (!new RegExp(/^[\S]{6,12}$/).test(val)){
+                    err = ''
+                    layer.msg(err)
+                    return true;
+                }
+            }
         });
         let isSend = false;
         $("[ia-event]").on('click',function (event) {
             let _this = $(this);
             let iaEvent = _this.attr('ia-event');
             if (iaEvent === 'pass-view'){
-                console.log(_this.parent().children('input'))
                 if (_this.hasClass('layui-icon-extend-Notvisible1')){
                     _this.removeClass('layui-icon-extend-Notvisible1');
                     _this.addClass('layui-icon-extend-browse');
@@ -182,18 +190,16 @@
                 }
             }
             if (iaEvent === 'send-verify-code'){
-                console.log('发送验证码');
                 let count = 60;
-                console.log(isSend)
                 if (isSend){
                     return;
                 }
                 _this.addClass('disabled');
-                _this.text(count+'s');
+                _this.text('发送验证码(' + count+'s)');
                 isSend = true
                 let verifyCodeTimer = setInterval(function(){
                     count--;
-                    _this.text(count+'s');
+                    _this.text('发送验证码(' + count+'s)');
                     if (count <=0) {
                         isSend = false;
                         _this.removeClass('disabled');
@@ -204,34 +210,23 @@
             }
             if (iaEvent === 'verify-refresh'){
                 let src = '{:captcha_src()}?v=' + ((new Date()).getTime());
-                console.log(src)
                 _this.find('img').attr('src',src);
             }
             // console.log(form.verify())
         })
         let page_loading = $("[ia-event='page-loading']");
-        // $("button[ia-event='loading']").on('click',function (obj) {
-        //     let _this = $(this)
-        //
-        //     _this.attr("disabled","disabled")
-        //     _this.css("opacity","0.7")
-        //     _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
-        //     setTimeout(function () {
-        //         _this.children('i.btn-loading').remove()
-        //         _this.removeAttr('disabled')
-        //         _this.css("opacity","1")
-        //     },1500)
-        //     console.log(form.verify(''))
-        //     return false;
-        // })
         page_loading.fadeOut(500);
-        form.on('submit(login-submit)', function(data) {
+        form.on('submit(login-submit)', function(data,el) {
             let _this = $(this);
-            console.log(data.field)
-            _this.attr("disabled","disabled")
-            _this.css("opacity","0.7")
-            _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
-            // setTimeout(function () {
+            loading.load({
+                el:_this
+            }).clear(1000)
+
+            // _this.attr("disabled","disabled")
+            // _this.css("opacity","0.7")
+            // _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
+            setTimeout(function () {
+                // btnRemoveLoading();
             //     _this.children('i.btn-loading').remove()
             //     _this.removeAttr('disabled')
             //     _this.css("opacity","1")
@@ -240,23 +235,19 @@
             //     // setTimeout(function () {
             //     //     location.href = "/admin";
             //     // },1000)
-            // },1500)
-
-            function btnRemoveLoading(){
-                _this.children('i.btn-loading').remove()
-                    _this.removeAttr('disabled')
-                    _this.css("opacity","1")
-            }
+            },1500)
 
             request.post({
                 data:data.field,
+                load:false,
                 error:function (res) {
-                    btnRemoveLoading()
+                    // btnRemoveLoading()
                 },
                 success(){
-                    btnRemoveLoading()
+                    // btnRemoveLoading()
                 }
             })
+            return false;
 
 
 

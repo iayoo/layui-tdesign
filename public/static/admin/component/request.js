@@ -32,8 +32,10 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             showLoading = false;
         }
         if (showLoading){
-            loading.Load(1)
+            console.log(showLoading)
+            loading.load(1)
         }
+
         if (undefined === options.type){
             options.type = "POST";
         }
@@ -52,7 +54,20 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 'X-Requested-With': 'XMLHttpRequest'
             },
             success: function(res) {
-                loading.loadRemove();
+                loading.clear();
+
+                if (res === undefined){
+                    if (undefined !== options.error){
+                        return options.error(res);
+                    }else{
+                        layer.msg("网络异常", {
+                            icon: 2,
+                            time: 1000
+                        });
+                        return;
+                    }
+                }
+
                 // 判断code是否为未登录code
                 // 判断当前是否为iframe子页面
                 // 触发上级页面跳转登录页面
@@ -97,7 +112,7 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 }
             },
             error:function (res) {
-                loading.loadRemove();
+                loading.clear();
                 if (undefined !== res.responseJSON && undefined !== res.responseJSON.message){
                     layer.msg(res.responseJSON.message, {
                         icon: 2,
@@ -115,7 +130,7 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 }
             },
             complete:function (res) {
-                loading.loadRemove();
+                loading.clear();
             }
         })
     }
