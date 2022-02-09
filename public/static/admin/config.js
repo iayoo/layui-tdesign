@@ -1,3 +1,4 @@
 layui.config({
-    base: '/static/admin/component/' //静态资源所在路径
+    base: '/static/admin/component/', //静态资源所在路径
+    dir:'/static/admin/component/'
 });

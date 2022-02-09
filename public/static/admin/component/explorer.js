@@ -178,7 +178,7 @@ layui.extend({
             img = '<div class="image-show"><img src="'+ item.path + '" alt="' + item.title + '"></div>';
             magnifying = '<div class="file_image_magnifying" ><i class="layui-icon layui-icon-search" explorer-event="show"></i></div>';
         }else{
-            img = '<div class="image-show"><img class="file_icon" src="/static/admin/images/file-icon/'+ item.ext + '.png" alt="' + item.title + '"></div>';
+            img = '<div class="image-show"><img class="file_icon" src="/static/administrator/images/file-icon/'+ item.ext + '.png" alt="' + item.title + '"></div>';
         }
         let selectIcon = '<div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div>';
 
@@ -431,12 +431,9 @@ layui.extend({
             ,btn2: function(){
                 layer.closeAll();
             }
-
             ,zIndex: layer.zIndex //重点1
             ,success: function(layerObj, index){
                 render();
-
-
                 form.render();
                 explorer._this = $(layerObj)
                 explorer._this.prepend('</div><div id="explorer_page">')
@@ -452,4 +449,4 @@ layui.extend({
         });
     }
     exports('explorer',explorer);
-})
+}).addcss('explorer.css');
