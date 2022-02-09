@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    function getQueryVariable(variable)
+    {
+        let r = {}
+        let query = window.location.search.substring(1);
+        let vars = query.split("&");
+        for (let i=0;i<vars.length;i++) {
+            let pair = vars[i].split("=");
+            // if(pair[0] == variable){return pair[1];}
+            r[pair[0]] = pair[1]
+        }
+        return r;
+    }
+    window.parent.postMessage(getQueryVariable(), '*');
+</script>
+</body>
+</html>
