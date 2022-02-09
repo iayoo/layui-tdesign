@@ -83,8 +83,8 @@ layui.extend({
             }
             let href = 'data-href="'+(item.href === undefined?'javascript:;':item.href)+'"';
             let id = 'menu-id="'+item.id+'"';
-            let icon = item.icon;
-            itemHtml += '<a '+ href +' '+ id +'><i class="layui-icon '+ icon +'"></i><span class="title">'+item.title+'</span></a>';
+            let icon = item.icon?'<i class="layui-icon '+ item.icon +'"></i>':'';
+            itemHtml += '<a '+ href +' '+ id +'>' + icon + '<span class="title">'+item.title+'</span></a>';
 
             if (item.children !== undefined && item.children.length > 0){
                 itemHtml += '<dl class="layui-nav-child" >' + getMenuChild(item.children,'dl') + '</dl>';
