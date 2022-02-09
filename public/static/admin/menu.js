@@ -56,7 +56,6 @@ layui.extend({
                 data:{},
                 type:"GET",
                 success:function (res) {
-                    console.log(res)
                     if (res.code === 0 && res.data !== undefined){
                         that.menu_list = res.data;
                         that.renderHeaderMenu()
@@ -137,8 +136,6 @@ layui.extend({
         //监听导航点击
         element.on('nav('+ $(el).attr('id') +')', function(elem){
             if (!$(elem).parent().hasClass('layui-nav-itemed')){
-                console.log($(elem))
-
                 $(_this).addClass('layui-nav-itemed')
             }
             let href = $(elem).data('href');
@@ -225,6 +222,7 @@ layui.extend({
                 if (item.id.toString() === menu_id.toString() && index !== that.cur_header_index){
                     that.cur_header_index = index;
                     that.renderSideMenu(options.el,item.children)
+                    handleEvent(true)
                     element.init();
                 }
             })
