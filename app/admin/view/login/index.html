@@ -96,7 +96,7 @@
 <!--                                <img src="/static/admin/images/wechat-login-demo.png" alt="" id="wechat-login">-->
                             </div>
                             <div class="refresh-action">
-                                <p>请使用微信扫码登录 <span>刷新 <i class="layui-icon layui-icon-refresh"></i></span></p>
+                                <p>请使用微信扫码登录 <span id="wechat-refresh">刷新 <i class="layui-icon layui-icon-refresh"></i></span></p>
                             </div>
                         </div>
                     </div>
@@ -161,11 +161,29 @@
         // 接收message
         window.addEventListener('message', function(event) {
             // 拿到event做对应的操作
-            console.log(event)
             if (event.data !== undefined && event.data.code !== undefined){
                 // 扫码成功回调，
+                request.post({
+                    url:'{:url("authentication.wechat/login")}',
+                    data:{code:event.data.code}
+                })
             }
         }, false)
+
+        $("#wechat-refresh").on('click',function (){
+            $.support.cors = true
+            // iframe1.contentWindow.location.reload(true);
+            console.log($("#wechat-login").find("iframe")[0])
+            // 创建微信登录的对象
+            new WxLogin({
+                self_redirect: true, // 是否在iframe内跳转 redirect_uri
+                id: 'wechat-login', // 希望二维码嵌入容器的 id
+                appid: '',
+                scope: 'snsapi_login',
+                redirect_uri: 'http://layui-tdsign.com/admin/authentication.wechat',
+                href:    'data:text/css;base64,LmxvZ2luUGFuZWwubm9ybWFsUGFuZWwgLnRpdGxlIHsKICBkaXNwbGF5OiBub25lOwp9Ci5xcmNvZGUubGlnaHRCb3JkZXIgewogIHdpZHRoOiAxNzBweDsKICBoZWlnaHQ6IDE3MHB4Owp9Ci5wYW5lbENvbnRlbnQgLmluZm97CiAgZGlzcGxheTogbm9uZTsKfQ==',
+            })
+        })
 
         form.verify({
             required:function (val,item){
