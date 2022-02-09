@@ -148,7 +148,9 @@ layui.extend({
         nav_tree.find(kv).parent().addClass("layui-this")
     });
 
-    $('#IA_layui_Tdesign > .page-loading').fadeOut(500);
+    setTimeout(function () {
+        $('#IA_layui_Tdesign > .page-loading').fadeOut(300);
+    },1500)
 
     admin.menu.change = handleTagChange
 
