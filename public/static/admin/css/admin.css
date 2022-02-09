@@ -261,7 +261,6 @@ ul.layui-nav a{
 }
 
 .layui-nav-tree .layui-nav-child dd.layui-this,
-.layui-nav-tree .layui-nav-child dd.layui-this a,
 .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a,
 .layui-nav-tree .layui-this > a:hover{
     background:none ;
@@ -315,13 +314,17 @@ ul.layui-nav a{
     padding-left: 33px;
 }
 /*.layui-side dl.layui-nav-child .layui-this a,*/
-.layui-nav-tree .layui-nav-item.layui-this > a
+.layui-nav-tree .layui-nav-item.layui-this > a,
+.layui-nav-tree .layui-nav-child dd.layui-this a
 {
     background-color: var(--td-brand-color);
     color: #fff !important;
 
 }
 
+.layui-side .layui-nav-tree dd > a{
+    display: flex;
+}
 .layui-side .layui-nav-tree .layui-nav-child dd,
 .layui-side .layui-nav-tree >.layui-nav-item
 {
@@ -368,14 +371,26 @@ ul.layui-nav a{
     user-select: none;
     touch-action: manipulation;
     border: 1px solid;
-    color: var(--td-bg-color-specialcomponent);
+
+    background-color: var(--td-bg-color-component);
+    color: var(--td-text-color-primary);
+    border-color: var(--td-bg-color-component);
+}
+
+.layui-btn:hover{
+    background-color: var(--td-bg-color-component-hover);
+}
+
+.layui-btn-primary{
+    color: var(--td-text-color-anti);
     background-color: var(--td-brand-color);
     border-color: var(--td-brand-color);
 }
 
-.layui-btn-primary{
-    color: var(--td-text-color-primary);
-    background-color: var(--td-bg-color-specialcomponent);
+.layui-btn-primary:hover{
+    background-color: var(--td-brand-color-hover);
+    color: var(--td-text-color-anti);
+    border-color: var(--td-brand-color-hover);
 }
 
 .layui-btn-normal{
@@ -507,7 +522,7 @@ input.layui-input:hover{
 }
 
 .layui-form-switch em{
-    font-size: 9px;
+    font-size: 12px;
     /*margin-left: 1px;*/
 }
 
@@ -864,7 +879,7 @@ div.layui-layer{
     margin-right: 2px;
 }
 
-.layui-side-shrink .layui-nav-tree .layui-nav-item > a{
+.layui-side-shrink .layui-nav-tree li.layui-nav-item > a{
     width: 18px;
     padding: 0 10px;
 }
@@ -1103,3 +1118,22 @@ div.layui-layer.layui-layer-msg{
     border: none;
     box-shadow: 1px 1px 5px 0px #00000029;
 }
+
+/* popup 表单按钮组 start */
+.bottom{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    line-height: 50px;
+    background-color: #F8F8F8;
+    border-top: 1px solid #eee;
+}
+
+.button-container{
+    position: absolute;
+    right: 15px;
+}
+
+/* popup 表单按钮组 end */

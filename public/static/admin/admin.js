@@ -74,11 +74,14 @@ layui.extend({
     }
 
     function iframeLoading(time){
+        console.log('iframeLoading')
         let loading = "<div class='ia-loading'><div><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop' style='font-size: 50px'></i></div></div>";
         let tabEl = $(".layui-layout-admin .layui-body .layui-tab-content");
+        console.log(tabEl.children('.ia-loading'))
         if (tabEl.children('.ia-loading').length <= 0){
             tabEl.append(loading);
         }
+        console.log(tabEl)
         tabEl.children('.ia-loading').css("display", "flex").fadeIn(100);
         tabEl.attr('height',0)
         if (time !== undefined){
@@ -145,7 +148,9 @@ layui.extend({
         nav_tree.find(kv).parent().addClass("layui-this")
     });
 
-    $('#IA_layui_Tdesign > .page-loading').fadeOut(500);
+    setTimeout(function () {
+        $('#IA_layui_Tdesign > .page-loading').fadeOut(300);
+    },1500)
 
     admin.menu.change = handleTagChange
 

@@ -9,7 +9,11 @@
     <link rel="stylesheet" href="/static/admin/font/iconfont.css?v={:time()}">
     <link rel="stylesheet" href="/static/admin/css/login.css?v={:time()}">
     <link rel="stylesheet" href="/static/admin/css/util.css?v={:time()}">
-
+    <style>
+        #wechat-login iframe{
+            height: 195px;
+        }
+    </style>
 </head>
 <body>
 <div class="dowebok">
@@ -85,8 +89,14 @@
                             </div>
                         </div>
                         <div class="layui-tab-item">
+                            <!-- 放二维码的容器 -->
+<!--                            <div id="wechat-login"><div>-->
                             <div class="wechat-qrcode qrcode">
-                                <img src="/static/admin/images/wechat-login-demo.png" alt="">
+                                <div id="wechat-login"></div>
+<!--                                <img src="/static/admin/images/wechat-login-demo.png" alt="" id="wechat-login">-->
+                            </div>
+                            <div class="refresh-action">
+                                <p>请使用微信扫码登录 <span id="wechat-refresh">刷新 <i class="layui-icon layui-icon-refresh"></i></span></p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +138,18 @@
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="/static/admin/layui/layui.js"></script>
+<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
+
+    // 创建微信登录的对象
+    new WxLogin({
+        self_redirect: true, // 是否在iframe内跳转 redirect_uri
+        id: 'wechat-login', // 希望二维码嵌入容器的 id
+        appid: '',
+        scope: 'snsapi_login',
+        redirect_uri: 'http://layui-tdsign.com/admin/authentication.wechat',
+        href:    'data:text/css;base64,LmxvZ2luUGFuZWwubm9ybWFsUGFuZWwgLnRpdGxlIHsKICBkaXNwbGF5OiBub25lOwp9Ci5xcmNvZGUubGlnaHRCb3JkZXIgewogIHdpZHRoOiAxNzBweDsKICBoZWlnaHQ6IDE3MHB4Owp9Ci5wYW5lbENvbnRlbnQgLmluZm97CiAgZGlzcGxheTogbm9uZTsKfQ==',
+    })
 
     layui.config({
         base: '/static/admin/component/' //静态资源所在路径
@@ -136,6 +157,33 @@
         index: '/static/admin' //主入口模块
     }).use(['jquery','form','request','loading'],function () {
         let $ = layui.jquery, form = layui.form, request = layui.request, loading = layui.loading;
+
+        // 接收message
+        window.addEventListener('message', function(event) {
+            // 拿到event做对应的操作
+            if (event.data !== undefined && event.data.code !== undefined){
+                // 扫码成功回调，
+                request.post({
+                    url:'{:url("authentication.wechat/login")}',
+                    data:{code:event.data.code}
+                })
+            }
+        }, false)
+
+        $("#wechat-refresh").on('click',function (){
+            $.support.cors = true
+            // iframe1.contentWindow.location.reload(true);
+            console.log($("#wechat-login").find("iframe")[0])
+            // 创建微信登录的对象
+            new WxLogin({
+                self_redirect: true, // 是否在iframe内跳转 redirect_uri
+                id: 'wechat-login', // 希望二维码嵌入容器的 id
+                appid: '',
+                scope: 'snsapi_login',
+                redirect_uri: 'http://layui-tdsign.com/admin/authentication.wechat',
+                href:    'data:text/css;base64,LmxvZ2luUGFuZWwubm9ybWFsUGFuZWwgLnRpdGxlIHsKICBkaXNwbGF5OiBub25lOwp9Ci5xcmNvZGUubGlnaHRCb3JkZXIgewogIHdpZHRoOiAxNzBweDsKICBoZWlnaHQ6IDE3MHB4Owp9Ci5wYW5lbENvbnRlbnQgLmluZm97CiAgZGlzcGxheTogbm9uZTsKfQ==',
+            })
+        })
 
         form.verify({
             required:function (val,item){
@@ -233,7 +281,7 @@
             //     page_loading.fadeIn(500);
             //
             //     // setTimeout(function () {
-            //     //     location.href = "/admin";
+            //     //     location.href = "/administrator";
             //     // },1000)
             },1500)
 
@@ -253,7 +301,7 @@
 
             // page_loading.fadeIn(500);
             // setTimeout(function () {
-            //     location.href = "/admin";
+            //     location.href = "/administrator";
             // },1000)
             return false;
         });
