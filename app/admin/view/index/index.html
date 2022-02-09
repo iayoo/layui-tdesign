@@ -72,7 +72,8 @@
         let admin = layui.admin;
         admin.menu.render({
             el:'#ia_side_menu',
-            header_el:'#ia_header_nav'
+            header_el:'#ia_header_nav',
+            url:'{:url("menu")}'
         })
         admin.open('{:url("home")}','<i class="layui-icon layui-icon-home"></i>',0)
 
