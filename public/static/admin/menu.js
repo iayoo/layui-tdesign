@@ -56,8 +56,9 @@ layui.extend({
                 data:{},
                 type:"GET",
                 success:function (res) {
-                    if (res.code === 0 && res.data !== undefined && res.data.data !== undefined){
-                        that.menu_list = res.data.data;
+                    console.log(res)
+                    if (res.code === 0 && res.data !== undefined){
+                        that.menu_list = res.data;
                         that.renderHeaderMenu()
                     }
                 },
@@ -78,13 +79,13 @@ layui.extend({
                 start = '<li class="layui-nav-item">'
                 end = '</li>';
             }else{
-                start = '<dd >'
+                start = '<dd class="layui-nav-item">'
                 end = '</dd>';
             }
             let href = 'data-href="'+(item.href === undefined?'javascript:;':item.href)+'"';
             let id = 'menu-id="'+item.id+'"';
             let icon = item.icon;
-            itemHtml += '<a '+ href +' '+ id +'><i class="layui-icon '+ icon +'"></i><span class="title">'+item.name+'</span></a>';
+            itemHtml += '<a '+ href +' '+ id +'><i class="layui-icon '+ icon +'"></i><span class="title">'+item.title+'</span></a>';
 
             if (item.children !== undefined && item.children.length > 0){
                 itemHtml += '<dl class="layui-nav-child" >' + getMenuChild(item.children,'dl') + '</dl>';
@@ -136,7 +137,9 @@ layui.extend({
         //监听导航点击
         element.on('nav('+ $(el).attr('id') +')', function(elem){
             if (!$(elem).parent().hasClass('layui-nav-itemed')){
-                console.log(1)
+                console.log($(elem))
+
+                $(_this).addClass('layui-nav-itemed')
             }
             let href = $(elem).data('href');
             if (href === undefined || href === ''){
@@ -191,6 +194,7 @@ layui.extend({
 
     Menu.prototype.renderHeaderMenu = function () {
         let that = this,options = that.config;
+
         if (options.header_el === undefined || !options.is_header){
             that.renderSideMenu(options.el,that.menu_list)
             element.init();
@@ -208,7 +212,7 @@ layui.extend({
         }
 
         that.menu_list.map(function (item,index) {
-            options.header_el.append('<li class="layui-nav-item '+ (index===that.cur_header_index? THIS :'') +'"><a data-href="" menu-id="'+item.id+'">'+item.name+'</a></li>')
+            options.header_el.append('<li class="layui-nav-item '+ (index===that.cur_header_index? THIS :'') +'"><a data-href="" menu-id="'+item.id+'">'+item.title+'</a></li>')
         })
         that.renderSideMenu(options.el,that.menu_list[that.cur_header_index].children)
         //监听导航点击
@@ -242,10 +246,9 @@ layui.extend({
                     })
                 }
                 if (e.type === 'mouseenter'){
-                    _this.children(".layui-nav-child").css({
+                    _this.children(".layui-nav-child").finish().fadeIn(300).css({
                         top: topLength,
                     });
-                    _this.children('.layui-nav-child').fadeIn(500)
                 }
 
             }

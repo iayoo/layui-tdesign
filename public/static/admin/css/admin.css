@@ -261,7 +261,6 @@ ul.layui-nav a{
 }
 
 .layui-nav-tree .layui-nav-child dd.layui-this,
-.layui-nav-tree .layui-nav-child dd.layui-this a,
 .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a,
 .layui-nav-tree .layui-this > a:hover{
     background:none ;
@@ -315,13 +314,17 @@ ul.layui-nav a{
     padding-left: 33px;
 }
 /*.layui-side dl.layui-nav-child .layui-this a,*/
-.layui-nav-tree .layui-nav-item.layui-this > a
+.layui-nav-tree .layui-nav-item.layui-this > a,
+.layui-nav-tree .layui-nav-child dd.layui-this a
 {
     background-color: var(--td-brand-color);
     color: #fff !important;
 
 }
 
+.layui-side .layui-nav-tree dd > a{
+    display: flex;
+}
 .layui-side .layui-nav-tree .layui-nav-child dd,
 .layui-side .layui-nav-tree >.layui-nav-item
 {
@@ -864,7 +867,7 @@ div.layui-layer{
     margin-right: 2px;
 }
 
-.layui-side-shrink .layui-nav-tree .layui-nav-item > a{
+.layui-side-shrink .layui-nav-tree li.layui-nav-item > a{
     width: 18px;
     padding: 0 10px;
 }
