@@ -524,6 +524,22 @@ span.verify_code > img{
 
 .login-form .qrcode img{
     width: 175px;
+    padding: 6px;
+    border: 1px solid #f2f2f2;
+}
+
+.login-form .refresh-action p{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 4px;
+
+}
+.login-form .refresh-action p span{
+    cursor: pointer;
+    color: #602424a8;
+}
+.login-form .refresh-action p i {
+    font-size: 14px;
 }
 
 /*.login-form .verify_code span.verify_code > img*/
