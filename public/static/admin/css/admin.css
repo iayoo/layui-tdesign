@@ -1180,13 +1180,13 @@ div.layui-layer.layui-layer-msg{
 }
 
 .layui-iconpicker{
-    height: 34px;
-    line-height: 34px;
+    height: 32px;
+    line-height: 32px;
     transition: all cubic-bezier(.38,0,.24,1) .2s;
 }
 .layui-iconpicker .layui-inline{
-    height: 32px;
-    line-height: 32px;
+    height: 30px;
+    line-height: 30px;
 }
 .layui-iconpicker-down{
     border-color: var(--td-brand-color) !important;
@@ -1194,8 +1194,8 @@ div.layui-layer.layui-layer-msg{
 }
 
 .layui-iconpicker-search > .layui-input-wrap{
-    height: 34px;
-    line-height: 34px;
+    height: 32px;
+    line-height: 32px;
 }
 
 .input-focus{
