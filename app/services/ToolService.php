@@ -36,53 +36,71 @@ class ToolService
         $appPath = root_path() . 'app';
         $modulePath = $appPath . DIRECTORY_SEPARATOR . $module;
         $controllerPath = $modulePath . DIRECTORY_SEPARATOR . 'controller';
-
-        $namespace = 'app\\' . $module . '\controller';
-        dump($modulePath);
-        dump($controllerPath);
         if (!is_dir($modulePath) && !is_dir($controllerPath)){
             return false;
         }
         $fileList = self::scandirFolder($controllerPath);
-        foreach ($fileList as $item){
-            if (is_string($item)){
-                $className = str_replace('.php','',$item);
-                if (in_array($className,$exclude)){
-                    continue;
-                }
-                $className = $namespace . '\\' . $className;
-                dump($className);
-                self::getClassMethods($className);
+        $re = [];
+        self::getClassNameFromFile($fileList,$module . '\\',$exclude,$classList);
+        foreach ($classList as $className){
+            $class = str_replace($module . '\\','app\\'. $module . '\controller\\',$className['class']);
+            $methods = self::getClassMethods($class);
+            foreach ($methods as $method){
+                $re[] = [
+                    'path'  => $className['route'] . '/' . $method['method'],
+                    'title' => $method['title']
+                ];
             }
         }
-
-//        foreach ($)
-
-
-
+        return $re;
     }
 
     public static function getClassMethods($classname)
     {
         $ref = new \ReflectionClass($classname);
-//        $consts = $ref->getConstants(); //返回所有常量名和值
-//        echo "----------------consts:---------------" . PHP_EOL;
-//        foreach ($consts as $key => $val)
-//        {
-//            dump("$key : $val" . PHP_EOL);
-//        }
-//        $props = $ref->getDefaultProperties(); //返回类中所有属性
-//        echo "--------------------props:--------------" . PHP_EOL . PHP_EOL;
-//        foreach ($props as $key => $val)
-//        {
-//            dump("$key : $val" . PHP_EOL);   // 属性名和属性值
-//        }
         $methods = $ref->getMethods();   //返回类中所有方法
-        echo "-----------------methods:---------------" . PHP_EOL . PHP_EOL;
+        $methodList = [];
         foreach ($methods as $method)
         {
-            dump($method);
-            dump($method->getName());
+            if ($method->class === $classname){
+                $docArr = explode(PHP_EOL,$method->getDocComment());
+                $loneDoc = '';
+                foreach ($docArr as $k => $item){
+                    $loneDoc = str_replace(' ','',$item);
+                    if (strstr($loneDoc,'@title') !== false){
+                        break;
+                    }else{
+                        $loneDoc = '';
+                    }
+                }
+                $methodList[] = [
+                    'method'    => $method->getName(),
+                    'title'     => str_replace('*@title','',$loneDoc),
+                ];
+            }
+        }
+        return $methodList;
+    }
+
+    public static function getClassNameFromFile($list,$pre = '',$exclude = [],&$return = [])
+    {
+        foreach ($list as $key => $item){
+            if (is_string($item)) {
+                $className = str_replace('.php', '', $item);
+                if (in_array($className, $exclude)) {
+                    continue;
+                }
+                $last = substr($pre,-1,1);
+                $return[] = [
+                    'route'=>str_replace('\\','/',$pre) . $className,
+                    'class'=> $last === '.' ?
+                        str_replace('.','\\',substr_replace($pre,'\\',-1,1)) . $className:
+                        $pre . $className,
+                ];
+            }
+            if (is_array($item)){
+                self::getClassNameFromFile($item,$pre . $key . '.',$exclude,$return);
+            }
         }
     }
 

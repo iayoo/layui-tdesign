@@ -248,9 +248,8 @@
                     elem: '#' + curID
                     ,url:url
                     ,cols: [[ //标题栏
-                        {field: 'id', title: 'ID', width: 80}
-                        ,{field: 'name', title: '权限', width: 120}
-                        ,{field: 'path', title: '路径', width: 155}
+                        {field: 'title', title: '权限', width: 120}
+                        ,{field: 'path', title: '路径', width: 320}
                     ]]
                     ,id:curID
                     ,skin: 'line' //表格风格
@@ -269,7 +268,10 @@
                 }
                 table.on('row('+ curID +')', function(obj){
                     let data = obj.data;
-                    _this.val(data[field])
+                    _this.val(data[field]);
+                    if (data.title){
+                        $('input[name=title]').val(data.title)
+                    }
                     $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
                     $('.input-focus').removeClass('input-focus');
                 });
