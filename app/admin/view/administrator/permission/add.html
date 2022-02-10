@@ -216,7 +216,11 @@
                 $(this).after(tableHtml);
 
                 $(this).on('focus',function () {
-                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
+                    let focusThis = $(this);
+                    if (!focusThis.hasClass('input-focus')){
+                        focusThis.addClass('input-focus')
+                    }
                     let pop = $(this).parent().find('.prompt-pop-table');
                     // let pop = $(this).parent().find('.prompt-pop-table').slideDown(100).show();
                     if (pop.hasClass('layui-hide')){
@@ -237,6 +241,7 @@
                         elem = elem.parentNode;
                     }
                     $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                    $('.input-focus').removeClass('input-focus');
                 });
                 //展示已知数据
                 table.render({
@@ -265,7 +270,8 @@
                 table.on('row('+ curID +')', function(obj){
                     let data = obj.data;
                     _this.val(data[field])
-                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
+                    $('.input-focus').removeClass('input-focus');
                 });
             });
         }
