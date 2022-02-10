@@ -379,6 +379,7 @@ ul.layui-nav a{
 
 .layui-btn:hover{
     background-color: var(--td-bg-color-component-hover);
+    color: var(--td-text-color-primary);
 }
 
 .layui-btn-primary{
