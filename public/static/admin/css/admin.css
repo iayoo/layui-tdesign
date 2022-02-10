@@ -1121,6 +1121,10 @@ div.layui-layer.layui-layer-msg{
 }
 
 /* popup 表单按钮组 start */
+.popup-contain{
+    padding: 25px 18px;
+}
+
 .bottom{
     width: 100%;
     position: absolute;
