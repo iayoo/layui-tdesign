@@ -1164,3 +1164,14 @@ div.layui-layer.layui-layer-msg{
 .number-input input::-webkit-outer-spin-button {
     -webkit-appearance: none;	/* 有无看不出差别 */
 }
+
+.prompt-pop-table {
+    position: absolute;
+    z-index: 1;
+    background: white;
+    padding: 10px 12px;
+    max-width: 845px;
+    top: 38px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 0px #9d9d9d6e;
+}

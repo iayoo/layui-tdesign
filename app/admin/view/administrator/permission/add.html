@@ -30,7 +30,7 @@
         <div class="layui-form-item">
             <label for="" class="layui-form-label">地址</label>
             <div class="layui-input-block">
-                <input type="text" name="href" placeholder="请输入地址" class="layui-input" >
+                <input type="prompt" href="{:url('getPermissionList')}" field="path" name="href" placeholder="请输入地址" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
@@ -79,6 +79,7 @@
         let icon= layui.icon;
         let $ = layui.jquery;
         let form = layui.form;
+        let table = layui.table;
         icon.render({
             elem: '#iconPicker2',
             style: 'color: #5FB878;'
@@ -183,18 +184,93 @@
                 numberInput.val(sub(numberInput.val(),step));
 
             })
-            // console.log(numberInputList)
-            // for (let i = 0;i<numberInputList.length;i++){
-            //     let html = '<div class="">';
-            //     console.log($(numberInputList[i]))
-            //     html += $(numberInputList).html();
-            //     html += '</div>';
-            //     console.log(html)
-            // }
-
         }
 
-        initNumberInput()
+        initNumberInput();
+
+        function promptInputInit(){
+            let iptTimer = null;
+            function searchInputTable(tableId,value){
+                console.log(iptTimer);
+                if (iptTimer){
+                    clearTimeout(iptTimer); // 清除上一个定时器
+                }
+                iptTimer = setTimeout(function () {
+                    table.reload(tableId,{
+                        where:{
+                            key:value
+                        }
+                    })
+                }, 300);
+            }
+            let promptID = 0;
+            $("input[type=prompt]").each(function (el) {
+                let _this = $(this);
+                let url = $(this).attr('href');
+                let field = $(this).attr('field');
+                if (url === undefined){
+                    return;
+                }
+                let curID = "promptID_" + promptID;
+                let tableHtml = '<div class="prompt-pop-table layui-anim layui-anim-upbit layui-hide" style="display: none"><table class="layui-hide" id="'+ curID +'" lay-filter="'+ curID +'"></table></div>';
+                $(this).after(tableHtml);
+
+                $(this).on('focus',function () {
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                    let pop = $(this).parent().find('.prompt-pop-table');
+                    // let pop = $(this).parent().find('.prompt-pop-table').slideDown(100).show();
+                    if (pop.hasClass('layui-hide')){
+                        pop.removeClass('layui-hide');
+                        pop.addClass('layui-show');
+                    }
+                })
+                $(document).bind('click', function(el) {
+                    let e = el || window.event;
+                    let elem = e.target || e.srcElement;
+                    while (elem) {
+                        if ($(elem).hasClass('prompt-pop-table')){
+                            return;
+                        }
+                        if ($(elem).attr('type') === 'prompt'){
+                            return;
+                        }
+                        elem = elem.parentNode;
+                    }
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                });
+                //展示已知数据
+                table.render({
+                    elem: '#' + curID
+                    ,url:url
+                    ,cols: [[ //标题栏
+                        {field: 'id', title: 'ID', width: 80}
+                        ,{field: 'name', title: '权限', width: 120}
+                        ,{field: 'path', title: '路径', width: 155}
+                    ]]
+                    ,id:curID
+                    //,skin: 'line' //表格风格
+                    ,even: true
+                    //,page: true //是否显示分页
+                    //,limits: [5, 7, 10]
+                    //,limit: 5 //每页默认显示的数量
+                });
+                _this.bind('input propertychange', function() {
+                    let valt = _this.val();
+                    searchInputTable(curID,valt);
+                })
+                //监听行单击事件（双击事件为：rowDouble）
+                if (field === undefined){
+                    return;
+                }
+                table.on('row('+ curID +')', function(obj){
+                    let data = obj.data;
+                    _this.val(data[field])
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                });
+            });
+        }
+
+        promptInputInit();
 
 
 
