@@ -6,6 +6,10 @@ use think\facade\Db;
 
 class File extends BaseController
 {
+    /**
+     * @title 上传资源文件
+     * @return \think\response\Json
+     */
     public function upload()
     {
         // 获取表单上传文件 例如上传了001.jpg
@@ -29,6 +33,13 @@ class File extends BaseController
         }
     }
 
+    /**
+     * @title 文件资源管理器
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function index(){
         $type = $this->request->param('file_type',[]);
         $where = [];
@@ -44,6 +55,11 @@ class File extends BaseController
         return json(['code'=>0,'data'=>['list'=>$list,'count'=>$count]]);
     }
 
+    /**
+     * @title 删除资源文件
+     * @return \think\response\Json
+     * @throws \think\db\exception\DbException
+     */
     public function delete(){
         $files = $this->request->param('file');
         $ids = array_column($files,'id');

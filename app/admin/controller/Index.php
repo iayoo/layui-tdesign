@@ -12,8 +12,7 @@ use think\Request;
 class Index extends BaseController
 {
     /**
-     * 显示资源列表
-     *
+     * @title 后台
      * @return string
      */
     public function index()
@@ -22,8 +21,8 @@ class Index extends BaseController
     }
 
     /**
-     * 显示创建资源表单页.
-     *
+     * @title 后台首页
+     * @return string
      */
     public function home()
     {
@@ -32,6 +31,7 @@ class Index extends BaseController
     }
 
     /**
+     * @title 获取后台导航列表
      * @param AdminPermissionService $adminPermissionService
      * @return JsonResponse
      */

@@ -11,6 +11,11 @@ class Wechat extends \app\admin\controller\BaseController
         return $this->fetch();
     }
 
+    /**
+     * @title 微信授权登录
+     * @param AdminService $adminService
+     * @return \Iayoo\ApiResponse\Response\ThinkPHP\JsonResponse
+     */
     public function login(AdminService $adminService){
         $code = $this->request->param('code');
         if (empty($code)){
