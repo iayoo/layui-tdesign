@@ -68,6 +68,10 @@
         let loading = layui.loading;
         let request = layui.request;
 
+        this.afterRequestSuccess = function () {
+            treetable.reload("#power-table");
+        }
+
         let MODULE_PATH = "../system/operate/";
 
         //弹出窗设置 自己设置弹出百分比
@@ -151,7 +155,10 @@
                 title: '新增',
                 shade: 0.1,
                 area: ['700px','670px'],
-                content: '{:url("add")}'
+                content: '{:url("add")}',
+                yes:function (layero) {
+                    console.log(layero)
+                }
             });
         }
 
@@ -168,42 +175,16 @@
         window.remove = function(obj){
             layer.confirm('确定要删除该权限', { title:'提示'}, function(index){
                 layer.close(index);
-                // let loading = layer.load();
-                loading.load({
-                    bg:false
-                })
-                console.log(obj.data)
+                loading.load({bg:false})
                 request.post({
                     url:'{:url("delete")}',
                     data:{
                         ids:obj.data['id']
                     },
                     success:function (res) {
-                        treetable.reload("#power-table");
+                        obj.del();
                     }
                 })
-                // $.ajax({
-                //     url: MODULE_PATH+"remove/"+obj.data['powerId'],
-                //     dataType:'json',
-                //     type:'delete',
-                //     success:function(result){
-                //         layer.close(loading);
-                //         if(result.success){
-                //             layer.msg(result.msg,{icon:1,time:1000},function(){
-                //                 obj.del();
-                //             });
-                //         }else{
-                //             layer.msg(result.msg,{icon:2,time:1000});
-                //         }
-                //     },
-                //     error:function (res) {
-                //         loading.clear({
-                //             done:function () {
-                //                 layer.msg(res.msg,{icon:2,time:1000});
-                //             }
-                //         });
-                //     }
-                // })
             });
         }
 
@@ -216,36 +197,23 @@
                 });
                 return false;
             }
-            let ids = "";
+            let ids = [];
             for (let i = 0; i < data.length; i++) {
-                ids += data[i].powerId + ",";
+                ids.push(data[i].id);
             }
-            ids = ids.substr(0, ids.length - 1);
             layer.confirm('确定要删除这些数据', {
                 icon: 3,
                 title: '提示'
             }, function(index) {
                 layer.close(index);
-                let loading = layer.load();
-                $.ajax({
-                    url: MODULE_PATH + "batchRemove/" + ids,
-                    dataType: 'json',
-                    type: 'delete',
-                    success: function(result) {
-                        layer.close(loading);
-                        if (result.success) {
-                            layer.msg(result.msg, {
-                                icon: 1,
-                                time: 1000
-                            }, function() {
-                                table.reload('user-table');
-                            });
-                        } else {
-                            layer.msg(result.msg, {
-                                icon: 2,
-                                time: 1000
-                            });
-                        }
+                loading.load({bg:false});
+                request.post({
+                    url:'{:url("delete")}',
+                    data:{
+                        ids:ids
+                    },
+                    success:function (res) {
+                        treetable.reload("#power-table");
                     }
                 })
             });
