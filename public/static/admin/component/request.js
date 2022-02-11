@@ -27,7 +27,7 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
     }
     
     request.delete = function (options) {
-        
+
     }
 
     request.post = function (options) {
@@ -59,7 +59,6 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             },
             success: function(res) {
                 loading.clear();
-
                 if (res === undefined){
                     if (undefined !== options.error){
                         return options.error(res);
