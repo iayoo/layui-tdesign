@@ -1,5 +1,10 @@
 {extend name="basic/page_layout" /}
 
+{block name="head"}
+<link rel="stylesheet" href="/static/admin/font-awesome/css/font-awesome.min.css">
+
+{/block}
+
 {block name="body"}
 <body>
 
@@ -36,7 +41,7 @@
         <div class="layui-form-item">
             <label for="" class="layui-form-label">图标</label>
             <div class="layui-input-block" style="width: unset">
-                <input type="text" id="iconPicker2" name="icon" value="layui-icon-face-smile" lay-filter="iconPicker2" class="hide">
+                <input type="text" id="iconPicker2" name="icon" lay-filter="iconPicker2" class="hide">
                 <span class="layui-btn layui-btn-primary" id="clear">清空</span>
             </div>
         </div>
@@ -80,7 +85,7 @@
         let request = layui.request;
         icon.render({
             elem: '#iconPicker2',
-            type: 'fontClass',
+            type: 'all',
             style: 'color: #0052d9;'
             ,placeholder: ''
             ,isSplit: true
@@ -89,7 +94,8 @@
             ,click: function (data) {
             },
             ready: function(d) {
-            }
+            },
+            url:'{:url("develop.Icon/getJson")}'
         });
 
         ///
@@ -306,7 +312,7 @@
         $('#clear').click(function() {
             $('#iconPicker2').attr("value","");
             $('#iconPicker2').attr("title","");
-            $('.layui-iconpicker-main').children("i").attr("class","layui-icon layui-icon-face-smile");
+            $('.layui-iconpicker-main').children("i").attr("class","");
             $('.layui-iconpicker-main').children("span").remove();
         });
 

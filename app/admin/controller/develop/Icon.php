@@ -21,10 +21,26 @@ class Icon extends \app\admin\controller\BaseController
             $default = '';
 //            $default = 'public/static/admin/font-awesome/css/font-awesome.min.css';
             $cssFile = $path??$default;
+        }else{
+//            $cssFile = "";
         }
-        if (is_file(root_path() . 'runtime/icon/' . $type .'.json') && empty($cssFile)){
-            $json = file_get_contents(root_path() . 'runtime/icon/' . $type .'.json');
-            $result = json_decode($json,true);
+        if ((is_file(root_path() . 'runtime/icon/' . $type .'.json') && empty($cssFile)) || $type === 'all'){
+            if ($type === 'all'){
+                $json = file_get_contents(root_path() . 'runtime/icon/layui.json');
+                $layuiRes = json_decode($json,true);
+                $result = [];
+                foreach ($layuiRes as $item){
+                    $result[] = "layui-icon layui-icon-" . $item;
+                }
+                $json = file_get_contents(root_path() . 'runtime/icon/fontawesome.json');
+                $fontawesomeRes = json_decode($json,true);
+                foreach ($fontawesomeRes as $item){
+                    $result[] = "fa fa-" . $item;
+                }
+            }else{
+                $json = file_get_contents(root_path() . 'runtime/icon/' . $type .'.json');
+                $result = json_decode($json,true);
+            }
         }else{
             $this->makeIconCache('runtime/icon/' . $type .'.json');
             $result = $this->readIconFromCssFile($type,root_path() . $cssFile);
