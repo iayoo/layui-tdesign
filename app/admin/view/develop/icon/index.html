@@ -1,6 +1,7 @@
 {extend name="basic/page_layout" /}
 
 {block name="head"}
+<link rel="stylesheet" href="/static/admin/font-awesome/css/font-awesome.min.css">
 <style>
     .layui-icon-view{
         display: flex;
@@ -21,19 +22,17 @@
 
 </style>
 
+
 {/block}
 
 {block name="body"}
 <body>
 
 <div class="popup-contain">
-    <div class="layui-tab">
+    <div class="layui-tab" lay-filter="test">
         <ul class="layui-tab-title">
             <li class="layui-this">Layui 图标</li>
             <li>fontawesome</li>
-            <li>权限分配</li>
-            <li>商品管理</li>
-            <li>订单管理</li>
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
@@ -41,7 +40,7 @@
                     <div class="layui-form-item">
                         <label for="" class="layui-form-label">地址</label>
                         <div class="layui-input-block">
-                            <input type="text"  field="path" name="href" placeholder="请输入地址" class="layui-input layui-inline" >
+                            <input type="text" name="path" value="public/static/admin/layui/css/layui.css" placeholder="请输入地址" class="layui-input layui-inline" >
                             <span class="layui-btn layui-btn-primary layui-inline">读取数据</span>
                         </div>
                     </div>
@@ -59,11 +58,18 @@
                     <div class="layui-form-item">
                         <label for="" class="layui-form-label">地址</label>
                         <div class="layui-input-block">
-                            <input type="text"  field="path" name="href" placeholder="请输入地址" class="layui-input layui-inline" >
+                            <input type="text" name="path" placeholder="请输入地址" value="public/static/admin/font-awesome/css/font-awesome.min.css" class="layui-input layui-inline" >
                             <span class="layui-btn layui-btn-primary layui-inline">读取数据</span>
                         </div>
                     </div>
                 </form>
+                <div class="layui-icon-view" id="fontawesome-icon-view" >
+                    <div>
+                        <span>
+                            <i class=""></i>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +80,7 @@
 <script src="/static/admin/config.js"></script>
 <script>
     layui.use(['element','jquery','request'],function () {
-        let $ = layui.jquery,request = layui.request;
+        let $ = layui.jquery,request = layui.request,element = layui.element;
         let layui_view = $('#layui-icon-view');
         request.post({
             url:'{:url("getJson")}',
@@ -82,7 +88,6 @@
                 type:'layui'
             },
             success:function (res) {
-                console.log(res)
                 if (res.data !== undefined){
                     res.data.map(function (item) {
                         layui_view.append("<div class='icon-view-item'><span><i class='layui-icon layui-icon-" + item + "'></i></span><p>layui-icon-" + item + "</p></div>")
@@ -90,6 +95,26 @@
                 }
             }
         })
+        let fontaw = false;
+        let fontawesome_icon_view = $("#fontawesome-icon-view");
+        element.on('tab(test)', function(data){
+            if (data.index === 1 && fontaw === false){
+                request.post({
+                    url:'{:url("getJson")}',
+                    data:{
+                        type:'fontawesome'
+                    },
+                    success:function (res) {
+                        if (res.data !== undefined){
+                            fontaw = true;
+                            res.data.map(function (item) {
+                                fontawesome_icon_view.append("<div class='icon-view-item'><span><i class='fa fa-" + item + "'></i></span><p>fa-" + item + "</p></div>")
+                            })
+                        }
+                    }
+                })
+            }
+        });
     });
 
 

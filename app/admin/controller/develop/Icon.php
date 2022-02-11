@@ -14,7 +14,12 @@ class Icon extends \app\admin\controller\BaseController
         $type = $this->request->param('type','layui');
         $cssFile = '';
         if ($type === 'layui'){
-            $default = 'public/static/admin/layui/css/layui.css';
+            $default = '';
+//            $default = 'public/static/admin/layui/css/layui.css';
+            $cssFile = $path??$default;
+        }elseif ($type === 'fontawesome'){
+            $default = '';
+//            $default = 'public/static/admin/font-awesome/css/font-awesome.min.css';
             $cssFile = $path??$default;
         }
         if (is_file(root_path() . 'runtime/icon/' . $type .'.json') && empty($cssFile)){
@@ -44,10 +49,11 @@ class Icon extends \app\admin\controller\BaseController
 
     public function readIconFromCssFile($type,$path){
         $reg = '';
-        $content = '';
+        $content = file_get_contents($path);
         if ($type === 'layui'){
-            $content = file_get_contents($path);
             $reg = '/layui-icon-(.*?)(\{(.*?)\})/';
+        }elseif ($type === 'fontawesome'){
+            $reg = '/fa-(\S[^{]+?):before/';
         }
         preg_match_all($reg,$content,$matches);
         $result = [];
