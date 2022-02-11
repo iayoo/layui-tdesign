@@ -112,6 +112,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			},option)
 		}
 		let loadingList = this.getWindow().find('div[id^='+this.config.ID+']').fadeOut(1000,function () {
+			if (option === undefined){
+				return;
+			}
 			if (typeof option.done ==="function"){
 				option.done();
 			}
