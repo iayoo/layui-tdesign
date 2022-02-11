@@ -11,7 +11,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		curID:0,
 		ID:'IA_LOADING',
 		time:0,
-		el:undefined
+		el:undefined,
+		bg:true
 	};
 		
     let Loading = function () {
@@ -37,16 +38,16 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	Loading.prototype.getLoadingElm = function (){
 		if (this.config.scene === 'curwindow'){
 			if (!this.config.curWinLoadingEl){
-				this.config.curWinLoadingEl = $(getHtml(this.config.ID + "_" + this.getCurID(true)));
+				this.config.curWinLoadingEl = $(this.getHtml(this.config.ID + "_" + this.getCurID(true)));
 				this.getWindow().append(this.config.curWinLoadingEl)
 			}
 			return this.config.curWinLoadingEl;
 		}
-		return $(getHtml(this.config.ID + "_" + this.getCurID(true)));
+		return $(this.getHtml(this.config.ID + "_" + this.getCurID(true)));
 	}
 
-	function getHtml(id){
-		let divStart = '<div class="page-loading" ia-event="page-loading" id="'+id+'">';
+	Loading.prototype.getHtml = function (id){
+		let divStart = '<div class="page-loading ' + (this.config.bg?'':'loading-without-bg-color') + '" ia-event="page-loading" id="'+id+'">';
 		let divEnd = '</div>';
 		let iconDivStart = '<div class="loading-icon">';
 		let iconDivEnd = '</div>';
@@ -67,39 +68,40 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			this.config.type = type
 		}
 		if (typeof type === 'object'){
-			this.config.scene = 'el'
-			if (type.el === undefined){
+			if (type.el !== undefined){
+				this.config.el = type.el;
+				this.config.scene = 'el'
 				console.error('loading el error');
-				return this;
+				let el = $(type.el);
+				el.attr("disabled","disabled")
+				el.css("opacity","0.7")
+				el.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
 			}
 			option = Object.assign(this.config,type)
-			let el = $(type.el);
-			this.config.el = type.el
-			el.attr("disabled","disabled")
-			el.css("opacity","0.7")
-			el.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
 			this.clear(option);
-			return this;
 		}
 		this.getLoadingElm().fadeIn(300)
 	}
 
 	Loading.prototype.clear = function (option) {
 		if (option !== undefined && typeof option === 'object'){
-			let el = $(option.el);
-			if (option.time !== undefined){
-				if (option.time === 0){
-					// 表示不关闭
+			if (option.el !== undefined){
+				let el = $(option.el);
+				if (option.time !== undefined){
+					if (option.time === 0){
+						// 表示不关闭
+						return this;
+					}
+					setTimeout(function () {
+						el.children('i.btn-loading').remove();
+						el.removeAttr('disabled');
+						el.css("opacity","1");
+					},option.time)
+
 					return this;
 				}
-				setTimeout(function () {
-					el.children('i.btn-loading').remove();
-					el.removeAttr('disabled');
-					el.css("opacity","1");
-				},option.time)
-
-				return this;
 			}
+
 		}
 		if (typeof option === "number"){
 			let el = this.config.el
@@ -109,7 +111,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				el.css("opacity","1");
 			},option)
 		}
-		let loadingList = this.getWindow().find('div[id^='+this.config.ID+']').fadeOut(1000)
+		let loadingList = this.getWindow().find('div[id^='+this.config.ID+']').fadeOut(1000,function () {
+			if (typeof option.done ==="function"){
+				option.done();
+			}
+		})
 		return this;
 	}
 

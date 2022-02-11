@@ -679,7 +679,9 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
-
+div.layui-layout-admin .layui-body{
+    padding-bottom: 75px;
+}
 div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.layui-this::after,.layui-layout-admin > .layui-tab > ul.layui-tab-title > li{
     border:none;
     border-bottom:none !important;
@@ -916,7 +918,7 @@ div.layui-layer{
 }
 /*兼容pc缩进菜单 end*/
 
- .page-loading{
+.page-loading {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -925,6 +927,11 @@ div.layui-layer{
     display: flex;
     justify-content: center;
     align-items: center;
+    top: 0;
+}
+
+.loading-without-bg-color{
+    background:none;
 }
 
  .page-loading > .loading-icon{
