@@ -1,0 +1,99 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+    .layui-icon-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .icon-view-item{
+        width: 155px;
+        height: 80px;
+        text-align: center;
+        margin-right: 18px;
+    }
+    .icon-view-item > span{
+        line-height: 35px;
+    }
+    .icon-view-item > span > i {
+        font-size: 30px;
+    }
+
+</style>
+
+{/block}
+
+{block name="body"}
+<body>
+
+<div class="popup-contain">
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">Layui 图标</li>
+            <li>fontawesome</li>
+            <li>权限分配</li>
+            <li>商品管理</li>
+            <li>订单管理</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form>
+                    <div class="layui-form-item">
+                        <label for="" class="layui-form-label">地址</label>
+                        <div class="layui-input-block">
+                            <input type="text"  field="path" name="href" placeholder="请输入地址" class="layui-input layui-inline" >
+                            <span class="layui-btn layui-btn-primary layui-inline">读取数据</span>
+                        </div>
+                    </div>
+                </form>
+                <div class="layui-icon-view" id="layui-icon-view" >
+                    <div>
+                        <span>
+                            <i class=""></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <form>
+                    <div class="layui-form-item">
+                        <label for="" class="layui-form-label">地址</label>
+                        <div class="layui-input-block">
+                            <input type="text"  field="path" name="href" placeholder="请输入地址" class="layui-input layui-inline" >
+                            <span class="layui-btn layui-btn-primary layui-inline">读取数据</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="/static/admin/layui/layui.all.js"></script>
+<script src="/static/admin/config.js"></script>
+<script>
+    layui.use(['element','jquery','request'],function () {
+        let $ = layui.jquery,request = layui.request;
+        let layui_view = $('#layui-icon-view');
+        request.post({
+            url:'{:url("getJson")}',
+            data:{
+                type:'layui'
+            },
+            success:function (res) {
+                console.log(res)
+                if (res.data !== undefined){
+                    res.data.map(function (item) {
+                        layui_view.append("<div class='icon-view-item'><span><i class='layui-icon layui-icon-" + item + "'></i></span><p>layui-icon-" + item + "</p></div>")
+                    })
+                }
+            }
+        })
+    });
+
+
+</script>
+</body>
+
+{/block}
