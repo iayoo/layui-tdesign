@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 10/02/2022 18:40:05
+ Date: 11/02/2022 18:44:01
 */
 
 SET NAMES utf8mb4;
@@ -58,7 +58,7 @@ CREATE TABLE `iayoo_admin_permission` (
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of iayoo_admin_permission
@@ -101,6 +101,8 @@ INSERT INTO `iayoo_admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sor
 INSERT INTO `iayoo_admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`, `create_time`) VALUES (37, 0, '账单管理', '', 'layui-icon layui-icon layui-icon-face-smile', 10, 1, 1, '2022-01-10 16:23:32');
 INSERT INTO `iayoo_admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`, `create_time`) VALUES (38, 37, '汇总统计', '/bill.bill/summary', 'layui-icon layui-icon layui-icon layui-icon-chart', 1, 1, 1, '2022-01-10 16:24:10');
 INSERT INTO `iayoo_admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`, `create_time`) VALUES (39, 37, '资金流水', '/bill.bill/index', 'layui-icon layui-icon layui-icon-list', 9, 1, 1, '2022-01-10 16:36:41');
+INSERT INTO `iayoo_admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`, `create_time`) VALUES (53, 36, '开发管理', '', 'layui-icon-code-circle', 10, 1, 1, '2022-02-11 17:47:13');
+INSERT INTO `iayoo_admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`, `status`, `create_time`) VALUES (54, 53, '图标配置', 'admin/develop.Icon/index', '', 10, 1, 1, '2022-02-11 17:48:02');
 COMMIT;
 
 -- ----------------------------
