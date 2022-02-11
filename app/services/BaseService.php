@@ -26,4 +26,17 @@ class BaseService
     public function save($data){
         return $this->model->save($data);
     }
+
+    public function delete($ids){
+        if (is_array($ids) && isset($ids[0]) && (is_numeric($ids[0]) || is_string($ids[0]))){
+            return $this->model->where('id','IN',$ids)->delete();
+        }
+        if (is_numeric($ids) || is_string($ids)){
+            return $this->model->where('id',$ids)->delete();
+        }
+        if (is_array($ids)){
+            return $this->model->where($ids)->delete();
+        }
+        throw new \Exception('参数错误');
+    }
 }
