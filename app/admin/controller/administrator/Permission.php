@@ -8,14 +8,28 @@ use app\services\ToolService;
 
 class Permission extends BaseController
 {
+    /**
+     * @title 查看权限列表
+     * @return string
+     */
     public function index(){
         return $this->fetch();
     }
 
+    /**
+     * @title 权限列表接口
+     * @param AdminPermissionService $adminPermissionService
+     * @return \Iayoo\ApiResponse\Response\ThinkPHP\JsonResponse
+     */
     public function getList(AdminPermissionService $adminPermissionService){
         return $this->success('success',$adminPermissionService->all());
     }
 
+    /**
+     * @title 添加权限
+     * @param AdminPermissionService $adminPermissionService
+     * @return \Iayoo\ApiResponse\Response\ThinkPHP\JsonResponse|string
+     */
     public function add(AdminPermissionService $adminPermissionService)
     {
         if ($this->request->isAjax()){
@@ -33,7 +47,7 @@ class Permission extends BaseController
     }
 
     /**
-     * @title 获取权限列表
+     * @title 获取所有路由权限
      * @return \Iayoo\ApiResponse\Response\ThinkPHP\JsonResponse
      */
     public function getPermissionList(){
