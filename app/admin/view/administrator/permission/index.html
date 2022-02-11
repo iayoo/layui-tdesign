@@ -60,12 +60,13 @@
 <script src="/static/admin/layui/layui.all.js"></script>
 <script src="/static/admin/config.js"></script>
 <script>
-    layui.use(['table','form','jquery','treetable','loading'],function () {
+    layui.use(['table','form','jquery','treetable','loading','request'],function () {
         let table = layui.table;
         let form = layui.form;
         let $ = layui.jquery;
         let treetable = layui.treetable;
         let loading = layui.loading;
+        let request = layui.request;
 
         let MODULE_PATH = "../system/operate/";
 
@@ -171,28 +172,38 @@
                 loading.load({
                     bg:false
                 })
-                $.ajax({
-                    url: MODULE_PATH+"remove/"+obj.data['powerId'],
-                    dataType:'json',
-                    type:'delete',
-                    success:function(result){
-                        layer.close(loading);
-                        if(result.success){
-                            layer.msg(result.msg,{icon:1,time:1000},function(){
-                                obj.del();
-                            });
-                        }else{
-                            layer.msg(result.msg,{icon:2,time:1000});
-                        }
+                console.log(obj.data)
+                request.post({
+                    url:'{:url("delete")}',
+                    data:{
+                        ids:obj.data['id']
                     },
-                    error:function (res) {
-                        loading.clear({
-                            done:function () {
-                                layer.msg(res.msg,{icon:2,time:1000});
-                            }
-                        });
+                    success:function (res) {
+                        treetable.reload("#power-table");
                     }
                 })
+                // $.ajax({
+                //     url: MODULE_PATH+"remove/"+obj.data['powerId'],
+                //     dataType:'json',
+                //     type:'delete',
+                //     success:function(result){
+                //         layer.close(loading);
+                //         if(result.success){
+                //             layer.msg(result.msg,{icon:1,time:1000},function(){
+                //                 obj.del();
+                //             });
+                //         }else{
+                //             layer.msg(result.msg,{icon:2,time:1000});
+                //         }
+                //     },
+                //     error:function (res) {
+                //         loading.clear({
+                //             done:function () {
+                //                 layer.msg(res.msg,{icon:2,time:1000});
+                //             }
+                //         });
+                //     }
+                // })
             });
         }
 

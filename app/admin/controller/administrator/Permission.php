@@ -63,4 +63,13 @@ class Permission extends BaseController
         }
         return $this->success('success',$data);
     }
+
+    public function delete(AdminPermissionService $adminPermissionService)
+    {
+        if ($adminPermissionService->delete($this->request->param('ids',[]))){
+            return $this->success('删除成功');
+        }else{
+            return $this->error('删除失败');
+        }
+    }
 }
