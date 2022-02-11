@@ -18,6 +18,15 @@ class Permission extends BaseController
 
     public function add(AdminPermissionService $adminPermissionService)
     {
+        if ($this->request->isAjax()){
+            $params = $this->request->param();
+            $res = $adminPermissionService->save($params);
+            if ($res){
+                return $this->success('保存成功');
+            }else{
+                return $this->error('保存失败','',$params);
+            }
+        }
         return $this->fetch('',[
             'permissions' => ToolService::getTree($adminPermissionService->all()->toArray())
         ]);

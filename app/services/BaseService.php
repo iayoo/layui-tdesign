@@ -22,4 +22,8 @@ class BaseService
     public function all($where = []){
         return $this->model->where($where)->select();
     }
+
+    public function save($data){
+        return $this->model->save($data);
+    }
 }

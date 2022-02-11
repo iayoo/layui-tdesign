@@ -81,6 +81,7 @@
         let $ = layui.jquery;
         let form = layui.form;
         let table = layui.table;
+        let request = layui.request;
         icon.render({
             elem: '#iconPicker2',
             style: 'color: #0052d9;'
@@ -294,29 +295,38 @@
             if(data.field.icon){
                 data.field.icon = "layui-icon" + data.field.icon;
             }
-            $.ajax({
-                data:JSON.stringify(data.field),
-                dataType:'json',
-                contentType:'application/json',
-                type:'post',
-                success:function(res){
-                    //判断有没有权限
-                    if(res && res.code==999){
-                        layer.msg(res.msg, {
-                            icon: 5,
-                            time: 2000,
-                        })
-                        return false;
-                    }else if(res.code==200){
-                        layer.msg(res.msg,{icon:1,time:1000},function(){
-                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-                            top.location.reload();
-                        });
-                    }else{
-                        layer.msg(res.msg,{icon:2,time:1000});
-                    }
-                }
+
+            request.post({
+                url:'{:url("add")}',
+                data:data.field,
+                is_close:true,
+                reload_table:'power-table'
             })
+
+            // $.ajax({
+            //
+            //     data:JSON.stringify(data.field),
+            //     dataType:'json',
+            //     contentType:'application/json',
+            //     type:'post',
+            //     success:function(res){
+            //         //判断有没有权限
+            //         if(res && res.code==999){
+            //             layer.msg(res.msg, {
+            //                 icon: 5,
+            //                 time: 2000,
+            //             })
+            //             return false;
+            //         }else if(res.code==200){
+            //             layer.msg(res.msg,{icon:1,time:1000},function(){
+            //                 parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+            //                 top.location.reload();
+            //             });
+            //         }else{
+            //             layer.msg(res.msg,{icon:2,time:1000});
+            //         }
+            //     }
+            // })
             return false;
         });
     });
