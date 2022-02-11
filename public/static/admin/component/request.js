@@ -10,12 +10,12 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
     const request = {};
 
     function onSuccess(options,res){
-        if (undefined !== options.isClose && options.isClose){
+        if (undefined !== options.is_close && options.is_close){
             parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
         }
-        if (undefined !== options.reloadTable && options.reloadTable){
+        if (undefined !== options.reload_table && options.reload_table){
             // 刷新上级table
-            parent.layui.table.reload(options.reloadTable);
+            parent.layui.table.reload(options.reload_table);
         }
         if (undefined !== options.reloadPage && options.reloadPage){
             // 刷新上级页面
@@ -25,6 +25,10 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             options.success(res);
         }
     }
+    
+    request.delete = function (options) {
+        
+    }
 
     request.post = function (options) {
 
@@ -32,7 +36,7 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             showLoading = false;
         }
         if (showLoading){
-            console.log(showLoading)
+            // console.log(showLoading)
             loading.load(1)
         }
 
