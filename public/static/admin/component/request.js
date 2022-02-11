@@ -13,11 +13,17 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
         if (undefined !== options.is_close && options.is_close){
             parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
         }
+        console.log(parent.layui)
         if (undefined !== options.reload_table && options.reload_table){
             // 刷新上级table
             parent.layui.table.reload(options.reload_table);
         }
-        if (undefined !== options.reloadPage && options.reloadPage){
+
+        if (parent.layui !== undefined && parent.layui.afterRequestSuccess !== undefined && typeof parent.layui.afterRequestSuccess === "function"){
+            parent.layui.afterRequestSuccess();
+        }
+
+        if (undefined !== options.reload_page && options.reload_page){
             // 刷新上级页面
             top.location.reload();
         }
