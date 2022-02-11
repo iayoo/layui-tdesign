@@ -35,13 +35,9 @@
         </div>
         <div class="layui-form-item">
             <label for="" class="layui-form-label">图标</label>
-            <div class="layui-input-block">
-                <div class="layui-input-inline" style="width: unset">
-                    <input type="text" id="iconPicker2" name="icon" value="layui-icon-face-smile" lay-filter="iconPicker2" class="hide">
-                </div>
-                <div class="layui-input-inline" style="width: unset">
-                    <span class="layui-btn layui-btn-primary" id="clear">清空</span>
-                </div>
+            <div class="layui-input-block" style="width: unset">
+                <input type="text" id="iconPicker2" name="icon" value="layui-icon-face-smile" lay-filter="iconPicker2" class="hide">
+                <span class="layui-btn layui-btn-primary" id="clear">清空</span>
             </div>
         </div>
         <div class="layui-form-item">
@@ -73,7 +69,7 @@
 </div>
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
-<script src="/static/admin/layui/layui.js"></script>
+<script src="/static/admin/layui/layui.all.js"></script>
 <script src="/static/admin/config.js"></script>
 <script>
     layui.use(['form','element','icon','jquery','request'],function () {
@@ -84,16 +80,39 @@
         let request = layui.request;
         icon.render({
             elem: '#iconPicker2',
+            type: 'fontClass',
             style: 'color: #0052d9;'
             ,placeholder: ''
             ,isSplit: true
-            ,page: false
+            ,page: true
             ,search: true
             ,click: function (data) {
             },
             ready: function(d) {
             }
         });
+
+        ///
+        // 选择器，推荐使用input
+        // elem: '#iconHhysFa',
+        //     // 数据类型：fontClass/awesome，推荐使用fontClass
+        //     type: 'fontClass',
+        //     // 是否开启搜索：true/false，默认true
+        //     search: true,
+        //     // 是否开启分页：true/false，默认true
+        //     page: true,
+        //     // 每页显示数量，默认12
+        //     limit: 12,
+        //     url: '',
+        //     value: '',//默认图标
+        //     // 点击回调
+        //     click: function(data) {
+        //     console.log(data);
+        // },
+        // // 渲染成功后的回调
+        // success: function(d) {
+        //     console.log(d);
+        // }
 
         function initNumberInput(){
 
