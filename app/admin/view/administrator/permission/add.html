@@ -78,11 +78,7 @@
 <script src="/static/admin/config.js"></script>
 <script>
     layui.use(['form','element','icon','jquery','request','elems'],function () {
-        let icon= layui.icon;
-        let $ = layui.jquery;
-        let form = layui.form;
-        let table = layui.table;
-        let request = layui.request;
+        let icon= layui.icon,$ = layui.jquery,form = layui.form,request = layui.request;
         icon.render({
             elem: '#iconPicker2',
             type: 'all',
@@ -98,166 +94,20 @@
             url:'{:url("develop.Icon/getJson")}'
         });
 
-        ///
-        // 选择器，推荐使用input
-        // elem: '#iconHhysFa',
-        //     // 数据类型：fontClass/awesome，推荐使用fontClass
-        //     type: 'fontClass',
-        //     // 是否开启搜索：true/false，默认true
-        //     search: true,
-        //     // 是否开启分页：true/false，默认true
-        //     page: true,
-        //     // 每页显示数量，默认12
-        //     limit: 12,
-        //     url: '',
-        //     value: '',//默认图标
-        //     // 点击回调
-        //     click: function(data) {
-        //     console.log(data);
-        // },
-        // // 渲染成功后的回调
-        // success: function(d) {
-        //     console.log(d);
-        // }
-
-        function promptInputInit(){
-            let iptTimer = null;
-            function searchInputTable(tableId,value){
-                console.log(iptTimer);
-                if (iptTimer){
-                    clearTimeout(iptTimer); // 清除上一个定时器
-                }
-                iptTimer = setTimeout(function () {
-                    table.reload(tableId,{
-                        where:{
-                            key:value
-                        }
-                    })
-                }, 300);
-            }
-            let promptID = 0;
-            $("input[type=prompt]").each(function (el) {
-                let _this = $(this);
-                let url = $(this).attr('href');
-                let field = $(this).attr('field');
-                if (url === undefined){
-                    return;
-                }
-                let curID = "promptID_" + promptID;
-                let tableHtml = '<div class="prompt-pop-table layui-anim layui-anim-upbit layui-hide" style="display: none"><table class="layui-hide" id="'+ curID +'" lay-filter="'+ curID +'"></table></div>';
-                $(this).after(tableHtml);
-
-                $(this).on('focus',function () {
-                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
-                    let focusThis = $(this);
-                    if (!focusThis.hasClass('input-focus')){
-                        focusThis.addClass('input-focus')
-                    }
-                    let pop = $(this).parent().find('.prompt-pop-table');
-                    // let pop = $(this).parent().find('.prompt-pop-table').slideDown(100).show();
-                    if (pop.hasClass('layui-hide')){
-                        pop.removeClass('layui-hide');
-                        pop.addClass('layui-show');
-                    }
-                })
-                $(document).bind('click', function(el) {
-                    let e = el || window.event;
-                    let elem = e.target || e.srcElement;
-                    while (elem) {
-                        if ($(elem).hasClass('prompt-pop-table')){
-                            return;
-                        }
-                        if ($(elem).attr('type') === 'prompt'){
-                            return;
-                        }
-                        elem = elem.parentNode;
-                    }
-                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
-                    $('.input-focus').removeClass('input-focus');
-                });
-                //展示已知数据
-                table.render({
-                    elem: '#' + curID
-                    ,url:url
-                    ,cols: [[ //标题栏
-                        {field: 'title', title: '权限', width: 120}
-                        ,{field: 'path', title: '路径', width: 320}
-                    ]]
-                    ,id:curID
-                    ,skin: 'line' //表格风格
-                    ,even: true
-                    //,page: true //是否显示分页
-                    //,limits: [5, 7, 10]
-                    //,limit: 5 //每页默认显示的数量
-                });
-                _this.bind('input propertychange', function() {
-                    let valt = _this.val();
-                    searchInputTable(curID,valt);
-                })
-                //监听行单击事件（双击事件为：rowDouble）
-                if (field === undefined){
-                    return;
-                }
-                table.on('row('+ curID +')', function(obj){
-                    let data = obj.data;
-                    _this.val(data[field]);
-                    if (data.title){
-                        $('input[name=title]').val(data.title)
-                    }
-                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
-                    $('.input-focus').removeClass('input-focus');
-                });
-            });
-        }
-
-        promptInputInit();
-
-
-
         $('#clear').click(function() {
-            $('#iconPicker2').attr("value","");
-            $('#iconPicker2').attr("title","");
-            $('.layui-iconpicker-main').children("i").attr("class","");
-            $('.layui-iconpicker-main').children("span").remove();
+            icon.reset('iconPicker2');
         });
 
         form.on('submit(save)', function(data){
             if(data.field.icon){
                 data.field.icon = "layui-icon" + data.field.icon;
             }
-            console.log(data.field);
-            return false;
             request.post({
                 url:'{:url("add")}',
                 data:data.field,
                 is_close:true,
                 reload_table:'power-table'
             })
-
-            // $.ajax({
-            //
-            //     data:JSON.stringify(data.field),
-            //     dataType:'json',
-            //     contentType:'application/json',
-            //     type:'post',
-            //     success:function(res){
-            //         //判断有没有权限
-            //         if(res && res.code==999){
-            //             layer.msg(res.msg, {
-            //                 icon: 5,
-            //                 time: 2000,
-            //             })
-            //             return false;
-            //         }else if(res.code==200){
-            //             layer.msg(res.msg,{icon:1,time:1000},function(){
-            //                 parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-            //                 top.location.reload();
-            //             });
-            //         }else{
-            //             layer.msg(res.msg,{icon:2,time:1000});
-            //         }
-            //     }
-            // })
             return false;
         });
     });

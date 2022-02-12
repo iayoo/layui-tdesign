@@ -1,6 +1,6 @@
-layui.define(['jquery', 'layer'], function (exports) {
+layui.define(['jquery', 'layer','table'], function (exports) {
     "use strict";
-    let $ = layui.jquery;
+    let $ = layui.jquery,table=layui.table;
     //乘法
     function mul(a, b) {
         let c = 0,
@@ -93,8 +93,6 @@ layui.define(['jquery', 'layer'], function (exports) {
             })
         }
     }
-
-
     let Radio = function () {
         this.v = '0.1';
         this.init = function (){
@@ -143,13 +141,110 @@ layui.define(['jquery', 'layer'], function (exports) {
             $(el).append(html);
         }
     }
+
+    let InputPrompt = function () {
+        this.timer = null;
+        let that = this;
+        this.render = function (params) {
+            
+        }
+        this.init = function () {
+            $("input[type=prompt]").each(function (el) {
+                let _this = $(this);
+                let url = $(this).attr('href');
+                let field = $(this).attr('field');
+                if (url === undefined || !url){
+                    return;
+                }
+                let curID = "promptID_" + promptID;
+                let tableHtml = '<div class="prompt-pop-table layui-anim layui-anim-upbit layui-hide" style="display: none"><table class="layui-hide" id="'+ curID +'" lay-filter="'+ curID +'"></table></div>';
+                $(this).after(tableHtml);
+
+                $(this).on('focus',function () {
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
+                    let focusThis = $(this);
+                    if (!focusThis.hasClass('input-focus')){
+                        focusThis.addClass('input-focus')
+                    }
+                    let pop = $(this).parent().find('.prompt-pop-table');
+                    if (pop.hasClass('layui-hide')){
+                        pop.removeClass('layui-hide');
+                        pop.addClass('layui-show');
+                    }
+                })
+                $(document).bind('click', function(el) {
+                    let e = el || window.event;
+                    let elem = e.target || e.srcElement;
+                    while (elem) {
+                        if ($(elem).hasClass('prompt-pop-table')){
+                            return;
+                        }
+                        if ($(elem).attr('type') === 'prompt'){
+                            return;
+                        }
+                        elem = elem.parentNode;
+                    }
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide')
+                    $('.input-focus').removeClass('input-focus');
+                });
+                //展示已知数据
+                table.render({
+                    elem: '#' + curID
+                    ,url:url
+                    ,cols: [[ //标题栏
+                        {field: 'title', title: '权限', width: 120}
+                        ,{field: 'path', title: '路径', width: 320}
+                    ]]
+                    ,id:curID
+                    ,skin: 'line' //表格风格
+                    ,even: true
+                    //,page: true //是否显示分页
+                    //,limits: [5, 7, 10]
+                    //,limit: 5 //每页默认显示的数量
+                });
+                _this.bind('input propertychange', function() {
+                    let valt = _this.val();
+                    that.searchInputTable(curID,valt);
+                })
+                //监听行单击事件（双击事件为：rowDouble）
+                if (field === undefined){
+                    return;
+                }
+                table.on('row('+ curID +')', function(obj){
+                    let data = obj.data;
+                    _this.val(data[field]);
+                    if (data.title){
+                        $('input[name=title]').val(data.title)
+                    }
+                    $('.prompt-pop-table.layui-show').removeClass('layui-show').addClass('layui-hide');
+                    $('.input-focus').removeClass('input-focus');
+                });
+            });
+        }
+        let promptID = 0;
+        this.searchInputTable = function(tableId,value){
+            if (that.timer){
+                clearTimeout(that.timer); // 清除上一个定时器
+            }
+            that.timer = setTimeout(function () {
+                table.reload(tableId,{
+                    where:{
+                        key:value
+                    }
+                })
+            }, 300);
+        }
+    }
     let radio = new Radio();
     radio.init();
     let stepNumber = new StepNumber();
     stepNumber.init();
+    let inputPrompt = new InputPrompt();
+    inputPrompt.init();
     let elems = {
         radio:radio,
-        stepNumber:stepNumber
+        stepNumber:stepNumber,
+        inputPrompt:inputPrompt
     }
     exports('elems',elems)
 }).addcss('elems.css?v=0.1','elems')

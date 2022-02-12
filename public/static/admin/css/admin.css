@@ -1154,28 +1154,6 @@ div.layui-layer.layui-layer-msg{
 
 /* popup 表单按钮组 end */
 
-.number-input{
-    display: flex;
-    max-width: 215px;
-}
-
-.number-input .plus-btn{
-    border-radius: 0 5px 5px 0;
-}
-.number-input .minus-btn{
-    border-radius: 5px 0 0 5px;
-}
-
-.number-input input{
-    -moz-appearance:textfield;
-    border-radius: 0;
-    text-align: center;
-    border-color: var(--td-brand-color);
-}
-.number-input input::-webkit-outer-spin-button {
-    -webkit-appearance: none;	/* 有无看不出差别 */
-}
-
 .prompt-pop-table {
     position: absolute;
     z-index: 1;
