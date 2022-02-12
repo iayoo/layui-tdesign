@@ -1,6 +1,6 @@
 layui.config({
-    base: '/static/admin/component/', //静态资源所在路径
-    dir:'/static/admin/component/'
+    base: '/static/plugin/layui-extend/', //静态资源所在路径
+    dir:'/static/plugin/layui-extend/'
 })
 
 layui.use(['jquery'],function () {

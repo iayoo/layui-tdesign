@@ -152,4 +152,4 @@ layui.extend({
     admin.menu.change = handleTagChange
 
     exports('admin',admin);
-});
+}).addcss('admin.css?v=1','admin.css');

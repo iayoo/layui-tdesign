@@ -1,7 +1,7 @@
 {extend name="basic/page_layout" /}
 
 {block name="head"}
-<link rel="stylesheet" href="/static/admin/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="__FONT_AWESOME_CSS__">
 
 {/block}
 
@@ -72,10 +72,9 @@
             </div>
     </form>
 </div>
-
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
-<script src="/static/admin/layui/layui.all.js"></script>
-<script src="/static/admin/config.js"></script>
+<script src="__LAYUI_STATIC__/layui.all.js"></script>
+<script src="__LAYUI_CONFIG__"></script>
 <script>
     layui.use(['form','element','icon','jquery','request','elems'],function () {
         let icon= layui.icon,$ = layui.jquery,form = layui.form,request = layui.request;
@@ -93,11 +92,9 @@
             },
             url:'{:url("develop.Icon/getJson")}'
         });
-
         $('#clear').click(function() {
             icon.reset('iconPicker2');
         });
-
         form.on('submit(save)', function(data){
             if(data.field.icon){
                 data.field.icon = "layui-icon" + data.field.icon;
@@ -111,8 +108,6 @@
             return false;
         });
     });
-
-
 </script>
 </body>
 
