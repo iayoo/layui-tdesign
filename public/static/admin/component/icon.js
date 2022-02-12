@@ -16,6 +16,7 @@ layui.define(['laypage', 'form'], function(exports) {
         laypage = layui.laypage,
         form = layui.form,
         BODY = 'body',
+        default_icon = 'layui-icon layui-icon-circle-dot',
         TIPS = '请选择图标';
 
     /**
@@ -99,11 +100,11 @@ layui.define(['laypage', 'form'], function(exports) {
                 // 默认图标
                 if (ORIGINAL_ELEM_VALUE === '') {
                     if (isFontClass) {
-                        ORIGINAL_ELEM_VALUE = 'layui-icon layui-icon-circle-dot';
+                        ORIGINAL_ELEM_VALUE = default_icon;
                     } else {
                         if (opts.type === 'all'){
                             oriIcon = '<i class="">';
-                            ORIGINAL_ELEM_VALUE = 'layui-icon layui-icon-circle-dot';
+                            ORIGINAL_ELEM_VALUE = default_icon;
                         }else{
                             ORIGINAL_ELEM_VALUE = '&#xe617;';
                         }
@@ -429,12 +430,22 @@ layui.define(['laypage', 'form'], function(exports) {
         var el = $('*[lay-filter=' + filter + ']'),
             p = el.next().find('.layui-iconpicker-item .layui-icon'),
             c = iconName;
-        console.log(el)
-        console.log(p)
         if (c.indexOf('#xe') > 0) {
             p.html(c);
         } else {
             p.html('').attr('class', 'layui-icon ' + c);
+        }
+        el.attr('value', c).val(c);
+    };
+
+    IconPicker.prototype.reset = function(filter) {
+        var el = $('#'+filter),
+            p = el.next().find('.layui-iconpicker-item .layui-icon'),
+            c = default_icon;
+        if (c.indexOf('#xe') > 0) {
+            p.html(c);
+        } else {
+            p.html('').attr('class', '' + c);
         }
         el.attr('value', c).val(c);
     };
