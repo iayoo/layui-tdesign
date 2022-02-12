@@ -78,7 +78,7 @@ layui.extend({}).define(['element', 'jquery'], function (exports) {
             }
             let href = 'data-href="' + (item.href === undefined ? 'javascript:;' : item.href) + '"';
             let id = 'menu-id="' + item.id + '"';
-            let icon = item.icon ? '<i class="layui-icon ' + item.icon + '"></i>' : '';
+            let icon = item.icon ? '<i class="' + item.icon + '"></i>' : '';
             itemHtml += '<a ' + href + ' ' + id + '>' + icon + '<span class="title">' + item.title + '</span></a>';
 
             if (item.children !== undefined && item.children.length > 0) {
@@ -159,12 +159,12 @@ layui.extend({}).define(['element', 'jquery'], function (exports) {
         }
 
         if (options.is_shrink) {
-            that.el[SHRINK_BTN] = getNavItem(null, '', true, "layui-icon-shrink-right", 'flexible');
+            that.el[SHRINK_BTN] = getNavItem(null, '', true, "layui-icon layui-icon-shrink-right", 'flexible');
             options.header_el.append(that.el[SHRINK_BTN]);
         }
 
         if (options.is_refresh) {
-            that.el[REFRESH_BTN] = getNavItem(null, '', true, "layui-icon-refresh-3", 'refresh');
+            that.el[REFRESH_BTN] = getNavItem(null, '', true, "layui-icon layui-icon-refresh-3", 'refresh');
             options.header_el.append(that.el[REFRESH_BTN]);
         }
 
@@ -217,7 +217,7 @@ layui.extend({}).define(['element', 'jquery'], function (exports) {
         icon = typeof icon === 'string' ? icon : ''
         href = href ? ('data-href="' + href + '"') : 'href="javascript:;"';
         event = event ? ('ia-event="' + event + '"') : '';
-        return $('<li class="layui-nav-item" ' + unselect + '><a ' + event + ' ' + href + '><i class="layui-icon ' + icon + '"></i></a></li>')
+        return $('<li class="layui-nav-item" ' + unselect + '><a ' + event + ' ' + href + '><i class="' + icon + '"></i></a></li>')
     }
     exports('menu', new Menu());
 })
