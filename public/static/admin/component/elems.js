@@ -1,9 +1,8 @@
-layui.define(['jquery', 'layer','loading'], function (exports) {
+layui.define(['jquery', 'layer'], function (exports) {
     "use strict";
     let $ = layui.jquery;
     let Radio = function () {
         this.v = '0.1';
-
         this.init = function (){
             let radioList = $('input[ia-event=group]').parent();
             for (let i = 0; i < radioList.length; i++) {
@@ -17,10 +16,10 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 $('input[type=radio],[name='+name+']').each(function () {
                     if ($(this).attr('value').toString()===val){
                         $(this).prop('checked',true);
-                        $(this).prev().addClass('layui-form-radioed')
+                        $(this).prev().addClass('layui-form-radioed');
                     }else{
                         $(this).removeAttr('checked');
-                        $(this).prev().removeClass('layui-form-radioed')
+                        $(this).prev().removeClass('layui-form-radioed');
                     }
                 });
                 $(this).addClass('layui-this');
@@ -32,7 +31,6 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 })
             })
         }
-
         function createElement(el,data){
             let html = '<div class="layui-btn-group layui-radio-group">'
             for (let i = 0; i < data.length; i++) {
@@ -43,9 +41,9 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 if ($(data[i]).attr('checked')){
                     BTN_CLASS = 'layui-btn layui-this';
                 }else{
-                    BTN_CLASS = 'layui-btn'
+                    BTN_CLASS = 'layui-btn';
                 }
-                html += "<span class='"+ BTN_CLASS +"' data-value='" + value + "' data-name='"+ name +"'>" + title + '</span>'
+                html += "<div class='"+ BTN_CLASS +"' data-value='" + value + "' data-name='"+ name +"'><span>" + title + '</span></div>'
             }
             html += "</div>";
             $(el).append(html);
@@ -53,5 +51,8 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
     }
     let radio = new Radio();
     radio.init();
-    exports('radio',radio)
-}).addcss('radio.css?v=0.1','radio')
+    let elems = {
+        radio:radio
+    }
+    exports('elems',elems)
+}).addcss('elems.css?v=0.1','elems')
