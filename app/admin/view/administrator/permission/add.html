@@ -48,9 +48,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">权限类型：</label>
             <div class="layui-input-block">
-                <input type="radio" name="type" value="0" title="目录" checked>
-                <input type="radio" name="type" value="1" title="菜单">
-                <input type="radio" name="type" value="2" title="按钮">
+                <input type="radio" ia-event="group" name="type" value="0" title="目录" checked>
+                <input type="radio" ia-event="group" name="type" value="1" title="菜单">
+                <input type="radio" ia-event="group" name="type" value="2" title="按钮">
             </div>
         </div>
         <div class="layui-form-item">
@@ -77,7 +77,7 @@
 <script src="/static/admin/layui/layui.all.js"></script>
 <script src="/static/admin/config.js"></script>
 <script>
-    layui.use(['form','element','icon','jquery','request'],function () {
+    layui.use(['form','element','icon','jquery','request','radio'],function () {
         let icon= layui.icon;
         let $ = layui.jquery;
         let form = layui.form;
@@ -320,7 +320,8 @@
             if(data.field.icon){
                 data.field.icon = "layui-icon" + data.field.icon;
             }
-
+            console.log(data.field);
+            return false;
             request.post({
                 url:'{:url("add")}',
                 data:data.field,
