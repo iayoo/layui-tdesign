@@ -99,11 +99,11 @@ layui.define(['laypage', 'form'], function(exports) {
                 // 默认图标
                 if (ORIGINAL_ELEM_VALUE === '') {
                     if (isFontClass) {
-                        ORIGINAL_ELEM_VALUE = 'layui-icon-circle-dot';
+                        ORIGINAL_ELEM_VALUE = 'layui-icon layui-icon-circle-dot';
                     } else {
                         if (opts.type === 'all'){
                             oriIcon = '<i class="">';
-                            ORIGINAL_ELEM_VALUE = 'layui-icon-circle-dot';
+                            ORIGINAL_ELEM_VALUE = 'layui-icon layui-icon-circle-dot';
                         }else{
                             ORIGINAL_ELEM_VALUE = '&#xe617;';
                         }
