@@ -11,9 +11,6 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 createElement(radioList[i],children);
                 $(radioList[i]).find('.layui-form-radio').remove();
             }
-
-
-
             $(".layui-radio-group .layui-btn").on('click',function (el){
                 let name = $(this).data('name');
                 let val = $(this).data('value').toString();
@@ -42,15 +39,17 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 let title = $(data[i]).attr('title'),
                     value = $(data[i]).attr('value'),
                     name = $(data[i]).attr('name');
-
-                html += "<span class='layui-btn' data-value='" + value + "' data-name='"+ name +"'>" + title + '</span>'
+                let BTN_CLASS = ''
+                if ($(data[i]).attr('checked')){
+                    BTN_CLASS = 'layui-btn layui-this';
+                }else{
+                    BTN_CLASS = 'layui-btn'
+                }
+                html += "<span class='"+ BTN_CLASS +"' data-value='" + value + "' data-name='"+ name +"'>" + title + '</span>'
             }
             html += "</div>";
-
             $(el).append(html);
         }
-
-
     }
     let radio = new Radio();
     radio.init();
