@@ -240,16 +240,49 @@ layui.define(['jquery', 'layer','table','form'], function (exports) {
         this.v = '0.1.0';
         this.verifyConfig = {};
         let that = this;
-        this.verify = {}
+        this.config = {
+            verify:{
+                required: [
+                    /[\S]+/
+                    ,'必填项不能为空'
+                ]
+                ,phone: [
+                    /^1\d{10}$/
+                    ,'请输入正确的手机号'
+                ]
+                ,email: [
+                    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+                    ,'邮箱格式不正确'
+                ]
+                ,url: [
+                    /^(#|(http(s?)):\/\/|\/\/)[^\s]+\.[^\s]+$/
+                    ,'链接格式不正确'
+                ]
+                ,number: function(value){
+                    if(!value || isNaN(value)) return '只能填写数字'
+                }
+                ,date: [
+                    /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
+                    ,'日期格式不正确'
+                ]
+                ,identity: [
+                    /(^\d{15}$)|(^\d{17}(x|X|\d)$)/
+                    ,'请输入正确的身份证号'
+                ]
+            },
+        }
+        this.required = function (value) {
+        }
+        
         function handleVerify(value, item){
             let verify_key = $(item).attr('lay-verify');
             let isError = false;
             let errorMsg = '';
-            if (that.verify[verify_key] === undefined){
+            if (that.config.verify[verify_key] === undefined){
                 return false;
             }
-            if (typeof that.verify[verify_key] === 'function'){
-                let verifyRes = that.verify[verify_key]();
+            if (typeof that.config.verify[verify_key] === 'function'){
+                let verifyRes = that.config.verify[verify_key]();
                 if (verifyRes === undefined){
                     return false;
                 }
@@ -257,11 +290,18 @@ layui.define(['jquery', 'layer','table','form'], function (exports) {
                     return null;
                 }
                 isError = true;
-            }else if(typeof that.verify[verify_key] === 'object'){
-                errorMsg = that.verify[verify_key].error === undefined?'':that.verify[verify_key].error;
-                if (typeof that.verify[verify_key].verify === 'string'){
-
-                }else if (typeof that.verify[verify_key].verify === 'function' && !that.verify[verify_key].verify(value, item)){
+            }else if(typeof that.config.verify[verify_key] === 'object'){
+                errorMsg = that.config.verify[verify_key].error === undefined?'':that.config.verify[verify_key].error;
+                if (typeof that.config.verify[verify_key].verify === 'string'){
+                    let vers = that.config.verify[verify_key].verify.split('|');
+                    layui.each(vers, function(_, thisVer){
+                        //匹配验证规则
+                        if(!that.config.verify[thisVer][0].test(value)) {
+                            isError = true;
+                            errorMsg = errorMsg?errorMsg:that.config.verify[thisVer][1];
+                        }
+                    })
+                }else if (typeof that.config.verify[verify_key].verify === 'function' && !that.config.verify[verify_key].verify(value, item)){
                     isError = true;
                 }
             }
@@ -270,7 +310,7 @@ layui.define(['jquery', 'layer','table','form'], function (exports) {
                 if (!$(item).next().hasClass('form-item-msg')){
                     $(item).after("<span class='form-item-msg is-error'>" + errorMsg + "</span>");
                 }
-                $(item).focusout(function () {
+                $(item).change(function () {
                     $(this).removeClass('layui-input-warning');
                     if ($(this).next().hasClass('form-item-msg')){
                         $(this).next().remove();
@@ -280,7 +320,8 @@ layui.define(['jquery', 'layer','table','form'], function (exports) {
             }
         }
         this.verify = function (obj) {
-            this.verify = obj;
+            console.log(this.config.verify);
+            $.extend(true,this.config.verify, obj);
             $.each(obj, function(index,value){
                 that.verifyConfig[index] = handleVerify
             });
