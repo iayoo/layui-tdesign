@@ -53,3 +53,7 @@
     -webkit-appearance: none;	/* 有无看不出差别 */
 }
 /* 数组输入框步进器 end */
+
+input.layui-input.layui-input-warning{
+    border-color:#ed7b2f;
+}

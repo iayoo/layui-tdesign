@@ -1,6 +1,6 @@
-layui.define(['jquery', 'layer','table'], function (exports) {
+layui.define(['jquery', 'layer','table','form'], function (exports) {
     "use strict";
-    let $ = layui.jquery,table=layui.table;
+    let $ = layui.jquery,table=layui.table,form=layui.form;
     //乘法
     function mul(a, b) {
         let c = 0,
@@ -235,16 +235,74 @@ layui.define(['jquery', 'layer','table'], function (exports) {
             }, 300);
         }
     }
+    
+    let FormVerify = function () {
+        this.v = '0.1.0';
+        this.verifyConfig = {};
+        let that = this;
+        this.verify = {}
+        function handleVerify(value, item){
+            let verify_key = $(item).attr('lay-verify');
+            let isError = false;
+            let errorMsg = '';
+            if (that.verify[verify_key] === undefined){
+                return false;
+            }
+            if (typeof that.verify[verify_key] === 'function'){
+                let verifyRes = that.verify[verify_key]();
+                if (verifyRes === undefined){
+                    return false;
+                }
+                if (verifyRes.result){
+                    return null;
+                }
+                isError = true;
+            }else if(typeof that.verify[verify_key] === 'object'){
+                errorMsg = that.verify[verify_key].error === undefined?'':that.verify[verify_key].error;
+                if (typeof that.verify[verify_key].verify === 'string'){
+
+                }else if (typeof that.verify[verify_key].verify === 'function' && !that.verify[verify_key].verify(value, item)){
+                    isError = true;
+                }
+            }
+            if (isError){
+                $(item).addClass('layui-input-warning');
+                if (!$(item).next().hasClass('form-item-msg')){
+                    $(item).after("<span class='form-item-msg is-error'>" + errorMsg + "</span>");
+                }
+                $(item).focusout(function () {
+                    $(this).removeClass('layui-input-warning');
+                    if ($(this).next().hasClass('form-item-msg')){
+                        $(this).next().remove();
+                    }
+                })
+                return stop = true;
+            }
+        }
+        this.verify = function (obj) {
+            this.verify = obj;
+            $.each(obj, function(index,value){
+                that.verifyConfig[index] = handleVerify
+            });
+            form.verify(that.verifyConfig)
+            return that.verifyConfig;
+        }
+    }
+    
     let radio = new Radio();
     radio.init();
     let stepNumber = new StepNumber();
     stepNumber.init();
     let inputPrompt = new InputPrompt();
     inputPrompt.init();
+
+    let formVerify = new FormVerify();
+    
     let elems = {
         radio:radio,
         stepNumber:stepNumber,
-        inputPrompt:inputPrompt
+        inputPrompt:inputPrompt,
+        form:formVerify
     }
     exports('elems',elems)
-}).addcss('elems.css?v=0.1','elems')
+}).addcss('elems.css?v=0.1.1','elems')

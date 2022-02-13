@@ -29,13 +29,13 @@
         <div class="layui-form-item">
             <label for="" class="layui-form-label">权限名称</label>
             <div class="layui-input-block">
-                <input type="text" maxlength="16" name="title"  lay-verify="required" placeholder="请输入权限名称" class="layui-input" >
+                <input type="text" maxlength="16" name="title" lay-verify="title" placeholder="请输入权限名称" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label for="" class="layui-form-label">地址</label>
             <div class="layui-input-block">
-                <input type="prompt" href="{:url('getPermissionList')}" field="path" name="href" placeholder="请输入地址" class="layui-input" autocomplete="off">
+                <input type="prompt" href="{:url('getPermissionList')}" lay-verify="path" field="path" name="href" placeholder="请输入地址" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
@@ -77,7 +77,24 @@
 <script src="__LAYUI_CONFIG__"></script>
 <script>
     layui.use(['form','element','icon','jquery','request','elems'],function () {
-        let icon= layui.icon,$ = layui.jquery,form = layui.form,request = layui.request;
+        let icon= layui.icon,$ = layui.jquery,form = layui.form,request = layui.request,elems = layui.elems;
+
+        elems.form.verify({
+            title:{
+                verify:function (value,item) {
+                    console.log(1111);
+                },
+                error:'参数不能为空'
+            },
+            path:{
+                verify:function (value,item) {
+                    console.log(1111);
+                },
+                error:'参数不能为空'
+            }
+        })
+
+
         icon.render({
             elem: '#iconPicker2',
             type: 'all',
