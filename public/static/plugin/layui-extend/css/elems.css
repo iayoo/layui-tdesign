@@ -54,6 +54,10 @@
 }
 /* 数组输入框步进器 end */
 
-input.layui-input.layui-input-warning{
-    border-color:#ed7b2f;
+input.layui-input.layui-input-warning,input.layui-input.layui-input-warning:focus{
+    border-color:#ed7b2f !important;
 }
+input.layui-input.layui-input-warning:focus{
+    box-shadow: 0 0 0 2px #e34d592e;
+}
+
