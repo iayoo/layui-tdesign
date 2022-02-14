@@ -957,3 +957,7 @@ div.layui-layer.layui-layer-msg{
 .is-error{
     color: #c9353f;
 }
+
+.layui-iconpicker-view .layui-iconpicker-list ul>li i {
+    font-size: 20px;
+}
