@@ -25,7 +25,6 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
         }
         Request.prototype.post = function (options) {
             if (typeof options === 'object') {
-                console.log(this.config);
                 $.extend(true,  this.config,options);
                 this.send(this.config.url,"POST",this.config.data,this.config);
             }
@@ -92,7 +91,6 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                     // code 为 0 时请求正常
                     if (undefined !== res.code && res.code === 0) {
                         if (undefined !== res.message) {
-                            console.log(options)
                             if (options.loading) {
                                 layer.msg(res.message, {
                                     icon: 1,
