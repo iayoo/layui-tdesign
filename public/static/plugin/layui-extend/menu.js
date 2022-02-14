@@ -220,4 +220,4 @@ layui.extend({}).define(['element', 'jquery'], function (exports) {
         return $('<li class="layui-nav-item" ' + unselect + '><a ' + event + ' ' + href + '><i class="' + icon + '"></i></a></li>')
     }
     exports('menu', new Menu());
-})
+}).addcss('menu.css?v=0.1.0','menu')
