@@ -961,3 +961,27 @@ div.layui-layer.layui-layer-msg{
 .layui-iconpicker-view .layui-iconpicker-list ul>li i {
     font-size: 20px;
 }
+.layui-iconpicker-search > .layui-input-wrap{
+    line-height: 34px;
+}
+
+.layui-iconpicker{
+    line-height: 34px;
+    height: 34px;
+}
+.layui-iconpicker .layui-inline{
+    line-height: 34px;
+}
+.layui-iconpicker-list li.layui-this{
+    border-color: #0052d9;
+    color: #0052d9;
+}
+
+.layui-iconpicker-page .layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color:unset;
+}
+
+.layui-iconpicker-down{
+    border-color: #0052d9 ;
+    box-shadow: 0 0 0 2px #d4e3fc;
+}

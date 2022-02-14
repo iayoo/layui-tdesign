@@ -27,8 +27,9 @@
 .layui-radio-group > .layui-btn.layui-this{
     border-right: 1px solid;
     border-color: #0052d9;
-    transition: border-color .2s cubic-bezier(0,0,.32,1);
-    color: #0052d9;
+    background-color: #0052d9;
+    transition: background-color .2s cubic-bezier(0,0,.32,1);
+    color: #dcdcdc;
 }
 /* radio 按钮组 end */
 
