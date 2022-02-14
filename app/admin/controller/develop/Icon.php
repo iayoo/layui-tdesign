@@ -6,6 +6,40 @@ class Icon extends \app\admin\controller\BaseController
 {
     public function index()
     {
+        if ($this->request->isAjax()){
+            $config = [
+                'layui'       => 'layui-icon layui-icon-',
+                'fontawesome' => 'fa fa-'
+            ];
+            $type = $this->request->param('type','all');
+            $result = [];
+            if ($type=== 'all'){
+
+                foreach ($config as $key => $item){
+                    $json = file_get_contents(root_path() . 'runtime/icon/' . $key . '.json');
+                    $jsonData = json_decode($json,true);
+                    foreach ($jsonData as $jsonDatum){
+                        $result[] = [
+                            'title'     => '',
+                            'fontclass' => $item . $jsonDatum,
+                            'unicode'   => ''
+                        ];
+                    }
+                }
+
+            }else{
+                $json = file_get_contents(root_path() . 'runtime/icon/' . $type . '.json');
+                $jsonData = json_decode($json,true);
+                foreach ($jsonData as $jsonDatum){
+                    $result[] = [
+                        'title'     => '',
+                        'fontclass' => $config[$type] . $jsonDatum,
+                        'unicode'   => ''
+                    ];
+                }
+            }
+            return $this->success('success',$result);
+        }
         return $this->fetch();
     }
 
@@ -42,6 +76,9 @@ class Icon extends \app\admin\controller\BaseController
                 $result = json_decode($json,true);
             }
         }else{
+            if (!is_file(root_path() . $cssFile)){
+                return $this->error("文件不存在");
+            }
             $this->makeIconCache('runtime/icon/' . $type .'.json');
             $result = $this->readIconFromCssFile($type,root_path() . $cssFile);
             file_put_contents(root_path() . 'runtime/icon/' . $type .'.json',json_encode($result));

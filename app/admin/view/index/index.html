@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>layui-tdesign Admin</title>
-    <link rel="stylesheet" href="__LAYUI_STATIC__/css/layui.css">
+    <link rel="stylesheet" href="__LAYUI_CSS__">
     <link rel="stylesheet" href="__FONT_AWESOME_CSS__">
+    <!--  主题样式  -->
+    <link rel="stylesheet" href="__ADMIN_THEME_CSS__">
 </head>
 <body>
 
@@ -62,8 +64,8 @@
 </div>
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
-<script src="__LAYUI_STATIC__/layui.js"></script>
-<script src="__LAYUI_STATIC__/config.js"></script>
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
 <script>
     layui.use(['admin'],function(){
         let admin = layui.admin;
@@ -73,7 +75,6 @@
             url:'{:url("menu")}'
         })
         admin.open('{:url("home")}','<i class="layui-icon layui-icon-home"></i>',0)
-
     });
 </script>
 </body>

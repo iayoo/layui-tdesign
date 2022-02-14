@@ -1,7 +1,7 @@
 {extend name="basic/page_layout" /}
 
 {block name="head"}
-<link rel="stylesheet" href="/static/admin/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="__FONT_AWESOME_CSS__">
 <style>
     .layui-icon-view{
         display: flex;
@@ -41,7 +41,7 @@
                         <label for="" class="layui-form-label">地址</label>
                         <div class="layui-input-block">
                             <input type="text" name="path" value="public/static/admin/layui/css/layui.css" placeholder="请输入地址" class="layui-input layui-inline" >
-                            <span class="layui-btn layui-btn-primary layui-inline">读取数据</span>
+                            <span class="layui-btn layui-btn-primary layui-inline" onclick="refresh(this,'layui')">读取数据</span>
                         </div>
                     </div>
                 </form>
@@ -59,7 +59,7 @@
                         <label for="" class="layui-form-label">地址</label>
                         <div class="layui-input-block">
                             <input type="text" name="path" placeholder="请输入地址" value="public/static/admin/font-awesome/css/font-awesome.min.css" class="layui-input layui-inline" >
-                            <span class="layui-btn layui-btn-primary layui-inline">读取数据</span>
+                            <span class="layui-btn layui-btn-primary layui-inline" onclick="refresh(this,'fontawesome')">读取数据</span>
                         </div>
                     </div>
                 </form>
@@ -76,12 +76,35 @@
 </div>
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
-<script src="/static/admin/layui/layui.all.js"></script>
-<script src="/static/admin/config.js"></script>
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
 <script>
     layui.use(['element','jquery','request'],function () {
         let $ = layui.jquery,request = layui.request,element = layui.element;
         let layui_view = $('#layui-icon-view');
+
+        window.refresh = function (obj,type) {
+            let path = $(obj).prev().val();
+            let config = {
+                'fontawesome':'fa fa-',
+                'layui':'layui-icon layui-icon-'
+            }
+            request.post({
+                url:'{:url("getJson")}',
+                data:{
+                    type:type,
+                    path:path
+                },
+                success:function (res) {
+                    if (res.data !== undefined){
+                        fontaw = true;
+                        res.data.map(function (item) {
+                            fontawesome_icon_view.append("<div class='icon-view-item'><span><i class='" + config[type] + item + "'></i></span><p>fa-" + item + "</p></div>")
+                        })
+                    }
+                }
+            })
+        }
         request.post({
             url:'{:url("getJson")}',
             data:{

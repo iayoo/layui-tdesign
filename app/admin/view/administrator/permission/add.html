@@ -42,7 +42,7 @@
             <label for="" class="layui-form-label">图标</label>
             <div class="layui-input-block" style="width: unset">
                 <input type="text" id="iconPicker2" name="icon" lay-filter="iconPicker2" class="hide">
-                <span class="layui-btn layui-btn-primary" id="clear">清空</span>
+                <span class="layui-btn layui-btn-primary layui-inline" id="clear">清空</span>
             </div>
         </div>
         <div class="layui-form-item">
@@ -73,7 +73,7 @@
     </form>
 </div>
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
-<script src="__LAYUI_STATIC__/layui.all.js"></script>
+<script src="__LAYUI_JS__"></script>
 <script src="__LAYUI_CONFIG__"></script>
 <script>
     layui.use(['form','element','icon','jquery','request','elems'],function () {
@@ -83,28 +83,31 @@
             title:{
                 verify:'required',
                 error:'参数不能为空'
-            },
-            path:{
-                verify:'required',
-                error:'参数不能为空'
             }
         })
 
+        request.post({
+            url:'{:url("/admin/develop.Icon/index")}',
+            triggerAfterSuccess:false,
+            success:function (res) {
+                icon.render({
+                    elem: '#iconPicker2'
+                    ,style: 'color: #0052d9;'
+                    ,type: "fontclass"
+                    ,fontfamily: ""
+                    ,placeholder: ''
+                    ,isSplit: true
+                    ,page: true
+                    //,search: false
+                    ,click: function(obj){
+                    }
+                    ,ready: function(){
+                    },
+                    data:res.data
+                });
+            }
+        })
 
-        icon.render({
-            elem: '#iconPicker2',
-            type: 'all',
-            style: 'color: #0052d9;'
-            ,placeholder: ''
-            ,isSplit: true
-            ,page: true
-            ,search: true
-            ,click: function (data) {
-            },
-            ready: function(d) {
-            },
-            url:'{:url("develop.Icon/getJson")}'
-        });
         $('#clear').click(function() {
             icon.reset('iconPicker2');
         });
