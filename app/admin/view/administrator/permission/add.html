@@ -83,12 +83,6 @@
             title:{
                 verify:'required',
                 error:'参数不能为空'
-            },
-            path:{
-                verify:function (value,item) {
-                    console.log(1111);
-                },
-                error:'参数不能为空'
             }
         })
 
@@ -96,7 +90,6 @@
             url:'{:url("/admin/develop.Icon/index")}',
             triggerAfterSuccess:false,
             success:function (res) {
-                console.log(res);
                 icon.render({
                     elem: '#iconPicker2'
                     ,style: 'color: #0052d9;'
@@ -107,11 +100,8 @@
                     ,page: true
                     //,search: false
                     ,click: function(obj){
-                        console.log(obj)
-                        //this.elem.val(obj.className)
                     }
                     ,ready: function(){
-                        console.log(1)
                     },
                     data:res.data
                 });
