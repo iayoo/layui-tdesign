@@ -94,21 +94,32 @@
             }
         })
 
+        request.post({
+            url:'{:url("/admin/develop.Icon/index")}',
+            triggerAfterSuccess:false,
+            success:function (res) {
+                console.log(res);
+                icon.render({
+                    elem: '#iconPicker2'
+                    ,style: 'color: #0052d9;'
+                    ,type: "fontclass"
+                    ,fontfamily: ""
+                    ,placeholder: ''
+                    ,isSplit: true
+                    ,page: true
+                    //,search: false
+                    ,click: function(obj){
+                        console.log(obj)
+                        //this.elem.val(obj.className)
+                    }
+                    ,ready: function(){
+                        console.log(1)
+                    },
+                    data:res.data
+                });
+            }
+        })
 
-        icon.render({
-            elem: '#iconPicker2',
-            type: 'all',
-            style: 'color: #0052d9;'
-            ,placeholder: ''
-            ,isSplit: true
-            ,page: true
-            ,search: true
-            ,click: function (data) {
-            },
-            ready: function(d) {
-            },
-            url:'{:url("develop.Icon/getJson")}'
-        });
         $('#clear').click(function() {
             icon.reset('iconPicker2');
         });
