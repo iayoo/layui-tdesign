@@ -60,13 +60,16 @@
 <script src="__LAYUI_JS__"></script>
 <script src="__LAYUI_CONFIG__"></script>
 <script>
-    layui.use(['table','form','jquery','treetable','loading','request'],function () {
+    layui.use(['table','form','jquery','treetable','loading','request','notify'],function () {
         let table = layui.table;
         let form = layui.form;
         let $ = layui.jquery;
         let treetable = layui.treetable;
         let loading = layui.loading;
         let request = layui.request;
+        let notify = layui.notify;
+
+        notify.info("提示消息");
 
         this.afterRequestSuccess = function () {
             treetable.reload("#power-table");
@@ -108,6 +111,7 @@
             if(obj.event === 'add'){
                 window.add();
             } else if(obj.event === 'refresh'){
+
                 window.refresh();
             } else if(obj.event === 'batchRemove'){
                 window.batchRemove(obj);
@@ -116,7 +120,9 @@
             } else if(obj.event === 'foldAll'){
                 treetable.foldAll("#power-table");
             } else if(obj.event === 'reload'){
-                treetable.reload("#power-table");
+                notify.loading("加载中");
+                console.log(1);
+                // treetable.reload("#power-table");
             }
         });
 

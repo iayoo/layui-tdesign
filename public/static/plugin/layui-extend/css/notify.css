@@ -1,0 +1,430 @@
+[class|=notify], [class|=notify]::after, [class|=notify]::before {
+    box-sizing: border-box;
+    outline: 0
+}
+
+.notify-msg-progress {
+    width: 13px;
+    height: 13px
+}
+
+.notify-msg__circle {
+    stroke-width: 2;
+    stroke-linecap: square;
+    fill: none;
+    transform: rotate(-90deg);
+    transform-origin: center
+}
+
+.notify-msg-stage:hover .notify-msg__circle {
+    -webkit-animation-play-state: paused !important;
+    animation-play-state: paused !important
+}
+
+.notify-msg__background {
+    stroke-width: 2;
+    fill: none
+}
+
+.notify-msg-stage {
+    position: fixed;
+    width: auto;
+    z-index: 99891015
+}
+
+.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0)
+}
+
+.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0)
+}
+
+.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.notify-msg-wrapper {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    transform: translate3d(-50%, 0, 0);
+    transition: height .3s ease, padding .3s ease;
+    padding: 6px 0;
+    will-change: transform, opacity
+}
+
+.notify-msg {
+    padding: 15px 21px;
+    border-radius: 3px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    transform: translate3d(-50%, 0, 0);
+    display: flex;
+    align-items: center
+}
+
+.notify-msg-content, .notify-msg-icon, .notify-msg-wait {
+    display: inline-block
+}
+
+.notify-msg-icon {
+    position: relative;
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.notify-msg-icon svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px
+}
+
+.notify-msg-wait {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    fill: #4eb127
+}
+
+.notify-msg-wait svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.notify-msg-close {
+    width: 14px;
+    height: 14px;
+}
+
+.notify-msg-content {
+    margin: 0 10px;
+    min-width: 240px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system, Microsoft Yahei, sans-serif;
+    text-shadow: 0 0 1px rgba(0, 0, 0, .01)
+}
+
+.notify-msg.info {
+    color: #0fafad;
+    background-color: #e7fdfc;
+    box-shadow: 0 0 2px 0 rgba(0, 1, 1, .01), 0 0 0 1px #c0faf9
+}
+
+.notify-msg.info .notify-msg-icon {
+    background-color: #0fafad
+}
+
+.notify-msg.success {
+    color: #67c23a;
+    background-color: #f0f9eb;
+    box-shadow: 0 0 2px 0 rgba(0, 1, 0, .01), 0 0 0 1px #e1f3d8
+}
+
+.notify-msg.success .notify-msg-icon {
+    background-color: #4ebb23
+}
+
+.notify-msg.warning {
+    color: #5c3c00;
+    background-color: #fffbe5;
+    box-shadow: 0 0 2px 0 rgba(1, 1, 0, .01), 0 0 0 1px #faecd8
+}
+
+.notify-msg.warning .notify-msg-icon {
+    background-color: #f1b306
+}
+
+.notify-msg.error {
+    color: #f56c6c;
+    background-color: #fef0f0;
+    box-shadow: 0 0 2px 0 rgba(1, 0, 0, .01), 0 0 0 1px #fde2e2
+}
+
+.notify-msg.error .notify-msg-icon {
+    background-color: #f34b51
+}
+
+.notify-msg.loading {
+    color: #0fafad;
+    background-color: #e7fdfc;
+    box-shadow: 0 0 2px 0 rgba(0, 1, 1, .01), 0 0 0 1px #c2faf9
+}
+
+.notify-msg_loading {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    position: relative
+}
+
+.notify-msg-circular {
+    -webkit-animation: notify-msg-rotate 2s linear infinite both;
+    animation: notify-msg-rotate 2s linear infinite both;
+    transform-origin: center center;
+    height: 18px !important;
+    width: 18px !important
+}
+
+.notify-msg-path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke: #0fafad;
+    -webkit-animation: notify-msg-dash 1.5s ease-in-out infinite;
+    animation: notify-msg-dash 1.5s ease-in-out infinite;
+    stroke-linecap: round
+}
+
+@-webkit-keyframes notify-msg-rotate {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg)
+    }
+}
+
+@keyframes notify-msg-rotate {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg)
+    }
+}
+
+@-webkit-keyframes notify-msg-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px
+    }
+}
+
+@keyframes notify-msg-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px
+    }
+}
+
+.notify-msg.info .notify-msg-wait {
+    fill: #0fafad
+}
+
+.notify-msg.success .notify-msg-wait {
+    fill: #4ebb23
+}
+
+.notify-msg.warning .notify-msg-wait {
+    fill: #f1b306
+}
+
+.notify-msg.error .notify-msg-wait {
+    fill: #f34b51
+}
+
+.notify-msg.loading .notify-msg-wait {
+    fill: #0fafad
+}
+
+.notify-msg-pointer {
+    cursor: pointer
+}
+
+@-webkit-keyframes notify-msg_info {
+    0% {
+        stroke: #0fafad
+    }
+    to {
+        stroke: #0fafad;
+        stroke-dasharray: 0 100
+    }
+}
+
+@keyframes notify-msg_info {
+    0% {
+        stroke: #0fafad
+    }
+    to {
+        stroke: #0fafad;
+        stroke-dasharray: 0 100
+    }
+}
+
+@-webkit-keyframes notify-msg_success {
+    0% {
+        stroke: #4eb127
+    }
+    to {
+        stroke: #4eb127;
+        stroke-dasharray: 0 100
+    }
+}
+
+@keyframes notify-msg_success {
+    0% {
+        stroke: #4eb127
+    }
+    to {
+        stroke: #4eb127;
+        stroke-dasharray: 0 100
+    }
+}
+
+@-webkit-keyframes notify-msg_warning {
+    0% {
+        stroke: #fcbc0b
+    }
+    to {
+        stroke: #fcbc0b;
+        stroke-dasharray: 0 100
+    }
+}
+
+@keyframes notify-msg_warning {
+    0% {
+        stroke: #fcbc0b
+    }
+    to {
+        stroke: #fcbc0b;
+        stroke-dasharray: 0 100
+    }
+}
+
+@-webkit-keyframes notify-msg_error {
+    0% {
+        stroke: #eb262d
+    }
+    to {
+        stroke: #eb262d;
+        stroke-dasharray: 0 100
+    }
+}
+
+@keyframes notify-msg_error {
+    0% {
+        stroke: #eb262d
+    }
+    to {
+        stroke: #eb262d;
+        stroke-dasharray: 0 100
+    }
+}
+
+.notify-msg-fade-in {
+    -webkit-animation: notify-msg-fade .2s ease-out both;
+    animation: notify-msg-fade .2s ease-out both
+}
+
+.notify-msg-fade-out {
+    animation: notify-msg-fade .3s linear reverse both
+}
+
+@-webkit-keyframes notify-msg-fade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, -80%, 0)
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 0, 0)
+    }
+}
+
+@keyframes notify-msg-fade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, -80%, 0)
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 0, 0)
+    }
+}
+
+.notify-msg-fade-in-b {
+    -webkit-animation: notify-msg-fade-b .2s ease-out both;
+    animation: notify-msg-fade-b .2s ease-out both
+}
+
+.notify-msg-fade-out-b {
+    animation: notify-msg-fade-b .3s linear reverse both
+}
+
+@-webkit-keyframes notify-msg-fade-b {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 80%, 0)
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 0, 0)
+    }
+}
+
+@keyframes notify-msg-fade-b {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 80%, 0)
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transform: translate3d(-50%, 0, 0)
+    }
+}
