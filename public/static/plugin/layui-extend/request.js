@@ -6,7 +6,7 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
     const loading = layui.loading;
 
     const Request = function () {
-        Request.prototype.v = '0.0.1';
+        Request.prototype.v = '0.0.2';
         Request.prototype.config = {
             url:undefined,
             data:undefined,
