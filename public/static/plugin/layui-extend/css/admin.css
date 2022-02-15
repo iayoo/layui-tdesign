@@ -985,3 +985,51 @@ div.layui-layer.layui-layer-msg{
     border-color: #0052d9 ;
     box-shadow: 0 0 0 2px #d4e3fc;
 }
+
+.radio-btn-group{
+
+}
+
+
+.radio-btn-group > .layui-form-radio{
+    background-color: #fff;
+    padding: 4px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid #dcdcdc;
+    border-right: 0;
+    line-height: 22px;
+    transition: color .2s cubic-bezier(0,0,.32,1);
+    color: rgba(0, 0, 0, .9);
+    white-space: nowrap;
+    margin: 2px -4px 0 0;
+}
+
+
+
+.radio-btn-group > .layui-form-radio:first-of-type {
+    border-radius: 5px 0 0 5px;
+    border-left:1px solid #dcdcdc;
+}
+.radio-btn-group > .layui-form-radio:last-child {
+    border-right: 1px solid;
+    border-right-color: #dcdcdc;
+    border-radius: 0 5px 5px 0;
+}
+
+.radio-btn-group > .layui-form-radio > i{
+    display: none;
+}
+
+.radio-btn-group > .layui-form-radio.layui-form-radioed{
+    border-right: 1px solid;
+    border-color: #0052d9;
+    background-color: #0052d9;
+    transition: background-color .2s cubic-bezier(0,0,.32,1);
+    color: #dcdcdc;
+}
+.radio-btn-group > .layui-form-radio.layui-form-radioed:hover,.radio-btn-group > .layui-form-radioed:hover *{
+    color: #dcdcdc;
+}
+
