@@ -1006,8 +1006,6 @@ div.layui-layer.layui-layer-msg{
     margin: 2px -4px 0 0;
 }
 
-
-
 .radio-btn-group > .layui-form-radio:first-of-type {
     border-radius: 5px 0 0 5px;
     border-left:1px solid #dcdcdc;
@@ -1026,7 +1024,7 @@ div.layui-layer.layui-layer-msg{
     border-right: 1px solid;
     border-color: #0052d9;
     background-color: #0052d9;
-    transition: background-color .2s cubic-bezier(0,0,.32,1);
+    transition: background-color,border-color .2s cubic-bezier(0,0,.32,1);
     color: #dcdcdc;
 }
 .radio-btn-group > .layui-form-radio.layui-form-radioed:hover,.radio-btn-group > .layui-form-radioed:hover *{
