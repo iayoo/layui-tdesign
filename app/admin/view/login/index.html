@@ -187,8 +187,6 @@
 
         form.verify({
             required:function (val,item){
-                // console.log(val)
-                // console.log(item)
             },
             account: function(value, item){ //value：表单的值、item：表单的DOM对象
                 // console.log('from verify!')
@@ -260,7 +258,6 @@
                 let src = '{:captcha_src()}?v=' + ((new Date()).getTime());
                 _this.find('img').attr('src',src);
             }
-            // console.log(form.verify())
         })
         let page_loading = $("[ia-event='page-loading']");
         page_loading.fadeOut(500);
@@ -296,13 +293,6 @@
                 }
             })
             return false;
-
-
-
-            // page_loading.fadeIn(500);
-            // setTimeout(function () {
-            //     location.href = "/administrator";
-            // },1000)
             return false;
         });
     })

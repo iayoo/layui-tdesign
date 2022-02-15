@@ -21,7 +21,8 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             is_close:false,
             type:'POST',
             // 显示loading
-            loading:true
+            loading:true,
+            is_msg:true
         }
 
         function init(options){
@@ -52,7 +53,23 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 this.send(options.url,"DELETE",options.data,options);
             }
         }
+        Request.prototype.msg = function (res,icon,after) {
 
+            if (typeof after === 'function'){
+                // if ()
+                layer.msg(res, {
+                    icon: icon,
+                    time: 1000
+                },function () {
+                    after();
+                });
+            }else{
+                layer.msg(res, {
+                    icon: icon,
+                    time: 1000
+                });
+            }
+        }
         Request.prototype.send = function (url,type,data,options) {
             let params = {},that = this;
             // 处理请求参数

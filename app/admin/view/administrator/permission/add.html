@@ -85,36 +85,41 @@
                 error:'参数不能为空'
             }
         })
-        console.log(request)
         request.get({
             url:'{:url("detail")}?id='+'{:request()->param("id")}',
             success:function (res) {
-                console.log(res);
-                console.log(res.data);
                 form.val('permission',res.data)
-            }
+                initIcon();
+            },
+            is_msg:false
         })
-        request.post({
-            url:'{:url("/admin/develop.Icon/index")}',
-            triggerAfterSuccess:false,
-            success:function (res) {
-                icon.render({
-                    elem: '#iconPicker2'
-                    ,style: 'color: #0052d9;'
-                    ,type: "fontclass"
-                    ,fontfamily: ""
-                    ,placeholder: ''
-                    ,isSplit: true
-                    ,page: true
-                    //,search: false
-                    ,click: function(obj){
-                    }
-                    ,ready: function(){
-                    },
-                    data:res.data
-                });
-            }
-        })
+
+        function initIcon(){
+            request.post({
+                url:'{:url("/admin/develop.Icon/index")}',
+                triggerAfterSuccess:false,
+                success:function (res) {
+                    icon.render({
+                        elem: '#iconPicker2'
+                        ,style: 'color: #0052d9;'
+                        ,type: "fontclass"
+                        ,fontfamily: ""
+                        ,placeholder: ''
+                        ,isSplit: true
+                        ,page: true
+                        //,search: false
+                        ,click: function(obj){
+                            console.log('icon click')
+                        }
+                        ,ready: function(){
+                        },
+                        data:res.data
+                    });
+                }
+            })
+        }
+
+
 
 
 
