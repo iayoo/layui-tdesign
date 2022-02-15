@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugin/layui/2.7.0.rc5/css/layui.css">
+    <link rel="stylesheet" href="/static/plugin/layui-extend/css/admin.css">
+    <style>
+        html{
+            height: 100%;
+            font-family: -apple-system,BlinkMacSystemFont,PingFang SC,Microsoft YaHei,Arial Regular;
+        }
+        body{
+            height: 98%;
+            background: var(--td-bg-color-page);
+        }
+        .error-contain {
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .message-contain{
+            height: 200px;
+        }
+        .error-message{
+            width: 100%;
+        }
+        .code-message{
+            font-style: normal;
+            font-weight: 500;
+            margin-top: 8px;
+            font-size: 20px;
+            line-height: 28px;
+            text-align: center;
+        }
+        .message{
+            margin: 8px 0 32px;
+            font-size: 14px;
+            color: var(--td-text-color-secondary);
+            line-height: 22px;
+            text-align: center;
+        }
+        .btn-contain{
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="error-contain">
+    <div class="message-contain">
+        <div class="error-message">
+            <?php if (\think\facade\App::isDebug()) { ?>
+            <div class="layui-collapse" lay-accordion="">
+                <?php foreach ($traces as $index => $trace) { ?>
+                <p class="code-message"><span>服务器异常: <?php echo $trace["message"]; ?></span></p>
+                <p class="message"><span><?php echo $trace["name"]; ?></span></p>
+                <?php } ?>
+            </div>
+            <?php }else{ ?>
+            <p class="code-message"><span>500 Internal Server Error</span></p>
+            <p class="message"><span>抱歉，服务器出错啦</span></p>
+            <?php } ?>
+
+        </div>
+        <div class="btn-contain">
+            <button class="layui-btn layui-btn-primary" lay-filter="">返回首页</button>
+        </div>
+    </div>
+</div>
+
+<script src="/static/plugin/layui/2.7.0.rc5/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+    layui.use(['dropdown', 'util', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer;
+
+        //监听折叠
+        element.on('collapse(test)', function(data){
+            layer.msg('展开状态：'+ data.show);
+        });
+    });
+</script>
+</body>
+</html>

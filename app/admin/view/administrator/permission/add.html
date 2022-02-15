@@ -9,7 +9,7 @@
 <body>
 
 <div class="popup-contain">
-    <form class="layui-form" action="">
+    <form class="layui-form" action="" lay-filter="permission">
         <div class="layui-form-item">
             <label for="" class="layui-form-label">父级</label>
             <div class="layui-input-block">
@@ -47,10 +47,10 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">权限类型：</label>
-            <div class="layui-input-block">
-                <input type="radio" ia-event="group" name="type" value="0" title="目录" checked>
-                <input type="radio" ia-event="group" name="type" value="1" title="菜单">
-                <input type="radio" ia-event="group" name="type" value="2" title="按钮">
+            <div class="layui-input-block radio-btn-group">
+                <input type="radio" name="type" value="0" title="目录" checked>
+                <input type="radio" name="type" value="1" title="菜单">
+                <input type="radio" name="type" value="2" title="按钮">
             </div>
         </div>
         <div class="layui-form-item">
@@ -85,28 +85,43 @@
                 error:'参数不能为空'
             }
         })
-
-        request.post({
-            url:'{:url("/admin/develop.Icon/index")}',
-            triggerAfterSuccess:false,
+        request.get({
+            url:'{:url("detail")}?id='+'{:request()->param("id")}',
             success:function (res) {
-                icon.render({
-                    elem: '#iconPicker2'
-                    ,style: 'color: #0052d9;'
-                    ,type: "fontclass"
-                    ,fontfamily: ""
-                    ,placeholder: ''
-                    ,isSplit: true
-                    ,page: true
-                    //,search: false
-                    ,click: function(obj){
-                    }
-                    ,ready: function(){
-                    },
-                    data:res.data
-                });
-            }
+                form.val('permission',res.data)
+                initIcon();
+            },
+            is_msg:false
         })
+
+        function initIcon(){
+            request.post({
+                url:'{:url("/admin/develop.Icon/index")}',
+                triggerAfterSuccess:false,
+                success:function (res) {
+                    icon.render({
+                        elem: '#iconPicker2'
+                        ,style: 'color: #0052d9;'
+                        ,type: "fontclass"
+                        ,fontfamily: ""
+                        ,placeholder: ''
+                        ,isSplit: true
+                        ,page: true
+                        //,search: false
+                        ,click: function(obj){
+                            console.log('icon click')
+                        }
+                        ,ready: function(){
+                        },
+                        data:res.data
+                    });
+                }
+            })
+        }
+
+
+
+
 
         $('#clear').click(function() {
             icon.reset('iconPicker2');
