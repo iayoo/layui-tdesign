@@ -9,7 +9,7 @@
 <body>
 
 <div class="popup-contain">
-    <form class="layui-form" action="">
+    <form class="layui-form" action="" lay-filter="permission">
         <div class="layui-form-item">
             <label for="" class="layui-form-label">父级</label>
             <div class="layui-input-block">
@@ -85,7 +85,15 @@
                 error:'参数不能为空'
             }
         })
-
+        console.log(request)
+        request.get({
+            url:'{:url("detail")}?id='+'{:request()->param("id")}',
+            success:function (res) {
+                console.log(res);
+                console.log(res.data);
+                form.val('permission',res.data)
+            }
+        })
         request.post({
             url:'{:url("/admin/develop.Icon/index")}',
             triggerAfterSuccess:false,
@@ -107,6 +115,8 @@
                 });
             }
         })
+
+
 
         $('#clear').click(function() {
             icon.reset('iconPicker2');

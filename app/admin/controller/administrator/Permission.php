@@ -42,7 +42,8 @@ class Permission extends BaseController
             }
         }
         return $this->fetch('',[
-            'permissions' => ToolService::getTree($adminPermissionService->all()->toArray())
+            'permissions' => ToolService::getTree($adminPermissionService->all()->toArray()),
+            'permission'=>$adminPermissionService->get(0)
         ]);
     }
 
@@ -71,5 +72,21 @@ class Permission extends BaseController
         }else{
             return $this->error('删除失败');
         }
+    }
+
+    public function edit(AdminPermissionService $adminPermissionService)
+    {
+        $id = $this->request->param('id');
+        return $this->fetch('add',[
+            'permissions' => ToolService::getTree($adminPermissionService->all()->toArray()),
+            'permission'=>$adminPermissionService->get($id)
+        ]);
+    }
+
+    public function detail(AdminPermissionService $adminPermissionService)
+    {
+        $id = $this->request->param('id');
+        $data = $adminPermissionService->get($id);
+        return $this->success('success',$data);
     }
 }

@@ -8,9 +8,9 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
     const Request = function () {
         Request.prototype.v = '0.0.1';
         Request.prototype.config = {
-            url:'',
-            data:{},
-            triggerAfterSuccess:false,
+            url:undefined,
+            data:undefined,
+            triggerAfterSuccess:undefined,
             success:undefined,
             error:undefined,
             // 请求成功后重载表单
@@ -23,24 +23,33 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             // 显示loading
             loading:true
         }
+
+        function init(options){
+            let option = Request.config;
+            if (typeof options === 'object') {
+                $.extend({},  option,options);
+            }
+            return option;
+        }
+
         Request.prototype.post = function (options) {
             if (typeof options === 'object') {
-                $.extend(true,  this.config,options);
-                this.send(this.config.url,"POST",this.config.data,this.config);
+                $.extend(true,options, this.config );
+                this.send(options.url,"POST",options.data,options);
             }
         }
 
         Request.prototype.get = function (options) {
             if (typeof options === 'object') {
-                $.extend(true, this.config, options);
-                this.send(this.config.url,"GET",this.config.data,this.config);
+                $.extend(true,options, this.config );
+                this.send(options.url,"GET",options.data,options);
             }
         }
 
         Request.prototype.delete = function (options){
             if (typeof options === 'object') {
-                $.extend(true, this.config, options);
-                this.send(this.config.url,"DELETE",this.config.data,this.config);
+                $$.extend(true,options, this.config );
+                this.send(options.url,"DELETE",options.data,options);
             }
         }
 
