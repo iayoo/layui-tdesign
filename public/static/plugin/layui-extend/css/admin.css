@@ -235,18 +235,28 @@
 
 .layui-btn-warm{
     color: var(--td-text-color-anti);
-    background-color: var(--td-error-color);
-    border-color: var(--td-error-color);
+    background-color: var(--td-warning-color);
+    border-color: var(--td-warning-color);
+}
+.layui-btn-warm:hover{
+    color: var(--td-text-color-anti);
+    border-color: var(--td-warning-color-hover);
+    background-color: var(--td-warning-color-hover);
 }
 .layui-btn-danger{
     color: var(--td-text-color-anti);
     background-color: var(--td-error-color);
     border-color: var(--td-error-color);
 }
+.layui-btn-success:hover{
+    color: var(--td-text-color-anti);
+    background-color: var(--td-success-color-hover);
+    border-color: var(--td-success-color-hover);
+}
 .layui-btn-success{
     color: var(--td-text-color-anti);
-    background-color: var(--td-success-color-active);
-    border-color: var(--td-success-color-active);
+    background-color: var(--td-success-color);
+    border-color: var(--td-success-color);
 }
 
 .layui-btn-lg{
