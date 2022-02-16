@@ -1,0 +1,43 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+</style>
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+    <div>
+        <label for=""></label>
+        <div class="layui-inline">
+            <label class="layui-form-label">搜索选择框</label>
+            <form action="" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">单行选择框</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao">
+                            <option value=""></option>
+                            <option value="0">写作</option>
+                            <option value="1" selected="">阅读</option>
+                            <option value="2">游戏</option>
+                            <option value="3">音乐</option>
+                            <option value="4">旅行</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use(['element'], function () {
+        let element = layui.element;
+    });
+</script>
+</body>
+
+{/block}

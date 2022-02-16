@@ -1,0 +1,44 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+</style>
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+    <div>
+        <input type="text" class="layui-input" id="demo">
+    </div>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use(['tableSelect'], function () {
+        let tableSelect = layui.tableSelect;
+        tableSelect.render({
+            elem: '#demo',	//定义输入框input对象 必填
+            checkedKey: 'id', //表格的唯一建值，非常重要，影响到选中状态 必填
+            searchKey: 'keyword',	//搜索输入框的name值 默认keyword
+            searchPlaceholder: '关键词搜索',	//搜索输入框的提示文字 默认关键词搜索
+            table: {	//定义表格参数，与LAYUI的TABLE模块一致，只是无需再定义表格elem
+                url:'{:url("inputTable")}',
+                cols: [
+                    [
+                        {type: 'checkbox'},
+                        {field: 'title', minWidth: 200, title: '权限名称'},
+                    ]
+                ]
+            },
+            done: function (elem, data) {
+                //选择完后的回调，包含2个返回值 elem:返回之前input对象；data:表格返回的选中的数据 []
+                //拿到data[]后 就按照业务需求做想做的事情啦~比如加个隐藏域放ID...
+            }
+        })
+    });
+</script>
+</body>
+
+{/block}
