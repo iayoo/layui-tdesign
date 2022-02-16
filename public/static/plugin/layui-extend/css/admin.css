@@ -243,10 +243,15 @@
     border-color: var(--td-warning-color-hover);
     background-color: var(--td-warning-color-hover);
 }
-.layui-btn-danger{
+.layui-btn-error{
     color: var(--td-text-color-anti);
     background-color: var(--td-error-color);
     border-color: var(--td-error-color);
+}
+.layui-btn-error:hover{
+    color: var(--td-text-color-anti);
+    background-color: var(--td-error-color-hover);
+    border-color: var(--td-error-color-hover);
 }
 .layui-btn-success:hover{
     color: var(--td-text-color-anti);
