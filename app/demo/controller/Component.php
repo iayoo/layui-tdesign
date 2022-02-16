@@ -20,10 +20,10 @@ class Component extends BaseController
     public function inputTable(){
         if ($this->request->isAjax()){
             return $this->success('success',[
-                ['title'=>'测试数据1'],
-                ['title'=>'测试数据1'],
-                ['title'=>'测试数据1'],
-                ['title'=>'测试数据1'],
+                ["id"=>1,'title'=>'测试数据1'],
+                ["id"=>2,'title'=>'测试数据1'],
+                ["id"=>3,'title'=>'测试数据1'],
+                ["id"=>4,'title'=>'测试数据1'],
             ]);
         }
         return $this->fetch();
