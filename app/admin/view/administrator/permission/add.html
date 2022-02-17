@@ -109,7 +109,6 @@
                         ,page: true
                         //,search: false
                         ,click: function(obj){
-                            console.log('icon click')
                         }
                         ,ready: function(){
                         },
@@ -119,22 +118,16 @@
             })
         }
 
-
-
-
-
         $('#clear').click(function() {
             icon.reset('iconPicker2');
         });
         form.on('submit(save)', function(data){
-            if(data.field.icon){
-                data.field.icon = "layui-icon" + data.field.icon;
-            }
             request.post({
                 url:'{:url("add")}',
                 data:data.field,
                 is_close:true,
-                reload_table:'power-table'
+                reload_table:'power-table',
+                triggerAfterSuccess:true
             })
             return false;
         });
