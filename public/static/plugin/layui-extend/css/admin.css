@@ -444,7 +444,7 @@ input.layui-input:hover{
     border-radius: 3px;
 }
 
-.layui-laydate tr> td.layui-this,.layui-laydate ul> li.layui-this{
+.layui-laydate tr> td.layui-this,.layui-laydate ul> li.layui-this,.layui-laydate-content td.laydate-now{
     background-color: var(--td-brand-color-1) !important;
     color: #fff !important;
 }
@@ -461,6 +461,22 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
 .layui-laydate-content td:hover{
     border-radius: 30px;
 }
+
+.layui-laydate-content td.laydate-now::after{
+    border: none !important;
+}
+
+.layui-laydate-content tr > td.laydate-selected{
+    background-color: var(--td-brand-color-2);
+    border-color: var(--td-brand-color-2);
+    transition: background .2s,border .2s;
+    border-radius:0;
+}
+
+.layui-laydate-content tr.laydate-selected:first-child{
+
+}
+
 
 .layui-laydate-list > li{
     height: 32px;
