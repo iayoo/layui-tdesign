@@ -272,7 +272,6 @@ layui.define(['jquery', 'layer','table','form'], function (exports) {
             }
         }
         this.verify = function (obj) {
-            console.log(this.config.verify);
             $.extend(true,this.config.verify, obj);
             $.each(obj, function(index,value){
                 that.verifyConfig[index] = handleVerify

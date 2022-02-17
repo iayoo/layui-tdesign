@@ -25,31 +25,30 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             is_msg:true
         }
 
+        let option = {};
+
         function init(options){
-            let option = Request.config;
             if (typeof options === 'object') {
-                $.extend({},  option,options);
+                let o = Object.assign({}, Request.config);
+                $.extend(true,o,options);
+                option = o;
             }
-            return option;
         }
 
         Request.prototype.post = function (options) {
             if (typeof options === 'object') {
-                $.extend(true,options, this.config );
                 this.send(options.url,"POST",options.data,options);
             }
         }
 
         Request.prototype.get = function (options) {
             if (typeof options === 'object') {
-                $.extend(true,options, this.config );
                 this.send(options.url,"GET",options.data,options);
             }
         }
 
         Request.prototype.delete = function (options){
             if (typeof options === 'object') {
-                $$.extend(true,options, this.config );
                 this.send(options.url,"DELETE",options.data,options);
             }
         }
@@ -71,6 +70,7 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
             }
         }
         Request.prototype.send = function (url,type,data,options) {
+            init(options);
             let params = {},that = this;
             // 处理请求参数
             if (undefined !== data && 'object' === (typeof data)) {
@@ -88,8 +88,8 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                 success: function (res) {
                     loading.clear();
                     if (res === undefined) {
-                        if (undefined !== options.error) {
-                            return options.error(res);
+                        if (undefined !== option.error) {
+                            return option.error(res);
                         } else {
                             layer.msg("网络异常", {
                                 icon: 2,
@@ -117,25 +117,24 @@ layui.define(['jquery', 'layer','loading'], function (exports) {
                     // code 为 0 时请求正常
                     if (undefined !== res.code && res.code === 0) {
                         if (undefined !== res.message) {
-                            if (options.loading) {
+                            if (option.loading) {
                                 layer.msg(res.message, {
                                     icon: 1,
                                     time: 1000
                                 }, function () {
-                                    onSuccess(options, res)
+                                    onSuccess(option, res)
                                 });
                             } else {
-                                onSuccess(options, res)
+                                onSuccess(option, res)
                             }
-
                         }
                     } else {
                         layer.msg(res.message, {
                             icon: 2,
                             time: 1000
                         }, function () {
-                            if (undefined !== options.error) {
-                                options.error(res);
+                            if (undefined !== option.error) {
+                                option.error(res);
                             }
                         });
                         return false;
