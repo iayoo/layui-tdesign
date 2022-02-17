@@ -43,6 +43,7 @@ class Index extends BaseController
             ['id'=>3,'title'=>'消息通知（notify）','pid'=>2,'href'=>'component/notify'],
             ['id'=>4,'title'=>'下拉框（select）','pid'=>2,'href'=>'component/select'],
             ['id'=>5,'title'=>'输入框表格提示（input-table）','pid'=>2,'href'=>'component/inputTable'],
+            ['id'=>6,'title'=>'数据表格封装','pid'=>2,'href'=>'component/dataTable'],
         ];
         return $this->success(ToolService::getTree($menu));
     }

@@ -28,4 +28,9 @@ class Component extends BaseController
         }
         return $this->fetch();
     }
+
+    public function dataTable()
+    {
+        return $this->fetch();
+    }
 }
