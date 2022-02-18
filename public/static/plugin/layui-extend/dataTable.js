@@ -1,5 +1,5 @@
-layui.define(['jquery','table','form','element','laydate'], function (exports) {
-    let $ = layui.jquery,table = layui.table,form = layui.form,element = layui.element,laydate = layui.laydate;
+layui.define(['jquery','table','form','notify','laydate'], function (exports) {
+    let $ = layui.jquery,table = layui.table,form = layui.form,notify = layui.notify,laydate = layui.laydate;
     let timeSelectArr = [];
     let DataTable = function () {
         
@@ -26,7 +26,6 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                     $.each(item.children, (idx, childItem) => {
                         let pane ='pane=""';
                         if (childItem.type === 'radio' || childItem.type === 'checkbox'){
-
                         }else{
                             pane = ''
                         }
@@ -229,7 +228,7 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                         form.on('submit('+ item.lay_filter +')', function(data){
                             if (typeof item.onclick === 'function'){
                                 item.onclick(data);
-                                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                                return false;
                             }
                             if (item.url !== undefined){
                                 let method = item.method?item.method:"GET";
@@ -239,7 +238,21 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                                 $.ajax({
                                     url:item.url,
                                     type:method,
-                                    data:data.field
+                                    data:data.field,
+                                    success:function (res) {
+                                        if (typeof item.success === 'function'){
+                                            item.success(res);
+                                        }else{
+                                            notify.success(res.message?res.message:'操作成功');
+                                        }
+                                    },
+                                    error:function (res) {
+                                        if (typeof item.error === 'function'){
+                                            item.error(res);
+                                        }else{
+                                            notify.success(res.message?res.message:'操作失败');
+                                        }
+                                    }
                                 })
                                 return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
                             }
@@ -252,4 +265,4 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
 
     let dataTable = new DataTable();
     exports('dataTable', dataTable);
-})
+}).addcss('dataTable.css?v=0.0.1','dataTable.css')
