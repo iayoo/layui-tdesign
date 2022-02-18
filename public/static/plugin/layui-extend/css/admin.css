@@ -433,6 +433,7 @@ input.layui-input:hover{
 }
 .layui-laydate-content td{
     border-radius: 30px;
+    line-height: 2;
 }
 .layui-laydate-content td, .layui-laydate-content th{
     width: 36px;
@@ -473,9 +474,57 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     border-radius:0;
 }
 
-.layui-laydate-content tr.laydate-selected:first-child{
+.layui-laydate-content tr td.layui-this:after{
+    content: '';
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    display: block;
 
 }
+.has-next-select:after{
+    right: 0;
+    background-color: var(--td-brand-color-2);
+}
+.has-prev-select:after{
+    left: 0;
+    background-color: var(--td-brand-color-2);
+}
+.layui-laydate-content tr td.first-selected{
+    border-radius: 30px 0 0 30px;
+}
+.layui-laydate-content tr td.last-selected{
+    border-radius:  0 30px 30px 0 ;
+}
+
+.layui-laydate-content tr td.laydate-selected:first-child{
+    border-radius: 30px 0 0 30px;
+}
+
+.layui-laydate-content tr td.laydate-selected:last-child{
+    border-radius: 0 30px 30px 0 ;
+}
+
+.layui-laydate-content tr{
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.layui-laydate .laydate-time-list li.layui-this{
+    background-color: var(--td-brand-color-1) !important;
+    color: #fff !important;
+}
+
+/* 隐藏滚动条 */
+.laydate-time-list ol{
+    scrollbar-width: none; /* Firefox */
+}
+.laydate-time-list ol::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+}
+/* 隐藏滚动条 */
 
 
 .layui-laydate-list > li{

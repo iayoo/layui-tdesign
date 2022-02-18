@@ -11,16 +11,18 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
             return console.error('table 参数错误');
         }
 
+        let formWidth = options.form.width? (options.form.width):(800);
+        let formPaneWidth = formWidth - 110;
+
         let html = '<div class="layui-card-header layui-table-card">' +
-            '<form class="layui-form layui-table-form-filter" lay-filter="'+ form.lay_filter +'" style="width: 800px">';
+            '<form class="layui-form layui-table-form-filter" lay-filter="'+ form.lay_filter +'" style="width:'+formWidth+'px">';
 
         if (typeof options.filter !== undefined && options.filter.fields.length > 0){
             $.each(options.filter.fields, (idx, item) => {
                 let itemHtml = '<div class="layui-form-item">';
                 itemHtml += '<label class="layui-form-label">' + item.label + '</label>'
-                console.log(item)
                 if (item.children !== undefined && item.children.length > 0){
-                    let childHtml = '<div class="layui-inline layui-form-item layui-form-pane">';
+                    let childHtml = '<div class="layui-inline layui-form-item layui-form-pane" style="width: '+ formPaneWidth +'px">';
                     $.each(item.children, (idx, childItem) => {
                         let pane ='pane=""';
                         if (childItem.type === 'radio' || childItem.type === 'checkbox'){
@@ -30,7 +32,6 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                         }
                         let childItemHtml = '<div class="layui-inline layui-form-item" '+ pane +'>';
                         childItemHtml+= '<label class="layui-form-label" >' + childItem.label + '</label>';
-                        console.log('111111')
                         switch (childItem.type) {
                             case 'input':
                                 childItemHtml += '<div class="layui-input-inline" >';
@@ -69,7 +70,6 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                         }
                         childItemHtml += '</div>';
                         childHtml+= childItemHtml;
-                        console.log(childHtml)
                     });
                     childHtml += '</div>'
                     itemHtml += childHtml;
@@ -99,14 +99,22 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                             itemHtml += '</div>';
                             break;
                         case 'date_range':
-                            itemHtml += '<div class="layui-input-block"  pane="">';
-                            itemHtml += '<input type="text" name="' + item.field + '" id="date_range_'+ timeSelectArr.length +'" autocomplete="off" class="layui-input">';
-                            itemHtml += '</div>';
+                            itemHtml += '<div class="layui-inline"  pane="">';
+                            itemHtml += '<input type="text" name="' + item.field + '[]" id="date_range_'+ timeSelectArr.length +'" autocomplete="off" class="layui-input layui-input-inline">';
                             timeSelectArr.push({
                                 id:'date_range_' + timeSelectArr.length,
                                 type:'datetime',
-                                range:true
+                                range:false
+                            });
+                            itemHtml += '<div class="layui-input-inline" style="width: 10px;text-align: center;line-height: 2;">-</div>'
+                            itemHtml += '<input type="text" name="' + item.field + '[]" id="date_range_'+ timeSelectArr.length +'" autocomplete="off" class="layui-input layui-input-inline">';
+                            timeSelectArr.push({
+                                id:'date_range_' + timeSelectArr.length,
+                                type:'datetime',
+                                range:false
                             })
+                            itemHtml += '</div>';
+
                             break;
                         default:
                             break;
@@ -125,8 +133,6 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
             '</div></div></div>';
 
         html+= '</form></div>';
-        console.log(options.table.elem.replace('#',''))
-        console.log(html);
         html += '<div class="layui-card-body">' +
             '<table class="layui-hide" id="'+ options.table.elem.replace('#','') +'"></table>' +
             '</div></div>';
@@ -140,6 +146,54 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                 elem: '#' + item.id
                 ,type: item.type
                 ,range: item.range
+                ,done: function(value, date, endDate){
+                    console.log(1)
+                }
+                ,ready: function(date){
+                    // $(".layui-laydate-content tr .laydate-selected").each(function () {
+                    //     if (!$(this).next().hasClass('layui-this') ){
+                    //         if ($(this).next().hasClass('laydate-selected') && $(this).next().hasClass('laydate-day-next')){
+                    //             $(this).addClass('last-selected');
+                    //         }
+                    //     }
+                    //     if (!$(this).prev().hasClass('layui-this')){
+                    //         if ($(this).prev().hasClass('laydate-selected') && $(this).prev().hasClass('laydate-day-prev')){
+                    //             $(this).addClass('first-selected');
+                    //         }
+                    //     }
+                    // });
+                    //
+                    // $(".layui-laydate-content tr .layui-this").each(function () {
+                    //     if ($(this).next().hasClass('laydate-selected') && !$(this).next().hasClass('laydate-day-next')){
+                    //         $(this).addClass('has-next-select');
+                    //     }
+                    //     if ($(this).prev().hasClass('laydate-selected') && !$(this).prev().hasClass('laydate-day-prev')){
+                    //         $(this).addClass('has-prev-select');
+                    //     }
+                    // })
+                    // $(".layui-laydate-content tr td").mouseenter(function () {
+                    //     $(".layui-laydate-content tr .layui-this").each(function () {
+                    //         if ($(this).next().hasClass('laydate-selected') && !$(this).next().hasClass('laydate-day-next')){
+                    //             if ($(this).hasClass('has-prev-select')){
+                    //                 $(this).removeClass('has-prev-select');
+                    //             }
+                    //             if ($(this).hasClass('has-next-select')){
+                    //                 return;
+                    //             }
+                    //             $(this).addClass('has-next-select');
+                    //         }
+                    //         if ($(this).prev().hasClass('laydate-selected') && !$(this).prev().hasClass('laydate-day-prev')){
+                    //             if ($(this).hasClass('has-next-select')){
+                    //                 $(this).removeClass('has-next-select');
+                    //             }
+                    //             if ($(this).hasClass('has-prev-select')){
+                    //                 return;
+                    //             }
+                    //             $(this).addClass('has-prev-select');
+                    //         }
+                    //     })
+                    // })
+                }
             });
         })
         
