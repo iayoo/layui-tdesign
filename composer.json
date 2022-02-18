@@ -24,7 +24,11 @@
         "topthink/framework": "^6.0.0",
         "topthink/think-orm": "^2.0",
         "topthink/think-multi-app": "^1.0",
-        "topthink/think-view": "^1.0"
+        "topthink/think-view": "^1.0",
+        "iayoo/api-response": "dev-master",
+        "topthink/think-captcha": "^3.0",
+        "zifan/addressparser": "^2.1",
+        "alapi/address_parse": "^0.0.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

@@ -1,0 +1,147 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<link rel="stylesheet" href="__FONT_AWESOME_CSS__">
+<style>
+    .layui-icon-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .icon-view-item{
+        width: 155px;
+        height: 80px;
+        text-align: center;
+        margin-right: 18px;
+    }
+    .icon-view-item > span{
+        line-height: 35px;
+    }
+    .icon-view-item > span > i {
+        font-size: 30px;
+    }
+
+</style>
+
+
+{/block}
+
+{block name="body"}
+<body>
+
+<div class="popup-contain">
+    <div class="layui-tab" lay-filter="test">
+        <ul class="layui-tab-title">
+            <li class="layui-this">Layui 图标</li>
+            <li>fontawesome</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form>
+                    <div class="layui-form-item">
+                        <label for="" class="layui-form-label">地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="path" value="public/static/admin/layui/css/layui.css" placeholder="请输入地址" class="layui-input layui-inline" >
+                            <span class="layui-btn layui-btn-primary layui-inline" onclick="refresh(this,'layui')">读取数据</span>
+                        </div>
+                    </div>
+                </form>
+                <div class="layui-icon-view" id="layui-icon-view" >
+                    <div>
+                        <span>
+                            <i class=""></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <form>
+                    <div class="layui-form-item">
+                        <label for="" class="layui-form-label">地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="path" placeholder="请输入地址" value="public/static/admin/font-awesome/css/font-awesome.min.css" class="layui-input layui-inline" >
+                            <span class="layui-btn layui-btn-primary layui-inline" onclick="refresh(this,'fontawesome')">读取数据</span>
+                        </div>
+                    </div>
+                </form>
+                <div class="layui-icon-view" id="fontawesome-icon-view" >
+                    <div>
+                        <span>
+                            <i class=""></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use(['element','jquery','request'],function () {
+        let $ = layui.jquery,request = layui.request,element = layui.element;
+        let layui_view = $('#layui-icon-view');
+
+        window.refresh = function (obj,type) {
+            let path = $(obj).prev().val();
+            let config = {
+                'fontawesome':'fa fa-',
+                'layui':'layui-icon layui-icon-'
+            }
+            request.post({
+                url:'{:url("getJson")}',
+                data:{
+                    type:type,
+                    path:path
+                },
+                success:function (res) {
+                    if (res.data !== undefined){
+                        fontaw = true;
+                        res.data.map(function (item) {
+                            fontawesome_icon_view.append("<div class='icon-view-item'><span><i class='" + config[type] + item + "'></i></span><p>fa-" + item + "</p></div>")
+                        })
+                    }
+                }
+            })
+        }
+        request.post({
+            url:'{:url("getJson")}',
+            data:{
+                type:'layui'
+            },
+            success:function (res) {
+                if (res.data !== undefined){
+                    res.data.map(function (item) {
+                        layui_view.append("<div class='icon-view-item'><span><i class='layui-icon layui-icon-" + item + "'></i></span><p>layui-icon-" + item + "</p></div>")
+                    })
+                }
+            }
+        })
+        let fontaw = false;
+        let fontawesome_icon_view = $("#fontawesome-icon-view");
+        element.on('tab(test)', function(data){
+            if (data.index === 1 && fontaw === false){
+                request.post({
+                    url:'{:url("getJson")}',
+                    data:{
+                        type:'fontawesome'
+                    },
+                    success:function (res) {
+                        if (res.data !== undefined){
+                            fontaw = true;
+                            res.data.map(function (item) {
+                                fontawesome_icon_view.append("<div class='icon-view-item'><span><i class='fa fa-" + item + "'></i></span><p>fa-" + item + "</p></div>")
+                            })
+                        }
+                    }
+                })
+            }
+        });
+    });
+
+
+</script>
+</body>
+
+{/block}

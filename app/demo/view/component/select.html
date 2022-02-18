@@ -1,0 +1,69 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+</style>
+
+<link rel="stylesheet" href="/static/plugin/layui-extend/css/formSelects-v4.css">
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+    <div>
+        <label for=""></label>
+        <div class="layui-inline">
+            <label class="layui-form-label">搜索选择框</label>
+            <form action="" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">单行选择框</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao" >
+                            <option value=""></option>
+                            <option value="0">写作</option>
+                            <option value="1" selected="">阅读</option>
+                            <option value="2">游戏</option>
+                            <option value="3">音乐</option>
+                            <option value="4">旅行</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">单行选择框</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="text" lay-select-type="form" data-href="{:url('inputTable')}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">xm-select</label>
+                    <div class="layui-input-block">
+                        <select name="city" xm-select="select1">
+                            <option value="1" disabled="disabled">北京</option>
+                            <option value="2" selected="selected">上海</option>
+                            <option value="3">广州</option>
+                            <option value="4" selected="selected">深圳</option>
+                            <option value="5">天津</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use(['element','select','formSelects'], function () {
+        let element = layui.element,formSelects = layui.formSelects;
+
+        formSelects.render('select1', {
+            init: ["1", "2"],               //默认值
+        })
+    });
+</script>
+</body>
+
+{/block}

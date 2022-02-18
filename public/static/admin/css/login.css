@@ -161,7 +161,7 @@ iframe {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 177px 130px 33px 95px;
+    padding: 160px 130px 33px 95px;
 }
 
 /*------------------------------------------------------------------
@@ -182,7 +182,6 @@ iframe {
 }
 
 .login-form-title {
-    font-family: Poppins-Bold;
     font-size: 24px;
     color: #333333;
     line-height: 1.2;
@@ -190,7 +189,7 @@ iframe {
 
     width: 100%;
     display: block;
-    padding-bottom: 54px;
+    padding-bottom: 15px;
 }
 
 
@@ -457,3 +456,90 @@ span.pass-view{
 span.pass-view i{
     cursor: pointer;
 }
+span.verify_code{
+    position: absolute;
+    width: 45%;
+    /*height: 74px;*/
+    right: 1px;
+    border-radius: 50%;
+    top: 1px;
+    /*border-left: 1px solid red;*/
+    /*height: 100%;*/
+}
+
+span.verify_code > img{
+    max-width: 100%;
+    height: 48px;
+    border-radius: 0 50px 50px 0;
+    /*border-left: 1px solid #001f9790;*/
+}
+
+.login-form .layui-tab-title,.login-form ul.layui-tab-title li.layui-this:after{
+    border: none;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form .layui-tab-content{
+    height: 260px;
+}
+
+.login-form .phone-verify-code{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40%;
+    line-height: 50px;
+    background-color: #001f97;
+    border-radius: 0 50px 50px 0;
+    text-align: center;
+    color: #f2f2f2;
+    cursor: pointer;
+}
+
+.login-form .phone-verify-code.disabled{
+    background-color: #001f9790;
+    cursor: not-allowed;
+}
+
+.login-form ul.layui-tab-title li{
+    border-radius: 50%;
+    min-width: 40px;
+    padding: 0;
+    border: none;
+    margin: 0 12px;
+}
+
+.login-form ul.layui-tab-title li.layui-this{
+    background-color: #001f97;
+    color: #f2f2f2;
+}
+
+.login-form .qrcode{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form .qrcode img{
+    width: 175px;
+    padding: 6px;
+    border: 1px solid #f2f2f2;
+}
+
+.login-form .refresh-action p{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 4px;
+
+}
+.login-form .refresh-action p span{
+    cursor: pointer;
+    color: #602424a8;
+}
+.login-form .refresh-action p i {
+    font-size: 14px;
+}
+
+/*.login-form .verify_code span.verify_code > img*/

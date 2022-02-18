@@ -1,0 +1,31 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+</style>
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+    <div>
+        <div>
+            <span>500 Internal Server Error</span>
+            <span>抱歉，服务器出错啦</span>
+        </div>
+        <div>
+            <button class="layui-btn layui-btn-primary" lay-filter="">返回首页</button>
+        </div>
+    </div>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use([], function () {
+
+    });
+</script>
+</body>
+
+{/block}

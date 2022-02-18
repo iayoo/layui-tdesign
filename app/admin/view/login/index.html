@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>IA Admin 后台登录</title>
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/admin.css?v={:time()}">
+    <link rel="stylesheet" href="/static/admin/font/iconfont.css?v={:time()}">
+    <link rel="stylesheet" href="/static/admin/css/login.css?v={:time()}">
+    <link rel="stylesheet" href="/static/admin/css/util.css?v={:time()}">
+    <style>
+        #wechat-login iframe{
+            height: 195px;
+        }
+    </style>
+</head>
+<body>
+<div class="dowebok">
+    <div class="page-loading" ia-event="page-loading">
+        <div class="loading-icon">
+            <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>
+        </div>
+    </div>
+    <div class="container-login">
+        <div class="wrap-login">
+            <div class="login-pic js-tilt" data-tilt="">
+                <img src="/static/admin/images/login-img.png" alt="img">
+            </div>
+
+            <form class="login-form validate-form layui-form" lay-verType="tips">
+                <span class="login-form-title">
+                    后台登录
+                </span>
+
+                <div class="layui-tab" lay-filter="test1">
+
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="wrap-input validate-input">
+                                <input class="input layui-input" lay-verify="account" type="text" name="account"
+                                       placeholder="账号" >
+                                <span class="symbol-input">
+                                    <i class="layui-icon layui-icon-username" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-input validate-input">
+                                <span class="pass-view">
+                                    <i ia-event="pass-view"
+                                       class="icon layui-icon layui-icon-extend-Notvisible1 password-view-icon"
+                                       aria-hidden="true"></i>
+                                </span>
+                                <span class="symbol-input">
+                                    <i class="layui-icon layui-icon-password" aria-hidden="true"></i>
+                                </span>
+                                <input class="input layui-input login-form-pass-input" lay-verify="password" type="password" name="password"
+                                       placeholder="密码">
+                            </div>
+
+                            <div class="wrap-input validate-input">
+                                <span class="symbol-input">
+                                    <i class="layui-icon layui-icon-vercode" aria-hidden="true"></i>
+                                </span>
+                                <span class="verify_code" ia-event="verify-refresh">
+                                    <img src="{:captcha_src()}" alt="" >
+                                </span>
+                                <input class="input layui-input login-form-pass-input" type="text" name="verify"
+                                       placeholder="验证码">
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="wrap-input validate-input">
+                                <input class="input layui-input" lay-verify="phone" type="text" name="phone"
+                                       placeholder="手机号">
+                                <span class="symbol-input">
+                                    <i class="layui-icon layui-icon-username" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <div class="wrap-input validate-input">
+                                <span class="symbol-input">
+                                    <i class="layui-icon layui-icon-vercode" aria-hidden="true"></i>
+                                </span>
+                                <span class="phone-verify-code" ia-event="send-verify-code">
+                                    发送验证码
+                                </span>
+                                <input class="input layui-input login-form-pass-input" type="text" name="verify"
+                                       placeholder="验证码">
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <!-- 放二维码的容器 -->
+<!--                            <div id="wechat-login"><div>-->
+                            <div class="wechat-qrcode qrcode">
+                                <div id="wechat-login"></div>
+<!--                                <img src="/static/admin/images/wechat-login-demo.png" alt="" id="wechat-login">-->
+                            </div>
+                            <div class="refresh-action">
+                                <p>请使用微信扫码登录 <span id="wechat-refresh">刷新 <i class="layui-icon layui-icon-refresh"></i></span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="layui-tab-title">
+                        <li class="layui-this" lay-id="account" >
+                            <i class="layui-icon layui-icon-auz"></i>
+                        </li>
+                        <li lay-id="phone">
+                            <i class="layui-icon layui-icon-cellphone"></i>
+                        </li>
+                        <li lay-id="phone">
+                            <i class="layui-icon layui-icon-login-wechat"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container-login-form-btn">
+                    <button class="login-form-btn" type="submit" lay-submit lay-filter="login-submit" ia-event="loading">
+                        登陆
+                    </button>
+                </div>
+
+                <div class="text-center p-t-12">
+<!--                    <a class="txt2" href="javascript:">-->
+<!--                        忘记密码？-->
+<!--                    </a>-->
+                </div>
+
+                <div class="text-center p-t-136">
+<!--                    <a class="txt2" href="https://www.helloweba.net/" target="_blank">-->
+<!--                        还没有账号？立即注册-->
+<!--                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>-->
+<!--                    </a>-->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="/static/admin/layui/layui.js"></script>
+<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+<script>
+
+    // 创建微信登录的对象
+    new WxLogin({
+        self_redirect: true, // 是否在iframe内跳转 redirect_uri
+        id: 'wechat-login', // 希望二维码嵌入容器的 id
+        appid: '',
+        scope: 'snsapi_login',
+        redirect_uri: 'http://layui-tdsign.com/admin/authentication.wechat',
+        href:    'data:text/css;base64,LmxvZ2luUGFuZWwubm9ybWFsUGFuZWwgLnRpdGxlIHsKICBkaXNwbGF5OiBub25lOwp9Ci5xcmNvZGUubGlnaHRCb3JkZXIgewogIHdpZHRoOiAxNzBweDsKICBoZWlnaHQ6IDE3MHB4Owp9Ci5wYW5lbENvbnRlbnQgLmluZm97CiAgZGlzcGxheTogbm9uZTsKfQ==',
+    })
+
+    layui.config({
+        base: '/static/admin/component/' //静态资源所在路径
+    }).extend({
+        index: '/static/admin' //主入口模块
+    }).use(['jquery','form','request','loading'],function () {
+        let $ = layui.jquery, form = layui.form, request = layui.request, loading = layui.loading;
+
+        // 接收message
+        window.addEventListener('message', function(event) {
+            // 拿到event做对应的操作
+            if (event.data !== undefined && event.data.code !== undefined){
+                // 扫码成功回调，
+                request.post({
+                    url:'{:url("authentication.wechat/login")}',
+                    data:{code:event.data.code}
+                })
+            }
+        }, false)
+
+        $("#wechat-refresh").on('click',function (){
+            $.support.cors = true
+            // iframe1.contentWindow.location.reload(true);
+            console.log($("#wechat-login").find("iframe")[0])
+            // 创建微信登录的对象
+            new WxLogin({
+                self_redirect: true, // 是否在iframe内跳转 redirect_uri
+                id: 'wechat-login', // 希望二维码嵌入容器的 id
+                appid: '',
+                scope: 'snsapi_login',
+                redirect_uri: 'http://layui-tdsign.com/admin/authentication.wechat',
+                href:    'data:text/css;base64,LmxvZ2luUGFuZWwubm9ybWFsUGFuZWwgLnRpdGxlIHsKICBkaXNwbGF5OiBub25lOwp9Ci5xcmNvZGUubGlnaHRCb3JkZXIgewogIHdpZHRoOiAxNzBweDsKICBoZWlnaHQ6IDE3MHB4Owp9Ci5wYW5lbENvbnRlbnQgLmluZm97CiAgZGlzcGxheTogbm9uZTsKfQ==',
+            })
+        })
+
+        form.verify({
+            required:function (val,item){
+            },
+            account: function(value, item){ //value：表单的值、item：表单的DOM对象
+                // console.log('from verify!')
+                let err = false;
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    err = '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    err = '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    err = '用户名不能全为数字';
+                }
+                if (err !== false){
+                    layer.msg(err)
+                    return true;
+                }
+                return false;
+            },
+            phone:function (val,item) {
+                return false;
+            }
+
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ,password:function (val,item) {
+                if (!new RegExp(/^[\S]{6,12}$/).test(val)){
+                    err = ''
+                    layer.msg(err)
+                    return true;
+                }
+            }
+        });
+        let isSend = false;
+        $("[ia-event]").on('click',function (event) {
+            let _this = $(this);
+            let iaEvent = _this.attr('ia-event');
+            if (iaEvent === 'pass-view'){
+                if (_this.hasClass('layui-icon-extend-Notvisible1')){
+                    _this.removeClass('layui-icon-extend-Notvisible1');
+                    _this.addClass('layui-icon-extend-browse');
+                    _this.parent().parent().children('input').attr('type','input')
+                }else{
+                    _this.addClass('layui-icon-extend-Notvisible1');
+                    _this.removeClass('layui-icon-extend-browse');
+                    _this.parent().parent().children('input').attr('type','password')
+                }
+            }
+            if (iaEvent === 'send-verify-code'){
+                let count = 60;
+                if (isSend){
+                    return;
+                }
+                _this.addClass('disabled');
+                _this.text('发送验证码(' + count+'s)');
+                isSend = true
+                let verifyCodeTimer = setInterval(function(){
+                    count--;
+                    _this.text('发送验证码(' + count+'s)');
+                    if (count <=0) {
+                        isSend = false;
+                        _this.removeClass('disabled');
+                        clearInterval(verifyCodeTimer);
+                        _this.text('发送验证码');
+                    }
+                },1000);
+            }
+            if (iaEvent === 'verify-refresh'){
+                let src = '{:captcha_src()}?v=' + ((new Date()).getTime());
+                _this.find('img').attr('src',src);
+            }
+        })
+        let page_loading = $("[ia-event='page-loading']");
+        page_loading.fadeOut(500);
+        form.on('submit(login-submit)', function(data,el) {
+            let _this = $(this);
+            loading.load({
+                el:_this
+            }).clear(1000)
+
+            // _this.attr("disabled","disabled")
+            // _this.css("opacity","0.7")
+            // _this.append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop btn-loading"></i>');
+            setTimeout(function () {
+                // btnRemoveLoading();
+            //     _this.children('i.btn-loading').remove()
+            //     _this.removeAttr('disabled')
+            //     _this.css("opacity","1")
+            //     page_loading.fadeIn(500);
+            //
+            //     // setTimeout(function () {
+            //     //     location.href = "/administrator";
+            //     // },1000)
+            },1500)
+
+            request.post({
+                data:data.field,
+                load:false,
+                error:function (res) {
+                    // btnRemoveLoading()
+                },
+                success(){
+                    // btnRemoveLoading()
+                }
+            })
+            return false;
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

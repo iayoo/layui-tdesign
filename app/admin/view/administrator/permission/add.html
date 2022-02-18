@@ -1,0 +1,138 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<link rel="stylesheet" href="__FONT_AWESOME_CSS__">
+
+{/block}
+
+{block name="body"}
+<body>
+
+<div class="popup-contain">
+    <form class="layui-form" action="" lay-filter="permission">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">父级</label>
+            <div class="layui-input-block">
+                <select name="pid" lay-verify="requried">
+                    <option value="0">顶级</option>
+                    {foreach $permissions as $k1=>$p1}
+                    <option value="{$p1.id}">{$p1.title}</option>
+                    {if isset($p1['children']) && !empty($p1['children']) }
+                    {foreach $p1['children'] as $k2=>$p2}
+                    <option value="{$p2.id}" >&nbsp;&nbsp;&nbsp;┗━━{$p2.title}</option>
+                    {/foreach}
+                    {/if}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">权限名称</label>
+            <div class="layui-input-block">
+                <input type="text" maxlength="16" name="title" lay-verify="title" placeholder="请输入权限名称" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">地址</label>
+            <div class="layui-input-block">
+                <input type="prompt" href="{:url('getPermissionList')}" lay-verify="path" field="path" name="href" placeholder="请输入地址" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">图标</label>
+            <div class="layui-input-block" style="width: unset">
+                <input type="text" id="iconPicker2" name="icon" lay-filter="iconPicker2" class="hide">
+                <span class="layui-btn layui-btn-primary layui-inline" id="clear">清空</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限类型：</label>
+            <div class="layui-input-block radio-btn-group">
+                <input type="radio" name="type" value="0" title="目录" checked>
+                <input type="radio" name="type" value="1" title="菜单">
+                <input type="radio" name="type" value="2" title="按钮">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="number" step="1" min="0" name="sort" value="10" lay-verify="required" placeholder="排序权重" class="layui-input" >
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-primary " lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn  ">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+    </form>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use(['form','element','icon','jquery','request','elems'],function () {
+        let icon= layui.icon,$ = layui.jquery,form = layui.form,request = layui.request,elems = layui.elems;
+
+        elems.form.verify({
+            title:{
+                verify:'required',
+                error:'参数不能为空'
+            }
+        })
+        request.get({
+            url:'{:url("detail")}?id='+'{:request()->param("id")}',
+            success:function (res) {
+                form.val('permission',res.data)
+                initIcon();
+            },
+            is_msg:false
+        })
+
+        function initIcon(){
+            request.post({
+                url:'{:url("/admin/develop.Icon/index")}',
+                triggerAfterSuccess:false,
+                success:function (res) {
+                    icon.render({
+                        elem: '#iconPicker2'
+                        ,style: 'color: #0052d9;'
+                        ,type: "fontclass"
+                        ,fontfamily: ""
+                        ,placeholder: ''
+                        ,isSplit: true
+                        ,page: true
+                        //,search: false
+                        ,click: function(obj){
+                        }
+                        ,ready: function(){
+                        },
+                        data:res.data
+                    });
+                }
+            })
+        }
+
+        $('#clear').click(function() {
+            icon.reset('iconPicker2');
+        });
+        form.on('submit(save)', function(data){
+            request.post({
+                url:'{:url("add")}',
+                data:data.field,
+                is_close:true,
+                reload_table:'power-table',
+                triggerAfterSuccess:true
+            })
+            return false;
+        });
+    });
+</script>
+</body>
+
+{/block}

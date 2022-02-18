@@ -1,0 +1,23 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+</style>
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use([], function () {
+
+    });
+</script>
+</body>
+
+{/block}

@@ -1,0 +1,110 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+</style>
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">基础设置</li>
+            <li>登录设置</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="site_name"  lay-verify="" placeholder="网站名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">站点域名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="site_url"  lay-verify="" placeholder="站点域名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-primary" lay-submit lay-filter="site_setting">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+                <form class="layui-form" action="" lay-filter="login_setting">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">图片验证码</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="" lay-skin="switch">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">登录方式</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="login_type[account]" lay-skin="primary" title="账号密码" checked>
+                            <input type="checkbox" name="login_type[wechat]" lay-skin="primary" title="微信扫码" >
+                            <input type="checkbox" name="login_type[email]" lay-skin="primary" title="邮箱登录" >
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-primary" lay-submit lay-filter="login_setting">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    layui.use(['request'], function () {
+        // request
+        let request = layui.request,form = layui.form;
+
+        //监听提交
+        form.on('submit(site_setting)', function(data){
+            // data.field
+            request.post({
+                url: '{:url("submit")}',
+                data: data.field,
+                triggerAfterSuccess: false,
+                success: function (res) {
+                    console.log(res)
+                },
+                error: function (res) {
+
+                },
+            })
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(login_setting)', function(data){
+            // data.field
+            request.post({
+                url: '{:url("submit")}',
+                data: data.field,
+                triggerAfterSuccess: false,
+                success: function (res) {
+                    console.log(res)
+                },
+                error: function (res) {
+
+                },
+            })
+            return false;
+        });
+
+    });
+</script>
+</body>
+
+{/block}

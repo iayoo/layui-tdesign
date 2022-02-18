@@ -1,0 +1,197 @@
+{extend name="basic/page_layout" /}
+
+{block name="head"}
+<style>
+    .layui-row{
+        margin-top: 10px;
+    }
+</style>
+{/block}
+
+{block name="body"}
+<body>
+<div class="popup-contain">
+    <div >
+
+        <div class="layui-row">
+            <pre class="layui-code">layui.use(["notify"],function(){})</pre>
+        </div>
+        <div class="layui-row">
+            <button id="info" class="layui-btn layui-btn-primary">提示</button>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.info("提示消息");</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <button id="warning" class="layui-btn layui-btn-warm">警告</button>
+
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.warning("提示消息");</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <button id="success" class="layui-btn layui-btn-success">成功</button>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.success("操作成功");</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row">
+            <button id="error" class="layui-btn layui-btn-error">错误</button>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.error("操作失败");</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row">
+            <button id="loading" class="layui-btn layui-btn-primary">加载</button>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.error("操作失败");</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row">
+            <button id="noclose" class="layui-btn layui-btn-primary">不显示关闭按钮</button>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.error("不显示关闭按钮", false);</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row">
+            <button id="close" class="layui-btn layui-btn-primary">关闭时回调</button>
+            <div class="layui-collapse">
+                <div class="layui-colla-item layui-row">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.info("提示消息", function () {alert("回调成功");});</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row">
+            <button id="destroyAll" class="layui-btn layui-btn-primary">关闭全部</button>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.destroyAll(); 全部关闭</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-inline">
+                <button id="topLeft" class="layui-btn layui-btn-primary">左上</button>
+                <button id="topRight" class="layui-btn layui-btn-primary">右上</button>
+                <button id="bottomLeft" class="layui-btn layui-btn-primary">左下</button>
+                <button id="bottomCenter" class="layui-btn layui-btn-primary">中下</button>
+                <button id="bottomRight" class="layui-btn layui-btn-primary">右下</button>
+                <button id="center" class="layui-btn layui-btn-primary">正中间</button>
+            </div>
+            <div class="layui-collapse layui-row">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">代码</h2>
+                    <div class="layui-colla-content">
+                        <pre class="layui-code">notify.info("位置显示", "topLeft"); // 参数：topLeft、topCenter、topRight、bottomLeft、bottomCenter、bottomRight、center</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="__LAYUI_JS__"></script>
+<script src="__LAYUI_CONFIG__"></script>
+<script>
+    let $ = layui.jquery;
+    layui.use(['notify','element'], function () {
+        $("#info").click(function () {
+            notify.info("提示消息");
+        });
+
+        $("#warning").click(function () {
+            notify.warning("警告消息");
+        })
+        $("#success").click(function () {
+            notify.success("操作成功");
+        })
+        $("#loading").click(function () {
+            notify.loading("加载中");
+        })
+        $("#error").click(function () {
+            notify.error("操作失败");
+        })
+        $("#noclose").click(function () {
+            notify.error("不显示关闭按钮", false);
+        })
+        $("#close").click(function () {
+            notify.info("提示消息", function () {
+                alert("回调成功");
+            });
+        });
+        $("#destroyAll").click(function () {
+            notify.destroyAll();
+        })
+        $("#topLeft").click(function () {
+            notify.info("左上", "topLeft");
+        })
+        $("#topRight").click(function () {
+            notify.info("右上", "topRight");
+        })
+        $("#bottomLeft").click(function () {
+            notify.info("左下", "bottomLeft");
+        })
+        $("#bottomRight").click(function () {
+            notify.info("右下", "bottomRight");
+        })
+        $("#bottomCenter").click(function () {
+            notify.info("中下", "bottomCenter");
+        })
+        $("#center").click(function () {
+            notify.info("正中", "center");
+        })
+    });
+</script>
+</body>
+
+{/block}
