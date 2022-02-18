@@ -125,11 +125,21 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
             });
 
         }
+        
+        let btnHtml = '';
+        
+        if (options.form.btn !== undefined && options.form.btn.length > 0){
+            $.each(options.form.btn,function (bKey,item) {
+                btnHtml += '<button class="layui-btn layui-btn-primary" lay-submit lay-filter="'+ item.lay_filter +'">'+ item.name +'</button>';
+            })
+        }
+        
         html += '<div class="layui-form-item" pane="">' +
             ' <label class="layui-form-label"></label>' +
             '<div class="layui-input-block"><div class="layui-inline">' +
             '<button class="layui-btn" type="reset">重置</button>' +
-            '<button class="layui-btn layui-btn-primary" lay-submit >搜索</button>' +
+            '<button class="layui-btn layui-btn-primary" lay-submit lay-filter="'+ options.form.lay_filter +'" >搜索</button>' +
+            btnHtml +
             '</div></div></div>';
 
         html+= '</form></div>';
@@ -200,7 +210,10 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
         let tableObj = table.render(options.table);
 
         if (options.form !== undefined && options.form.lay_filter !== undefined){
-            form.on('submit('+ form.lay_filter +')', function(data){
+
+            form.on('submit('+ options.form.lay_filter +')', function(data){
+                console.log(data.elem);
+                console.log(data);
                 tableObj.reload({
                     where: data.field
                     ,page: {
@@ -209,6 +222,31 @@ layui.define(['jquery','table','form','element','laydate'], function (exports) {
                 })
                 return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
             });
+
+            if (options.form.btn !== undefined && options.form.btn.length > 0){
+                $.each(options.form.btn,function (bKey,item) {
+                    if (item.lay_filter !== undefined ){
+                        form.on('submit('+ item.lay_filter +')', function(data){
+                            if (typeof item.onclick === 'function'){
+                                item.onclick(data);
+                                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                            }
+                            if (item.url !== undefined){
+                                let method = item.method?item.method:"GET";
+                                if (item.query !== undefined && typeof item.query === 'object'){
+                                    $.extend(true,data.field,item.query);
+                                }
+                                $.ajax({
+                                    url:item.url,
+                                    type:method,
+                                    data:data.field
+                                })
+                                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                            }
+                        });
+                    }
+                })
+            }
         }
     }
 
